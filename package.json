@@ -1,8 +1,11 @@
 {
     "name": "RedConnect",
-    "description": "A Node-RED Project",
+    "description": "A Node-RED Project for connecting with Grainfather Connect",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-generic-ble": "3.1.0",
+        "node-red-dashboard": "2.19.4"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flow.json",

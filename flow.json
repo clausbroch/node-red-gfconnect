@@ -1,1 +1,573 @@
-[]
+[
+    {
+        "id": "9dea0b26.bbbe98",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "91bf2aea.c00a48",
+        "type": "Generic BLE",
+        "z": "",
+        "localName": "Grain",
+        "address": "bb:a0:50:0e:0a:12",
+        "uuid": "bba0500e0a12",
+        "muteNotifyEvents": false,
+        "operationTimeout": "",
+        "characteristics": [
+            {
+                "uuid": "2a00",
+                "name": "Device Name",
+                "type": "org.bluetooth.characteristic.gap.device_name",
+                "notifiable": false,
+                "readable": true,
+                "writable": false,
+                "writeWithoutResponse": false
+            },
+            {
+                "uuid": "2a01",
+                "name": "Appearance",
+                "type": "org.bluetooth.characteristic.gap.appearance",
+                "notifiable": false,
+                "readable": true,
+                "writable": false,
+                "writeWithoutResponse": false
+            },
+            {
+                "uuid": "2a04",
+                "name": "Peripheral Preferred Connection Parameters",
+                "type": "org.bluetooth.characteristic.gap.peripheral_preferred_connection_parameters",
+                "notifiable": false,
+                "readable": true,
+                "writable": false,
+                "writeWithoutResponse": false
+            },
+            {
+                "uuid": "2a05",
+                "name": "Service Changed",
+                "type": "org.bluetooth.characteristic.gatt.service_changed",
+                "notifiable": false,
+                "readable": true,
+                "writable": false,
+                "writeWithoutResponse": false
+            },
+            {
+                "uuid": "0003cdd100001000800000805f9b0131",
+                "name": "<Unnamed>",
+                "type": "(Custom Type)",
+                "notifiable": true,
+                "readable": false,
+                "writable": false,
+                "writeWithoutResponse": false
+            },
+            {
+                "uuid": "0003cdd200001000800000805f9b0131",
+                "name": "<Unnamed>",
+                "type": "(Custom Type)",
+                "notifiable": false,
+                "readable": false,
+                "writable": false,
+                "writeWithoutResponse": true
+            }
+        ]
+    },
+    {
+        "id": "355d7d12.6d7412",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "321f8fea.8d69d",
+        "type": "ui_group",
+        "z": "",
+        "name": "Raw Messages",
+        "tab": "355d7d12.6d7412",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "35c55f1f.67b1",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "e68e0336.77848",
+        "type": "Generic BLE in",
+        "z": "9dea0b26.bbbe98",
+        "name": "Grainfather Read",
+        "genericBle": "91bf2aea.c00a48",
+        "useString": false,
+        "notification": true,
+        "x": 370,
+        "y": 180,
+        "wires": [
+            [
+                "b3f2ec24.29c96",
+                "cf0ea885.b26888"
+            ]
+        ]
+    },
+    {
+        "id": "b3f2ec24.29c96",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.characteristics[\"0003cdd100001000800000805f9b0131\"]",
+        "targetType": "msg",
+        "x": 870,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b8c7fa1.1d3b808",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Connect",
+        "topic": "",
+        "payload": "{\"notify\":true,\"period\":0}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 180,
+        "y": 180,
+        "wires": [
+            [
+                "e68e0336.77848"
+            ]
+        ]
+    },
+    {
+        "id": "d2eeaa0a.f44ab8",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "property": "message",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "A",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "B",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "C",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "E",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "I",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "T",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "W",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "X",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Y",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 10,
+        "x": 830,
+        "y": 260,
+        "wires": [
+            [
+                "efbe3f05.d87f2"
+            ],
+            [
+                "a34e3d37.c0939"
+            ],
+            [
+                "84deb30e.2da68"
+            ],
+            [
+                "b42404c3.ad47c8"
+            ],
+            [
+                "c8b01438.50c4f8"
+            ],
+            [
+                "4cf2931f.a6b6fc"
+            ],
+            [
+                "cab7e49e.1f8b68"
+            ],
+            [
+                "33f8c2c3.008bee"
+            ],
+            [
+                "5bc571d1.43af"
+            ],
+            [
+                "2133a47e.5d109c",
+                "411c53b4.5f7cbc"
+            ]
+        ]
+    },
+    {
+        "id": "33f8c2c3.008bee",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "X",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "5bc571d1.43af",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Y",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "4cf2931f.a6b6fc",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "T",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c8b01438.50c4f8",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "I",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "cab7e49e.1f8b68",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "W",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "84deb30e.2da68",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "C",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "efbe3f05.d87f2",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "A",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "a34e3d37.c0939",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "B",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b42404c3.ad47c8",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "E",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "cf0ea885.b26888",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode response",
+        "func": "var raw = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\n\nif(raw.length > 1) {\n    msg.message = raw.substr(0, 1);\n    \n    var n = raw.indexOf(\"Z\");\n    var trimmed = raw;\n    if(n != -1) {\n        trimmed = raw.substring(1, n - 1);\n    }\n    else {\n        trimmed = raw.substring(1, raw.length - 1);\n    }\n    \n    msg.parameters = trimmed.split(\",\");\n}\n\nmsg.payload = raw;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 200,
+        "wires": [
+            [
+                "d2eeaa0a.f44ab8",
+                "edd54130.402e4"
+            ]
+        ]
+    },
+    {
+        "id": "edd54130.402e4",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 760,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "f6b97fc6.07873",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Initialize",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 840,
+        "y": 140,
+        "wires": [
+            [
+                "efbe3f05.d87f2",
+                "a34e3d37.c0939",
+                "84deb30e.2da68",
+                "b42404c3.ad47c8",
+                "c8b01438.50c4f8",
+                "4cf2931f.a6b6fc",
+                "cab7e49e.1f8b68",
+                "33f8c2c3.008bee",
+                "5bc571d1.43af"
+            ]
+        ]
+    },
+    {
+        "id": "2133a47e.5d109c",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "321f8fea.8d69d",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Unknown",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1080,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "411c53b4.5f7cbc",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1080,
+        "y": 560,
+        "wires": []
+    }
+]

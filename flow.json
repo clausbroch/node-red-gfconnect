@@ -76,7 +76,7 @@
         "id": "355d7d12.6d7412",
         "type": "ui_tab",
         "z": "",
-        "name": "Home",
+        "name": "GF Connect",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false
@@ -87,6 +87,7 @@
         "z": "",
         "name": "Raw Messages",
         "tab": "355d7d12.6d7412",
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -95,7 +96,7 @@
         "id": "35c55f1f.67b1",
         "type": "ui_base",
         "theme": {
-            "name": "theme-light",
+            "name": "theme-custom",
             "lightTheme": {
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
@@ -107,54 +108,56 @@
                 "default": "#097479",
                 "baseColor": "#097479",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "customTheme": {
                 "name": "Untitled Theme 1",
                 "default": "#4B7930",
                 "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "reset": false
             },
             "themeState": {
                 "base-color": {
-                    "default": "#0094CE",
-                    "value": "#0094CE",
+                    "default": "#4B7930",
+                    "value": "#4B7930",
                     "edited": false
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
+                    "value": "#4B7930",
                     "edited": false
                 },
                 "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "widget-textColor": {
                     "value": "#111111",
                     "edited": false
                 },
+                "page-sidebar-backgroundColor": {
+                    "value": "#000000",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#6db046",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
+                    "value": "#4b7930",
                     "edited": false
                 },
                 "widget-borderColor": {
-                    "value": "#ffffff",
+                    "value": "#333333",
                     "edited": false
                 },
                 "base-font": {
@@ -186,6 +189,17 @@
                 "py": 0
             }
         }
+    },
+    {
+        "id": "1df37c54.681d74",
+        "type": "ui_group",
+        "z": "",
+        "name": "Main Control",
+        "tab": "355d7d12.6d7412",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
     },
     {
         "id": "e68e0336.77848",
@@ -318,16 +332,20 @@
                 "c8b01438.50c4f8"
             ],
             [
-                "4cf2931f.a6b6fc"
+                "4cf2931f.a6b6fc",
+                "a8c00bf5.937f48"
             ],
             [
-                "cab7e49e.1f8b68"
+                "cab7e49e.1f8b68",
+                "db424521.23c928"
             ],
             [
-                "33f8c2c3.008bee"
+                "33f8c2c3.008bee",
+                "ff72ff6f.df808"
             ],
             [
-                "5bc571d1.43af"
+                "5bc571d1.43af",
+                "b7dc68c4.dcdc98"
             ],
             [
                 "2133a47e.5d109c",
@@ -347,8 +365,8 @@
         "label": "X",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 420,
+        "x": 1390,
+        "y": 440,
         "wires": []
     },
     {
@@ -363,8 +381,8 @@
         "label": "Y",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 460,
+        "x": 1390,
+        "y": 480,
         "wires": []
     },
     {
@@ -379,8 +397,8 @@
         "label": "T",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 340,
+        "x": 1390,
+        "y": 360,
         "wires": []
     },
     {
@@ -395,8 +413,8 @@
         "label": "I",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 300,
+        "x": 1390,
+        "y": 320,
         "wires": []
     },
     {
@@ -411,8 +429,8 @@
         "label": "W",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 380,
+        "x": 1390,
+        "y": 400,
         "wires": []
     },
     {
@@ -427,8 +445,8 @@
         "label": "C",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 220,
+        "x": 1390,
+        "y": 240,
         "wires": []
     },
     {
@@ -443,8 +461,8 @@
         "label": "A",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 140,
+        "x": 1390,
+        "y": 160,
         "wires": []
     },
     {
@@ -459,8 +477,8 @@
         "label": "B",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 180,
+        "x": 1390,
+        "y": 200,
         "wires": []
     },
     {
@@ -475,8 +493,8 @@
         "label": "E",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1070,
-        "y": 260,
+        "x": 1390,
+        "y": 280,
         "wires": []
     },
     {
@@ -488,7 +506,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 610,
-        "y": 200,
+        "y": 260,
         "wires": [
             [
                 "d2eeaa0a.f44ab8",
@@ -507,15 +525,15 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 760,
-        "y": 420,
+        "x": 670,
+        "y": 180,
         "wires": []
     },
     {
         "id": "f6b97fc6.07873",
         "type": "inject",
         "z": "9dea0b26.bbbe98",
-        "name": "Initialize",
+        "name": "Initialize Raw",
         "topic": "",
         "payload": "",
         "payloadType": "str",
@@ -523,7 +541,7 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 840,
+        "x": 1190,
         "y": 140,
         "wires": [
             [
@@ -544,15 +562,15 @@
         "type": "ui_text",
         "z": "9dea0b26.bbbe98",
         "group": "321f8fea.8d69d",
-        "order": 9,
+        "order": 10,
         "width": 0,
         "height": 0,
         "name": "",
         "label": "Unknown",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1080,
-        "y": 500,
+        "x": 1400,
+        "y": 520,
         "wires": []
     },
     {
@@ -564,10 +582,495 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 1080,
-        "y": 560,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1380,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8579532f.2e07a",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "1df37c54.681d74",
+        "order": 1,
+        "width": 5,
+        "height": 1,
+        "name": "Temperature",
+        "label": "Temperature",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 1450,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "ff72ff6f.df808",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode Temperature",
+        "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\nnode.send([{'payload':targetTemp},null]);\nnode.send([null,{'payload':currentTemp}]);\n\n//return msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1240,
+        "y": 820,
+        "wires": [
+            [
+                "c91c3b8f.db2c98"
+            ],
+            [
+                "8579532f.2e07a"
+            ]
+        ],
+        "outputLabels": [
+            "target",
+            "current"
+        ]
+    },
+    {
+        "id": "c91c3b8f.db2c98",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "1df37c54.681d74",
+        "order": 3,
+        "width": 5,
+        "height": 1,
+        "name": "Target",
+        "label": "Target",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 1440,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "a8c00bf5.937f48",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode Timer",
+        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nvar timerActive = Boolean(msg.parameters[0] === \"1\");\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerFormatted = \"--\";\n\nif(timerActive) {\n    timerLeftSecs = Number(msg.parameters[3]);\n    timerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\n    timerStartMins = Number(msg.parameters[2]);\n    timerLeftSecs = timerLeftSecs % 60;\n    if(timerLeftMins <= 59) {\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n        //timerFormatted = \"_:__:__\";\n    }\n}\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nnode.send([null, null, null, null, {'payload':timerFormatted}]);\n\n//return msg;",
+        "outputs": 5,
+        "noerr": 0,
+        "x": 1320,
+        "y": 700,
+        "wires": [
+            [],
+            [],
+            [],
+            [],
+            [
+                "ec5bbfdd.5f86e"
+            ]
+        ],
+        "outputLabels": [
+            "active",
+            "total",
+            "mins",
+            "secs",
+            "formatted"
+        ]
+    },
+    {
+        "id": "ec5bbfdd.5f86e",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "1df37c54.681d74",
+        "order": 5,
+        "width": 5,
+        "height": 1,
+        "name": "",
+        "label": "Timer",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 1540,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "b7dc68c4.dcdc98",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode Status (Y)",
+        "func": "var heatPower = Boolean(msg.parameters[0] === \"1\");\nvar pumpPower = Boolean(msg.parameters[1] === \"1\");\nvar autoMode = Boolean(msg.parameters[2] === \"1\");\nvar stageRamp = Boolean(msg.parameters[3] === \"1\");\nvar interactionMode = Boolean(msg.parameters[4] === \"1\");\nvar interactionCode = msg.parameters[5];\nvar stageNumber = Number(msg.parameters[6]);\nvar delayedHeat = Boolean(msg.parameters[7] === \"1\");\n\nnode.send([{'payload':heatPower}, null, null, null, null, null, null, null]);\nnode.send([null, {'payload':pumpPower}, null, null, null, null, null, null]);\nnode.send([null, null, {'payload':autoMode}, null, null, null, null, null]);\nnode.send([null, null, null, {'payload':stageRamp}, null, null, null, null]);\nnode.send([null, null, null, null, {'payload':interactionMode}, null, null, null]);\nnode.send([null, null, null, null, null, {'payload':interactionCode}, null, null]);\nnode.send([null, null, null, null, null, null, {'payload':stageNumber}, null]);\nnode.send([null, null, null, null, null, null, null, {'payload':delayedHeat}]);\n\n//return msg;",
+        "outputs": 8,
+        "noerr": 0,
+        "x": 650,
+        "y": 1000,
+        "wires": [
+            [
+                "a8a972b4.9eef5"
+            ],
+            [
+                "2ceaf8ac.c4b598",
+                "4520f4b5.50e53c"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "outputLabels": [
+            "heat power",
+            "pump status",
+            "auto mode",
+            "stage ramp",
+            "interaction mode",
+            "interaction code",
+            "stage number",
+            "delayed heat"
+        ]
+    },
+    {
+        "id": "77e120cb.3a7ec",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "1df37c54.681d74",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Pump",
+        "tooltip": "",
+        "color": "#FFFFFF",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1190,
+        "y": 1040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2752d604.f66c0a",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "1df37c54.681d74",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Heat",
+        "tooltip": "",
+        "color": "#FFFFFF",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1190,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "36967178.bc09fe",
+        "type": "ui_level",
+        "z": "9dea0b26.bbbe98",
+        "group": "1df37c54.681d74",
+        "order": 4,
+        "width": 1,
+        "height": 2,
+        "name": "Heat Level",
+        "label": "",
+        "colorHi": "#00b33c",
+        "colorWarn": "#00b33c",
+        "colorNormal": "#00b33c",
+        "colorOff": "#595959",
+        "min": 0,
+        "max": 100,
+        "segWarn": "",
+        "segHigh": "",
+        "unit": "",
+        "layout": "sv",
+        "channelA": "",
+        "channelB": "",
+        "decimals": 0,
+        "animations": "soft",
+        "shape": "3",
+        "colorschema": "valuedriven",
+        "textoptions": "default",
+        "colorText": "#eeeeee",
+        "fontLabel": "",
+        "fontValue": "",
+        "fontSmall": "",
+        "colorFromTheme": true,
+        "textAnimations": false,
+        "hideValue": true,
+        "tickmode": "off",
+        "peakmode": false,
+        "peaktime": 3000,
+        "x": 650,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "db424521.23c928",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode Status (W)",
+        "func": "var heatPowerPct = Number(msg.parameters[0]);\nvar timerPaused = Boolean(msg.parameters[1] === \"1\");\nvar stepMashMode = Boolean(msg.parameters[2] === \"1\");\nvar recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nvar manualPower = Boolean(msg.parameters[4] === \"1\");\nvar spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\n//return msg;",
+        "outputs": 6,
+        "noerr": 0,
+        "x": 350,
+        "y": 540,
+        "wires": [
+            [
+                "36967178.bc09fe",
+                "f693bae1.855238"
+            ],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "outputLabels": [
+            "heat power pct",
+            "timer paused",
+            "step mash mode",
+            "recipe interrupted",
+            "manual power",
+            "sparge water alert"
+        ]
+    },
+    {
+        "id": "a49530b4.09b39",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "1df37c54.681d74",
+        "order": 2,
+        "width": 1,
+        "height": 1,
+        "name": "",
+        "label": "Heat",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 750,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "f693bae1.855238",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Format display",
+        "func": "if(msg.payload === 0) {\n    msg.payload = \"Off\";\n}\nelse {\n    msg.payload = msg.payload + \"%\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 500,
+        "wires": [
+            [
+                "a49530b4.09b39"
+            ]
+        ]
+    },
+    {
+        "id": "a8a972b4.9eef5",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 850,
+        "y": 940,
+        "wires": [
+            [
+                "8bb616a.62b5ee8"
+            ],
+            [
+                "bb2dab1a.27cec8"
+            ]
+        ]
+    },
+    {
+        "id": "8bb616a.62b5ee8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Heat On",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#DD0000",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 920,
+        "wires": [
+            [
+                "2752d604.f66c0a"
+            ]
+        ]
+    },
+    {
+        "id": "bb2dab1a.27cec8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Heat Off",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#595959",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 960,
+        "wires": [
+            [
+                "2752d604.f66c0a"
+            ]
+        ]
+    },
+    {
+        "id": "2ceaf8ac.c4b598",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 870,
+        "y": 1040,
+        "wires": [
+            [
+                "bb4f926c.9206e"
+            ],
+            [
+                "eb1126f9.7cfe58"
+            ]
+        ]
+    },
+    {
+        "id": "bb4f926c.9206e",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pump On",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#00BB00",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 1020,
+        "wires": [
+            [
+                "77e120cb.3a7ec"
+            ]
+        ]
+    },
+    {
+        "id": "eb1126f9.7cfe58",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pump Off",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "set",
+                "p": "colour",
+                "pt": "msg",
+                "to": "#595959",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 1060,
+        "wires": [
+            [
+                "77e120cb.3a7ec"
+            ]
+        ]
+    },
+    {
+        "id": "4520f4b5.50e53c",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 960,
+        "y": 1140,
         "wires": []
     }
 ]

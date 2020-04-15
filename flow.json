@@ -2,7 +2,7 @@
     {
         "id": "9dea0b26.bbbe98",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Grainfather Connect",
         "disabled": false,
         "info": ""
     },
@@ -77,7 +77,8 @@
         "type": "ui_tab",
         "z": "",
         "name": "GF Connect",
-        "icon": "dashboard",
+        "icon": "fa-chain",
+        "order": 1,
         "disabled": false,
         "hidden": false
     },
@@ -202,6 +203,27 @@
         "collapse": false
     },
     {
+        "id": "48a38e5e.ad6eb",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Settings",
+        "icon": "settings",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "d9188a2e.55c2a8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Connection",
+        "tab": "48a38e5e.ad6eb",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
         "id": "e68e0336.77848",
         "type": "Generic BLE in",
         "z": "9dea0b26.bbbe98",
@@ -209,12 +231,14 @@
         "genericBle": "91bf2aea.c00a48",
         "useString": false,
         "notification": true,
-        "x": 370,
-        "y": 180,
+        "x": 570,
+        "y": 80,
         "wires": [
             [
                 "b3f2ec24.29c96",
-                "cf0ea885.b26888"
+                "24c60883.250118",
+                "a0467867.1033e8",
+                "5b7a230a.cce58c"
             ]
         ]
     },
@@ -229,29 +253,9 @@
         "tostatus": false,
         "complete": "payload.characteristics[\"0003cdd100001000800000805f9b0131\"]",
         "targetType": "msg",
-        "x": 870,
+        "x": 1010,
         "y": 80,
         "wires": []
-    },
-    {
-        "id": "b8c7fa1.1d3b808",
-        "type": "inject",
-        "z": "9dea0b26.bbbe98",
-        "name": "Connect",
-        "topic": "",
-        "payload": "{\"notify\":true,\"period\":0}",
-        "payloadType": "json",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "1",
-        "x": 180,
-        "y": 180,
-        "wires": [
-            [
-                "e68e0336.77848"
-            ]
-        ]
     },
     {
         "id": "d2eeaa0a.f44ab8",
@@ -313,7 +317,7 @@
         "checkall": "false",
         "repair": false,
         "outputs": 10,
-        "x": 830,
+        "x": 1170,
         "y": 260,
         "wires": [
             [
@@ -365,7 +369,7 @@
         "label": "X",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 440,
         "wires": []
     },
@@ -381,7 +385,7 @@
         "label": "Y",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 480,
         "wires": []
     },
@@ -397,7 +401,7 @@
         "label": "T",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 360,
         "wires": []
     },
@@ -413,7 +417,7 @@
         "label": "I",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 320,
         "wires": []
     },
@@ -429,7 +433,7 @@
         "label": "W",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 400,
         "wires": []
     },
@@ -445,7 +449,7 @@
         "label": "C",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 240,
         "wires": []
     },
@@ -461,7 +465,7 @@
         "label": "A",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 160,
         "wires": []
     },
@@ -477,7 +481,7 @@
         "label": "B",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 200,
         "wires": []
     },
@@ -493,7 +497,7 @@
         "label": "E",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1390,
+        "x": 1730,
         "y": 280,
         "wires": []
     },
@@ -505,7 +509,7 @@
         "func": "var raw = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\n\nif(raw.length > 1) {\n    msg.message = raw.substr(0, 1);\n    \n    var n = raw.indexOf(\"Z\");\n    var trimmed = raw;\n    if(n != -1) {\n        trimmed = raw.substring(1, n - 1);\n    }\n    else {\n        trimmed = raw.substring(1, raw.length - 1);\n    }\n    \n    msg.parameters = trimmed.split(\",\");\n}\n\nmsg.payload = raw;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 610,
+        "x": 950,
         "y": 260,
         "wires": [
             [
@@ -525,7 +529,7 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 670,
+        "x": 1010,
         "y": 180,
         "wires": []
     },
@@ -541,7 +545,7 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 1190,
+        "x": 1530,
         "y": 140,
         "wires": [
             [
@@ -569,7 +573,7 @@
         "label": "Unknown",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1400,
+        "x": 1740,
         "y": 520,
         "wires": []
     },
@@ -584,7 +588,7 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1380,
+        "x": 1720,
         "y": 580,
         "wires": []
     },
@@ -600,8 +604,8 @@
         "label": "Temperature",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 1450,
-        "y": 840,
+        "x": 1770,
+        "y": 900,
         "wires": []
     },
     {
@@ -612,8 +616,8 @@
         "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\nnode.send([{'payload':targetTemp},null]);\nnode.send([null,{'payload':currentTemp}]);\n\n//return msg;",
         "outputs": 2,
         "noerr": 0,
-        "x": 1240,
-        "y": 820,
+        "x": 1560,
+        "y": 880,
         "wires": [
             [
                 "c91c3b8f.db2c98"
@@ -639,8 +643,8 @@
         "label": "Target",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 1440,
-        "y": 800,
+        "x": 1760,
+        "y": 860,
         "wires": []
     },
     {
@@ -651,8 +655,8 @@
         "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nvar timerActive = Boolean(msg.parameters[0] === \"1\");\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerFormatted = \"--\";\n\nif(timerActive) {\n    timerLeftSecs = Number(msg.parameters[3]);\n    timerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\n    timerStartMins = Number(msg.parameters[2]);\n    timerLeftSecs = timerLeftSecs % 60;\n    if(timerLeftMins <= 59) {\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n        //timerFormatted = \"_:__:__\";\n    }\n}\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nnode.send([null, null, null, null, {'payload':timerFormatted}]);\n\n//return msg;",
         "outputs": 5,
         "noerr": 0,
-        "x": 1320,
-        "y": 700,
+        "x": 1680,
+        "y": 660,
         "wires": [
             [],
             [],
@@ -682,8 +686,8 @@
         "label": "Timer",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 1540,
-        "y": 720,
+        "x": 1900,
+        "y": 680,
         "wires": []
     },
     {
@@ -694,15 +698,14 @@
         "func": "var heatPower = Boolean(msg.parameters[0] === \"1\");\nvar pumpPower = Boolean(msg.parameters[1] === \"1\");\nvar autoMode = Boolean(msg.parameters[2] === \"1\");\nvar stageRamp = Boolean(msg.parameters[3] === \"1\");\nvar interactionMode = Boolean(msg.parameters[4] === \"1\");\nvar interactionCode = msg.parameters[5];\nvar stageNumber = Number(msg.parameters[6]);\nvar delayedHeat = Boolean(msg.parameters[7] === \"1\");\n\nnode.send([{'payload':heatPower}, null, null, null, null, null, null, null]);\nnode.send([null, {'payload':pumpPower}, null, null, null, null, null, null]);\nnode.send([null, null, {'payload':autoMode}, null, null, null, null, null]);\nnode.send([null, null, null, {'payload':stageRamp}, null, null, null, null]);\nnode.send([null, null, null, null, {'payload':interactionMode}, null, null, null]);\nnode.send([null, null, null, null, null, {'payload':interactionCode}, null, null]);\nnode.send([null, null, null, null, null, null, {'payload':stageNumber}, null]);\nnode.send([null, null, null, null, null, null, null, {'payload':delayedHeat}]);\n\n//return msg;",
         "outputs": 8,
         "noerr": 0,
-        "x": 650,
-        "y": 1000,
+        "x": 1450,
+        "y": 1080,
         "wires": [
             [
                 "a8a972b4.9eef5"
             ],
             [
-                "2ceaf8ac.c4b598",
-                "4520f4b5.50e53c"
+                "2ceaf8ac.c4b598"
             ],
             [],
             [],
@@ -740,8 +743,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 1190,
-        "y": 1040,
+        "x": 1990,
+        "y": 1120,
         "wires": [
             []
         ]
@@ -764,8 +767,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 1190,
-        "y": 940,
+        "x": 1990,
+        "y": 1020,
         "wires": [
             []
         ]
@@ -807,8 +810,8 @@
         "tickmode": "off",
         "peakmode": false,
         "peaktime": 3000,
-        "x": 650,
-        "y": 540,
+        "x": 1890,
+        "y": 780,
         "wires": []
     },
     {
@@ -819,8 +822,8 @@
         "func": "var heatPowerPct = Number(msg.parameters[0]);\nvar timerPaused = Boolean(msg.parameters[1] === \"1\");\nvar stepMashMode = Boolean(msg.parameters[2] === \"1\");\nvar recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nvar manualPower = Boolean(msg.parameters[4] === \"1\");\nvar spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\n//return msg;",
         "outputs": 6,
         "noerr": 0,
-        "x": 350,
-        "y": 540,
+        "x": 1590,
+        "y": 780,
         "wires": [
             [
                 "36967178.bc09fe",
@@ -853,8 +856,8 @@
         "label": "Heat",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 750,
-        "y": 500,
+        "x": 1990,
+        "y": 740,
         "wires": []
     },
     {
@@ -865,8 +868,8 @@
         "func": "if(msg.payload === 0) {\n    msg.payload = \"Off\";\n}\nelse {\n    msg.payload = msg.payload + \"%\";\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 580,
-        "y": 500,
+        "x": 1820,
+        "y": 740,
         "wires": [
             [
                 "a49530b4.09b39"
@@ -891,8 +894,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 850,
-        "y": 940,
+        "x": 1650,
+        "y": 1020,
         "wires": [
             [
                 "8bb616a.62b5ee8"
@@ -926,8 +929,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1000,
-        "y": 920,
+        "x": 1800,
+        "y": 1000,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -958,8 +961,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1000,
-        "y": 960,
+        "x": 1800,
+        "y": 1040,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -984,8 +987,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 870,
-        "y": 1040,
+        "x": 1670,
+        "y": 1120,
         "wires": [
             [
                 "bb4f926c.9206e"
@@ -1019,8 +1022,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1020,
-        "y": 1020,
+        "x": 1820,
+        "y": 1100,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1051,8 +1054,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1020,
-        "y": 1060,
+        "x": 1820,
+        "y": 1140,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1060,17 +1063,363 @@
         ]
     },
     {
-        "id": "4520f4b5.50e53c",
-        "type": "debug",
+        "id": "24c60883.250118",
+        "type": "change",
         "z": "9dea0b26.bbbe98",
         "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 960,
-        "y": 1140,
+        "rules": [
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 260,
+        "wires": [
+            [
+                "cf0ea885.b26888"
+            ]
+        ]
+    },
+    {
+        "id": "26bae695.25082a",
+        "type": "ui_switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "Connect automatically",
+        "tooltip": "",
+        "group": "d9188a2e.55c2a8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 880,
+        "y": 600,
+        "wires": [
+            [
+                "85a75268.f463e"
+            ]
+        ]
+    },
+    {
+        "id": "bc38eefe.ada82",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "d9188a2e.55c2a8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Connect",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "connect",
+        "payloadType": "str",
+        "topic": "",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "2a13b630.b9e87a"
+            ]
+        ]
+    },
+    {
+        "id": "c9ea0ca5.44f82",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "d9188a2e.55c2a8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1000,
+        "y": 400,
         "wires": []
+    },
+    {
+        "id": "a0467867.1033e8",
+        "type": "trigger",
+        "z": "9dea0b26.bbbe98",
+        "op1": "",
+        "op2": "disconnected",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "disconnect after 15 secs",
+        "x": 710,
+        "y": 380,
+        "wires": [
+            [
+                "5b7a230a.cce58c",
+                "e8f8e043.244be",
+                "c9ea0ca5.44f82"
+            ]
+        ]
+    },
+    {
+        "id": "5b7a230a.cce58c",
+        "type": "trigger",
+        "z": "9dea0b26.bbbe98",
+        "op1": "connected",
+        "op2": "",
+        "op1type": "str",
+        "op2type": "nul",
+        "duration": "15",
+        "extend": true,
+        "units": "s",
+        "reset": "disconnected",
+        "bytopic": "all",
+        "name": "connected",
+        "x": 670,
+        "y": 460,
+        "wires": [
+            [
+                "e8f8e043.244be",
+                "c9ea0ca5.44f82"
+            ]
+        ]
+    },
+    {
+        "id": "e8f8e043.244be",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connection",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d9018eca.ca9e9",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Initialize",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 360,
+        "wires": [
+            [
+                "5e825722.30d588",
+                "fbd65c91.f4f7a"
+            ]
+        ]
+    },
+    {
+        "id": "5e825722.30d588",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connection",
+                "pt": "flow",
+                "to": "disconnected",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "disconnected",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 320,
+        "wires": [
+            [
+                "c9ea0ca5.44f82"
+            ]
+        ]
+    },
+    {
+        "id": "2a13b630.b9e87a",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Subscribe",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"notify\":true,\"period\":0}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "e68e0336.77848"
+            ]
+        ]
+    },
+    {
+        "id": "fbd65c91.f4f7a",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Set defaults",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('defaults_set', true);\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 540,
+        "wires": [
+            [
+                "96bf6cb3.8e68c"
+            ]
+        ]
+    },
+    {
+        "id": "96bf6cb3.8e68c",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "auto_connect",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 600,
+        "wires": [
+            [
+                "26bae695.25082a"
+            ]
+        ]
+    },
+    {
+        "id": "4431c780.445d38",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Connect",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "15",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "b0c3c34b.8e94"
+            ]
+        ]
+    },
+    {
+        "id": "b0c3c34b.8e94",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Auto connect",
+        "func": "var auto_connect = flow.get('auto_connect') || false;\nvar connected = (flow.get('connection') === \"connected\") || false;\n\nif(auto_connect && !connected) {\n    msg.payload = \"auto connect\";\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "2a13b630.b9e87a"
+            ]
+        ]
+    },
+    {
+        "id": "85a75268.f463e",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "auto_connect",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1140,
+        "y": 600,
+        "wires": [
+            [
+                "b0c3c34b.8e94"
+            ]
+        ]
     }
 ]

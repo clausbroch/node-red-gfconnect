@@ -493,19 +493,11 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 1930,
+        "x": 1710,
         "y": 120,
         "wires": [
             [
-                "efbe3f05.d87f2",
-                "a34e3d37.c0939",
-                "84deb30e.2da68",
-                "b42404c3.ad47c8",
-                "c8b01438.50c4f8",
-                "4cf2931f.a6b6fc",
-                "cab7e49e.1f8b68",
-                "33f8c2c3.008bee",
-                "5bc571d1.43af"
+                "1f325fe7.4f74"
             ]
         ]
     },
@@ -688,13 +680,15 @@
         "color": "#FFFFFF",
         "bgcolor": "{{colour}}",
         "icon": "",
-        "payload": "",
+        "payload": "P",
         "payloadType": "str",
         "topic": "",
         "x": 2390,
         "y": 1120,
         "wires": [
-            []
+            [
+                "bce0ab71.378748"
+            ]
         ]
     },
     {
@@ -712,13 +706,15 @@
         "color": "#FFFFFF",
         "bgcolor": "{{colour}}",
         "icon": "",
-        "payload": "",
+        "payload": "H",
         "payloadType": "str",
         "topic": "",
         "x": 2390,
         "y": 1020,
         "wires": [
-            []
+            [
+                "bce0ab71.378748"
+            ]
         ]
     },
     {
@@ -1406,6 +1402,142 @@
             [
                 "b3f2ec24.29c96",
                 "24c60883.250118"
+            ]
+        ]
+    },
+    {
+        "id": "bce0ab71.378748",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Format GF command",
+        "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str;\n}\n\nvar command = Buffer.from(pad(msg.payload)).toString('hex');\n\nvar payload = {\"0003cdd200001000800000805f9b0131\":command};\nmsg.payload = payload;\n//msg.payload = JSON.stringify(payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2920,
+        "y": 800,
+        "wires": [
+            [
+                "28188956.6c5066",
+                "fa3b9cc2.52978"
+            ]
+        ]
+    },
+    {
+        "id": "28188956.6c5066",
+        "type": "Generic BLE out",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "genericBle": "3f80edac.961f72",
+        "x": 3170,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "fa3b9cc2.52978",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 3170,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "1f325fe7.4f74",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Clear All",
+        "group": "321f8fea.8d69d",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Clear All",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": " ",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1860,
+        "y": 120,
+        "wires": [
+            [
+                "efbe3f05.d87f2",
+                "a34e3d37.c0939",
+                "84deb30e.2da68",
+                "b42404c3.ad47c8",
+                "c8b01438.50c4f8",
+                "4cf2931f.a6b6fc",
+                "cab7e49e.1f8b68",
+                "33f8c2c3.008bee",
+                "5bc571d1.43af",
+                "2133a47e.5d109c"
+            ]
+        ]
+    },
+    {
+        "id": "a3758cf5.99919",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Get Firmware version",
+        "topic": "",
+        "payload": "X",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2600,
+        "y": 440,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "8a41ea03.659918",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Get current boil temp",
+        "topic": "",
+        "payload": "M",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2600,
+        "y": 480,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "c9d8c036.cb531",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Get Controller Voltage And Units",
+        "topic": "",
+        "payload": "g",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2530,
+        "y": 540,
+        "wires": [
+            [
+                "bce0ab71.378748"
             ]
         ]
     }

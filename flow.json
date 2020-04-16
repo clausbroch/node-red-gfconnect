@@ -473,8 +473,8 @@
         "func": "var raw = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\n\nif(raw.length > 1) {\n    msg.message = raw.substr(0, 1);\n    \n    var n = raw.indexOf(\"Z\");\n    var trimmed = raw;\n    if(n != -1) {\n        trimmed = raw.substring(1, n - 1);\n    }\n    else {\n        trimmed = raw.substring(1, raw.length - 1);\n    }\n    \n    msg.parameters = trimmed.split(\",\");\n}\n\nmsg.payload = raw;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 950,
-        "y": 260,
+        "x": 1010,
+        "y": 140,
         "wires": [
             [
                 "d2eeaa0a.f44ab8",
@@ -495,8 +495,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1010,
-        "y": 180,
+        "x": 1250,
+        "y": 140,
         "wires": []
     },
     {
@@ -995,8 +995,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 260,
+        "x": 790,
+        "y": 140,
         "wires": [
             [
                 "cf0ea885.b26888"
@@ -1026,8 +1026,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 1120,
-        "y": 640,
+        "x": 860,
+        "y": 240,
         "wires": [
             [
                 "85a75268.f463e"
@@ -1136,8 +1136,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 180,
-        "y": 360,
+        "x": 140,
+        "y": 240,
         "wires": [
             [
                 "5e825722.30d588",
@@ -1171,8 +1171,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
-        "y": 320,
+        "x": 820,
+        "y": 360,
         "wires": [
             [
                 "c9ea0ca5.44f82",
@@ -1215,8 +1215,8 @@
         "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 390,
-        "y": 540,
+        "x": 450,
+        "y": 240,
         "wires": [
             [
                 "96bf6cb3.8e68c"
@@ -1242,8 +1242,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 880,
-        "y": 640,
+        "x": 640,
+        "y": 240,
         "wires": [
             [
                 "26bae695.25082a"
@@ -1305,8 +1305,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1380,
-        "y": 640,
+        "x": 1100,
+        "y": 240,
         "wires": [
             [
                 "b0c3c34b.8e94"
@@ -1760,6 +1760,57 @@
         "wires": [
             [
                 "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "8d412b05.7d2508",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Hide Raw Messages",
+        "topic": "",
+        "payload": "{\"group\":{\"hide\":[\"GF_Connect_Raw_Messages\"]}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2360,
+        "y": 60,
+        "wires": [
+            [
+                "641fed3f.0bb3b4"
+            ]
+        ]
+    },
+    {
+        "id": "641fed3f.0bb3b4",
+        "type": "ui_ui_control",
+        "z": "9dea0b26.bbbe98",
+        "name": "Raw Messages Group",
+        "x": 2620,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bc89f6ab.f1fe48",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Show Raw Messages",
+        "topic": "",
+        "payload": "{\"group\":{\"show\":[\"GF_Connect_Raw_Messages\"]}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2360,
+        "y": 100,
+        "wires": [
+            [
+                "641fed3f.0bb3b4"
             ]
         ]
     }

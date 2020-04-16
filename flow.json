@@ -7,72 +7,6 @@
         "info": ""
     },
     {
-        "id": "91bf2aea.c00a48",
-        "type": "Generic BLE",
-        "z": "",
-        "localName": "Grain",
-        "address": "bb:a0:50:0e:0a:12",
-        "uuid": "bba0500e0a12",
-        "muteNotifyEvents": false,
-        "operationTimeout": "",
-        "characteristics": [
-            {
-                "uuid": "2a00",
-                "name": "Device Name",
-                "type": "org.bluetooth.characteristic.gap.device_name",
-                "notifiable": false,
-                "readable": true,
-                "writable": false,
-                "writeWithoutResponse": false
-            },
-            {
-                "uuid": "2a01",
-                "name": "Appearance",
-                "type": "org.bluetooth.characteristic.gap.appearance",
-                "notifiable": false,
-                "readable": true,
-                "writable": false,
-                "writeWithoutResponse": false
-            },
-            {
-                "uuid": "2a04",
-                "name": "Peripheral Preferred Connection Parameters",
-                "type": "org.bluetooth.characteristic.gap.peripheral_preferred_connection_parameters",
-                "notifiable": false,
-                "readable": true,
-                "writable": false,
-                "writeWithoutResponse": false
-            },
-            {
-                "uuid": "2a05",
-                "name": "Service Changed",
-                "type": "org.bluetooth.characteristic.gatt.service_changed",
-                "notifiable": false,
-                "readable": true,
-                "writable": false,
-                "writeWithoutResponse": false
-            },
-            {
-                "uuid": "0003cdd100001000800000805f9b0131",
-                "name": "<Unnamed>",
-                "type": "(Custom Type)",
-                "notifiable": true,
-                "readable": false,
-                "writable": false,
-                "writeWithoutResponse": false
-            },
-            {
-                "uuid": "0003cdd200001000800000805f9b0131",
-                "name": "<Unnamed>",
-                "type": "(Custom Type)",
-                "notifiable": false,
-                "readable": false,
-                "writable": false,
-                "writeWithoutResponse": true
-            }
-        ]
-    },
-    {
         "id": "355d7d12.6d7412",
         "type": "ui_tab",
         "z": "",
@@ -88,7 +22,7 @@
         "z": "",
         "name": "Raw Messages",
         "tab": "355d7d12.6d7412",
-        "order": 2,
+        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -224,23 +158,35 @@
         "collapse": false
     },
     {
-        "id": "e68e0336.77848",
-        "type": "Generic BLE in",
-        "z": "9dea0b26.bbbe98",
-        "name": "Grainfather Read",
-        "genericBle": "91bf2aea.c00a48",
-        "useString": false,
-        "notification": true,
-        "x": 570,
-        "y": 80,
-        "wires": [
-            [
-                "b3f2ec24.29c96",
-                "24c60883.250118",
-                "a0467867.1033e8",
-                "5b7a230a.cce58c"
-            ]
-        ]
+        "id": "8225a265.09c9b",
+        "type": "ui_group",
+        "z": "",
+        "name": "Timer",
+        "tab": "355d7d12.6d7412",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7d79fde.f628304",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "1df37c54.681d74",
+        "order": 2,
+        "width": 4,
+        "height": 1
+    },
+    {
+        "id": "3f80edac.961f72",
+        "type": "Generic BLE",
+        "z": "",
+        "localName": "Grain",
+        "address": "bb:a0:50:0e:0a:12",
+        "uuid": "bba0500e0a12",
+        "muteNotifyEvents": false,
+        "operationTimeout": "",
+        "characteristics": []
     },
     {
         "id": "b3f2ec24.29c96",
@@ -317,8 +263,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 10,
-        "x": 1170,
-        "y": 260,
+        "x": 1530,
+        "y": 280,
         "wires": [
             [
                 "efbe3f05.d87f2"
@@ -369,8 +315,8 @@
         "label": "X",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 440,
+        "x": 2130,
+        "y": 420,
         "wires": []
     },
     {
@@ -385,8 +331,8 @@
         "label": "Y",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 480,
+        "x": 2130,
+        "y": 460,
         "wires": []
     },
     {
@@ -401,8 +347,8 @@
         "label": "T",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 360,
+        "x": 2130,
+        "y": 340,
         "wires": []
     },
     {
@@ -417,8 +363,8 @@
         "label": "I",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 320,
+        "x": 2130,
+        "y": 300,
         "wires": []
     },
     {
@@ -433,8 +379,8 @@
         "label": "W",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 400,
+        "x": 2130,
+        "y": 380,
         "wires": []
     },
     {
@@ -449,8 +395,8 @@
         "label": "C",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 240,
+        "x": 2130,
+        "y": 220,
         "wires": []
     },
     {
@@ -465,8 +411,8 @@
         "label": "A",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 160,
+        "x": 2130,
+        "y": 140,
         "wires": []
     },
     {
@@ -481,8 +427,8 @@
         "label": "B",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 200,
+        "x": 2130,
+        "y": 180,
         "wires": []
     },
     {
@@ -497,8 +443,8 @@
         "label": "E",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1730,
-        "y": 280,
+        "x": 2130,
+        "y": 260,
         "wires": []
     },
     {
@@ -514,7 +460,9 @@
         "wires": [
             [
                 "d2eeaa0a.f44ab8",
-                "edd54130.402e4"
+                "edd54130.402e4",
+                "a0467867.1033e8",
+                "5b7a230a.cce58c"
             ]
         ]
     },
@@ -545,8 +493,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 1530,
-        "y": 140,
+        "x": 1930,
+        "y": 120,
         "wires": [
             [
                 "efbe3f05.d87f2",
@@ -573,8 +521,8 @@
         "label": "Unknown",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1740,
-        "y": 520,
+        "x": 2140,
+        "y": 500,
         "wires": []
     },
     {
@@ -588,8 +536,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1720,
-        "y": 580,
+        "x": 2120,
+        "y": 560,
         "wires": []
     },
     {
@@ -597,14 +545,14 @@
         "type": "ui_text",
         "z": "9dea0b26.bbbe98",
         "group": "1df37c54.681d74",
-        "order": 1,
+        "order": 4,
         "width": 5,
         "height": 1,
         "name": "Temperature",
         "label": "Temperature",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 1770,
+        "x": 2170,
         "y": 900,
         "wires": []
     },
@@ -616,7 +564,7 @@
         "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\nnode.send([{'payload':targetTemp},null]);\nnode.send([null,{'payload':currentTemp}]);\n\n//return msg;",
         "outputs": 2,
         "noerr": 0,
-        "x": 1560,
+        "x": 1960,
         "y": 880,
         "wires": [
             [
@@ -636,14 +584,14 @@
         "type": "ui_text",
         "z": "9dea0b26.bbbe98",
         "group": "1df37c54.681d74",
-        "order": 3,
+        "order": 6,
         "width": 5,
         "height": 1,
         "name": "Target",
         "label": "Target",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 1760,
+        "x": 2160,
         "y": 860,
         "wires": []
     },
@@ -655,7 +603,7 @@
         "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nvar timerActive = Boolean(msg.parameters[0] === \"1\");\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerFormatted = \"--\";\n\nif(timerActive) {\n    timerLeftSecs = Number(msg.parameters[3]);\n    timerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\n    timerStartMins = Number(msg.parameters[2]);\n    timerLeftSecs = timerLeftSecs % 60;\n    if(timerLeftMins <= 59) {\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n        //timerFormatted = \"_:__:__\";\n    }\n}\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nnode.send([null, null, null, null, {'payload':timerFormatted}]);\n\n//return msg;",
         "outputs": 5,
         "noerr": 0,
-        "x": 1680,
+        "x": 2080,
         "y": 660,
         "wires": [
             [],
@@ -678,15 +626,15 @@
         "id": "ec5bbfdd.5f86e",
         "type": "ui_text",
         "z": "9dea0b26.bbbe98",
-        "group": "1df37c54.681d74",
-        "order": 5,
-        "width": 5,
+        "group": "8225a265.09c9b",
+        "order": 1,
+        "width": 6,
         "height": 1,
         "name": "",
         "label": "Timer",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 1900,
+        "x": 2300,
         "y": 680,
         "wires": []
     },
@@ -698,7 +646,7 @@
         "func": "var heatPower = Boolean(msg.parameters[0] === \"1\");\nvar pumpPower = Boolean(msg.parameters[1] === \"1\");\nvar autoMode = Boolean(msg.parameters[2] === \"1\");\nvar stageRamp = Boolean(msg.parameters[3] === \"1\");\nvar interactionMode = Boolean(msg.parameters[4] === \"1\");\nvar interactionCode = msg.parameters[5];\nvar stageNumber = Number(msg.parameters[6]);\nvar delayedHeat = Boolean(msg.parameters[7] === \"1\");\n\nnode.send([{'payload':heatPower}, null, null, null, null, null, null, null]);\nnode.send([null, {'payload':pumpPower}, null, null, null, null, null, null]);\nnode.send([null, null, {'payload':autoMode}, null, null, null, null, null]);\nnode.send([null, null, null, {'payload':stageRamp}, null, null, null, null]);\nnode.send([null, null, null, null, {'payload':interactionMode}, null, null, null]);\nnode.send([null, null, null, null, null, {'payload':interactionCode}, null, null]);\nnode.send([null, null, null, null, null, null, {'payload':stageNumber}, null]);\nnode.send([null, null, null, null, null, null, null, {'payload':delayedHeat}]);\n\n//return msg;",
         "outputs": 8,
         "noerr": 0,
-        "x": 1450,
+        "x": 1850,
         "y": 1080,
         "wires": [
             [
@@ -731,7 +679,7 @@
         "z": "9dea0b26.bbbe98",
         "name": "",
         "group": "1df37c54.681d74",
-        "order": 6,
+        "order": 7,
         "width": 3,
         "height": 1,
         "passthru": false,
@@ -743,7 +691,7 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 1990,
+        "x": 2390,
         "y": 1120,
         "wires": [
             []
@@ -755,7 +703,7 @@
         "z": "9dea0b26.bbbe98",
         "name": "",
         "group": "1df37c54.681d74",
-        "order": 7,
+        "order": 8,
         "width": 3,
         "height": 1,
         "passthru": false,
@@ -767,7 +715,7 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 1990,
+        "x": 2390,
         "y": 1020,
         "wires": [
             []
@@ -778,7 +726,7 @@
         "type": "ui_level",
         "z": "9dea0b26.bbbe98",
         "group": "1df37c54.681d74",
-        "order": 4,
+        "order": 5,
         "width": 1,
         "height": 2,
         "name": "Heat Level",
@@ -810,7 +758,7 @@
         "tickmode": "off",
         "peakmode": false,
         "peaktime": 3000,
-        "x": 1890,
+        "x": 2290,
         "y": 780,
         "wires": []
     },
@@ -822,7 +770,7 @@
         "func": "var heatPowerPct = Number(msg.parameters[0]);\nvar timerPaused = Boolean(msg.parameters[1] === \"1\");\nvar stepMashMode = Boolean(msg.parameters[2] === \"1\");\nvar recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nvar manualPower = Boolean(msg.parameters[4] === \"1\");\nvar spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\n//return msg;",
         "outputs": 6,
         "noerr": 0,
-        "x": 1590,
+        "x": 1990,
         "y": 780,
         "wires": [
             [
@@ -849,14 +797,14 @@
         "type": "ui_text",
         "z": "9dea0b26.bbbe98",
         "group": "1df37c54.681d74",
-        "order": 2,
+        "order": 3,
         "width": 1,
         "height": 1,
         "name": "",
         "label": "Heat",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 1990,
+        "x": 2390,
         "y": 740,
         "wires": []
     },
@@ -868,7 +816,7 @@
         "func": "if(msg.payload === 0) {\n    msg.payload = \"Off\";\n}\nelse {\n    msg.payload = msg.payload + \"%\";\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1820,
+        "x": 2220,
         "y": 740,
         "wires": [
             [
@@ -894,7 +842,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1650,
+        "x": 2050,
         "y": 1020,
         "wires": [
             [
@@ -929,7 +877,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1800,
+        "x": 2200,
         "y": 1000,
         "wires": [
             [
@@ -961,7 +909,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1800,
+        "x": 2200,
         "y": 1040,
         "wires": [
             [
@@ -987,7 +935,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1670,
+        "x": 2070,
         "y": 1120,
         "wires": [
             [
@@ -1022,7 +970,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1820,
+        "x": 2220,
         "y": 1100,
         "wires": [
             [
@@ -1054,7 +1002,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1820,
+        "x": 2220,
         "y": 1140,
         "wires": [
             [
@@ -1112,8 +1060,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 880,
-        "y": 600,
+        "x": 1120,
+        "y": 640,
         "wires": [
             [
                 "85a75268.f463e"
@@ -1158,8 +1106,8 @@
         "label": "Status:",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1000,
-        "y": 400,
+        "x": 1340,
+        "y": 500,
         "wires": []
     },
     {
@@ -1176,13 +1124,13 @@
         "reset": "",
         "bytopic": "all",
         "name": "disconnect after 15 secs",
-        "x": 710,
-        "y": 380,
+        "x": 1050,
+        "y": 480,
         "wires": [
             [
                 "5b7a230a.cce58c",
-                "e8f8e043.244be",
-                "c9ea0ca5.44f82"
+                "c9ea0ca5.44f82",
+                "96f0c2.6fd37f4"
             ]
         ]
     },
@@ -1200,38 +1148,13 @@
         "reset": "disconnected",
         "bytopic": "all",
         "name": "connected",
-        "x": 670,
-        "y": 460,
+        "x": 1010,
+        "y": 560,
         "wires": [
             [
-                "e8f8e043.244be",
-                "c9ea0ca5.44f82"
+                "c9ea0ca5.44f82",
+                "96f0c2.6fd37f4"
             ]
-        ]
-    },
-    {
-        "id": "e8f8e043.244be",
-        "type": "change",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "connection",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1030,
-        "y": 460,
-        "wires": [
-            []
         ]
     },
     {
@@ -1285,7 +1208,8 @@
         "y": 320,
         "wires": [
             [
-                "c9ea0ca5.44f82"
+                "c9ea0ca5.44f82",
+                "853fd41f.fb4a28"
             ]
         ]
     },
@@ -1312,7 +1236,7 @@
         "y": 80,
         "wires": [
             [
-                "e68e0336.77848"
+                "b79bbad8.1ee5f8"
             ]
         ]
     },
@@ -1351,8 +1275,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 640,
-        "y": 600,
+        "x": 880,
+        "y": 640,
         "wires": [
             [
                 "26bae695.25082a"
@@ -1414,11 +1338,74 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1140,
-        "y": 600,
+        "x": 1380,
+        "y": 640,
         "wires": [
             [
                 "b0c3c34b.8e94"
+            ]
+        ]
+    },
+    {
+        "id": "853fd41f.fb4a28",
+        "type": "ui_template",
+        "z": "9dea0b26.bbbe98",
+        "group": "1df37c54.681d74",
+        "name": "BLE icon",
+        "order": 1,
+        "width": 1,
+        "height": 1,
+        "format": "<div>\n<ng-md-icon ng-if=\"msg.payload === 'connected'\" icon=\"bluetooth\" size=\"40\"></ng-md-icon>\n<ng-md-icon ng-if=\"msg.payload === 'disconnected'\" icon=\"bluetooth_disabled\" size=\"40\"></ng-md-icon>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 1520,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "96f0c2.6fd37f4",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "connection",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1330,
+        "y": 560,
+        "wires": [
+            [
+                "853fd41f.fb4a28"
+            ]
+        ]
+    },
+    {
+        "id": "b79bbad8.1ee5f8",
+        "type": "Generic BLE in",
+        "z": "9dea0b26.bbbe98",
+        "name": "Grainfather Read",
+        "genericBle": "3f80edac.961f72",
+        "useString": false,
+        "notification": true,
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "b3f2ec24.29c96",
+                "24c60883.250118"
             ]
         ]
     }

@@ -180,29 +180,11 @@
         "characteristics": []
     },
     {
-        "id": "9042231b.b7792",
+        "id": "406b755.e721a8c",
         "type": "ui_spacer",
         "name": "spacer",
         "group": "1df37c54.681d74",
         "order": 4,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "7da3232e.21658c",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "1df37c54.681d74",
-        "order": 6,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "6e58fd08.04beb4",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "1df37c54.681d74",
-        "order": 7,
         "width": 1,
         "height": 1
     },
@@ -1340,7 +1322,7 @@
         "order": 1,
         "width": 1,
         "height": 1,
-        "format": "<div>\n<ng-md-icon ng-if=\"msg.payload === 'connected'\" icon=\"bluetooth\" size=\"40\"></ng-md-icon>\n<ng-md-icon ng-if=\"msg.payload === 'disconnected'\" icon=\"bluetooth_disabled\" size=\"40\"></ng-md-icon>\n</div>",
+        "format": "<div>\n<ng-md-icon ng-if=\"msg.payload === 'connected'\" icon=\"bluetooth\" size=\"40\"></ng-md-icon>\n<!-- <ng-md-icon ng-if=\"msg.payload === 'disconnected'\" icon=\"bluetooth_disabled\" size=\"40\"></ng-md-icon> -->\n</div>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -1727,6 +1709,58 @@
         "y": 680,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "9f4f2aaf.39d9a8",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Arrow Up",
+        "group": "1df37c54.681d74",
+        "order": 6,
+        "width": 1,
+        "height": 1,
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#595959",
+        "icon": "expand_less",
+        "payload": "U",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2570,
+        "y": 660,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "b178a5fb.a4ab68",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Arrow Down",
+        "group": "1df37c54.681d74",
+        "order": 7,
+        "width": 1,
+        "height": 1,
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#595959",
+        "icon": "expand_more",
+        "payload": "D",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2600,
+        "y": 720,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
         ]
     }
 ]

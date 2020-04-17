@@ -1,8 +1,8 @@
-Red Connect
+Node Red GFConnect
 ===========
 
 ### About
-Red Connect is a Node-RED flow for connecting with the Grainfather Connect (G30) brewing system.
+Node Red GFConnect is a Node-RED flow for connecting with the Grainfather Connect (G30) brewing system.
 
 ### Dependencies
 * node-red-dashboard

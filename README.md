@@ -4,6 +4,14 @@ Node Red GFConnect
 ### About
 Node Red GFConnect is a Node-RED flow for connecting with the Grainfather Connect (G30) brewing system.
 
+<img src="pictures/GFConnectMainControl.png">
+
+The following features are currently supported:
+* Temperature control
+* Pump control
+* Heating power control
+* Timer status
+
 ### Dependencies
 * node-red-dashboard
 * node-red-contrib-ui-level

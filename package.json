@@ -1,6 +1,6 @@
 {
     "name": "RedConnect",
-    "description": "A Node-RED Project for connecting with Grainfather Connect",
+    "description": "A Node-RED Project for connecting with Grainfather Connect brew system",
     "version": "0.0.1",
     "dependencies": {
         "node-red-contrib-generic-ble": "3.1.0",

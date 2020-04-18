@@ -555,7 +555,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Temperature",
-        "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\nnode.send([{'payload':targetTemp},null, null]);\nnode.send([null,{'payload':currentTemp}, null]);\n\nvar payload = {};\ntemperature_unit = flow.get('temperature_unit');\nif(temperature_unit === 'F') {\n    targetTemp = (targetTemp * 9 / 5) + 32;\n    currentTemp = (currentTemp * 9 / 5) + 32;\n}\n\npayload.temperature_unit = temperature_unit;\npayload.targetTemp = Number(targetTemp).toFixed(0);\npayload.currentTemp = Number(currentTemp).toFixed(1);\n\nmsg.payload = payload;\nnode.send([null, null, msg]);\n//return msg;",
+        "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\n// Grainfather set target temp to 120 °C during boil\nif(targetTemp > 100.0) {\n    targetTemp = 100.0;\n}\nnode.send([{'payload':targetTemp},null, null]);\nnode.send([null,{'payload':currentTemp}, null]);\n\nvar payload = {};\ntemperature_unit = flow.get('temperature_unit');\nif(temperature_unit === 'F') {\n    targetTemp = (targetTemp * 9 / 5) + 32;\n    currentTemp = (currentTemp * 9 / 5) + 32;\n}\n\npayload.temperature_unit = temperature_unit;\npayload.targetTemp = Number(targetTemp).toFixed(0);\npayload.currentTemp = Number(currentTemp).toFixed(1);\n\nmsg.payload = payload;\nnode.send([null, null, msg]);\n//return msg;",
         "outputs": 3,
         "noerr": 0,
         "x": 1960,
@@ -1456,26 +1456,6 @@
         ]
     },
     {
-        "id": "a3758cf5.99919",
-        "type": "inject",
-        "z": "9dea0b26.bbbe98",
-        "name": "Get Firmware version",
-        "topic": "",
-        "payload": "X",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 2600,
-        "y": 440,
-        "wires": [
-            [
-                "bce0ab71.378748"
-            ]
-        ]
-    },
-    {
         "id": "8a41ea03.659918",
         "type": "inject",
         "z": "9dea0b26.bbbe98",
@@ -1487,28 +1467,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2600,
-        "y": 480,
-        "wires": [
-            [
-                "bce0ab71.378748"
-            ]
-        ]
-    },
-    {
-        "id": "c9d8c036.cb531",
-        "type": "inject",
-        "z": "9dea0b26.bbbe98",
-        "name": "Get Controller Voltage And Units",
-        "topic": "",
-        "payload": "g",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 2530,
-        "y": 540,
+        "x": 2880,
+        "y": 400,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1913,6 +1873,97 @@
         "wires": [
             [
                 "a8a28b0b.dc3ba8"
+            ]
+        ]
+    },
+    {
+        "id": "5ff76da9.ada754",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Simple test recipe",
+        "func": "var testRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2480,
+        "y": 240,
+        "wires": [
+            [
+                "46b9479a.5828e8",
+                "6cb11f95.fde87"
+            ]
+        ]
+    },
+    {
+        "id": "b8df316.e3d76d",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2300,
+        "y": 240,
+        "wires": [
+            [
+                "5ff76da9.ada754"
+            ]
+        ]
+    },
+    {
+        "id": "46b9479a.5828e8",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 2680,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "23588e4f.8411d2",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Set boil temp 25°C",
+        "topic": "",
+        "payload": "E25.0,",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2890,
+        "y": 320,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "d25d9d1d.af548",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Set boil temp 99.5°C",
+        "topic": "",
+        "payload": "E99.5,",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2890,
+        "y": 360,
+        "wires": [
+            [
+                "bce0ab71.378748"
             ]
         ]
     }

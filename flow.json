@@ -1884,7 +1884,7 @@
         "func": "var testRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2480,
+        "x": 2510,
         "y": 240,
         "wires": [
             [
@@ -1923,7 +1923,7 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 2680,
+        "x": 2750,
         "y": 240,
         "wires": []
     },
@@ -1931,9 +1931,9 @@
         "id": "23588e4f.8411d2",
         "type": "inject",
         "z": "9dea0b26.bbbe98",
-        "name": "Set boil temp 25°C",
+        "name": "Set boil temp 30°C",
         "topic": "",
-        "payload": "E25.0,",
+        "payload": "E30.0,",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
@@ -1961,6 +1961,220 @@
         "onceDelay": 0.1,
         "x": 2890,
         "y": 360,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "f5fa6744.cee1a8",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Test recipe with all enabled",
+        "func": "var testRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2500,
+        "y": 280,
+        "wires": [
+            [
+                "46b9479a.5828e8",
+                "6cb11f95.fde87"
+            ]
+        ]
+    },
+    {
+        "id": "281973ec.2a2b1c",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2300,
+        "y": 280,
+        "wires": [
+            [
+                "f5fa6744.cee1a8"
+            ]
+        ]
+    },
+    {
+        "id": "3d45c775.350518",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Simple with delay recipe",
+        "func": "var testRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,1,0,\", // No water tratment alert, no sparge counter, no sparge alert, delayed session, do not skip start\n    \"SIMPLE DELAY\", // Name of recipe\n    \"0,2,0,0,\", // No hop stand, 2 boil additions, no boil power mode, no strike temp mode\n    \"7\", // Boil addition 1 at 7 mins remaining\n    \"3\", // Boil addition 1 at 3 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"4,60\" // Delay session 4:00\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2530,
+        "y": 320,
+        "wires": [
+            [
+                "6cb11f95.fde87",
+                "46b9479a.5828e8"
+            ]
+        ]
+    },
+    {
+        "id": "665526a1.19c698",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2300,
+        "y": 320,
+        "wires": [
+            [
+                "3d45c775.350518"
+            ]
+        ]
+    },
+    {
+        "id": "33b407ef.e8da98",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Delayed heat 4:00",
+        "topic": "",
+        "payload": "B4,60,",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2850,
+        "y": 480,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "c85f3ea5.c0a8d",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Sparge progress 1",
+        "topic": "",
+        "payload": "b$1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2850,
+        "y": 540,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "4acad1c8.831e7",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Sparge progress 2",
+        "topic": "",
+        "payload": "b$2",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2850,
+        "y": 580,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "25b410d4.baa87",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Cancel Timer",
+        "topic": "",
+        "payload": "C",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2830,
+        "y": 620,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "7d5e8b18.24e2f4",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Cancel or finish session",
+        "topic": "",
+        "payload": "F",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2820,
+        "y": 680,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "485448e6.85e698",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Interaction complete",
+        "topic": "",
+        "payload": "I",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2810,
+        "y": 720,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "ee14d066.4d833",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Reset recipe interrupted",
+        "topic": "",
+        "payload": "!",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2830,
+        "y": 780,
         "wires": [
             [
                 "bce0ab71.378748"

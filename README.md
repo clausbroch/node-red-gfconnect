@@ -10,7 +10,7 @@ The following features are currently supported:
 * Temperature control
 * Pump control
 * Heating power control
-* Timer status
+* Timer control (stop, pause, resume)
 
 ### Dependencies
 * node-red-dashboard

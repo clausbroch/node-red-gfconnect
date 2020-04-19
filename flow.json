@@ -180,7 +180,7 @@
         "characteristics": []
     },
     {
-        "id": "406b755.e721a8c",
+        "id": "f11c5aab.303e48",
         "type": "ui_spacer",
         "name": "spacer",
         "group": "1df37c54.681d74",
@@ -559,7 +559,7 @@
         "outputs": 3,
         "noerr": 0,
         "x": 1960,
-        "y": 920,
+        "y": 1040,
         "wires": [
             [],
             [],
@@ -578,13 +578,16 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Timer",
-        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nvar timerActive = Boolean(msg.parameters[0] === \"1\");\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(timerActive) {\n    timerLeftSecs = Number(msg.parameters[3]);\n    timerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\n    timerStartMins = Number(msg.parameters[2]);\n    timerLeftSecs = timerLeftSecs % 60;\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins < 0) {\n            timerLeftMins = 0;\n        }\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            displayStatic = \"none\";\n            displayFlashing = \"inline\";\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n    \n    timerTitle = \"Timer active\";\n}\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nconst payload = {'timertitle':timerTitle, 'timervalue':timerFormatted, 'static': displayStatic, 'flashing':displayFlashing};\nnode.send([null, null, null, null, {'payload':payload}]);\n\n//return msg;",
+        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            displayStatic = \"none\";\n            displayFlashing = \"inline\";\n            flow.set('timer_finished', true);\n        }\n        else {\n            flow.set('timer_finished', false);\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nif(timerActive) {\n    timerTitle = \"Timer active\";\n}\nif(timerPaused) {\n    timerTitle = \"Timer paused\";\n}\n\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nconst payload = {'timertitle':timerTitle, 'timervalue':timerFormatted, 'static': displayStatic, 'flashing':displayFlashing};\nnode.send([null, null, null, null, {'payload':payload}]);\n\n//return msg;",
         "outputs": 5,
         "noerr": 0,
         "x": 2080,
         "y": 660,
         "wires": [
-            [],
+            [
+                "e43ed08c.e0f55",
+                "8b92ed08.f1527"
+            ],
             [],
             [],
             [],
@@ -609,7 +612,7 @@
         "outputs": 8,
         "noerr": 0,
         "x": 1850,
-        "y": 1080,
+        "y": 1200,
         "wires": [
             [
                 "a8a972b4.9eef5"
@@ -654,7 +657,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2430,
-        "y": 1120,
+        "y": 1240,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -680,7 +683,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2430,
-        "y": 1040,
+        "y": 1160,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -724,8 +727,8 @@
         "tickmode": "off",
         "peakmode": false,
         "peaktime": 3000,
-        "x": 2290,
-        "y": 820,
+        "x": 2270,
+        "y": 940,
         "wires": []
     },
     {
@@ -733,17 +736,20 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Status (W)",
-        "func": "var heatPowerPct = Number(msg.parameters[0]);\nvar timerPaused = Boolean(msg.parameters[1] === \"1\");\nvar stepMashMode = Boolean(msg.parameters[2] === \"1\");\nvar recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nvar manualPower = Boolean(msg.parameters[4] === \"1\");\nvar spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\n//return msg;",
+        "func": "const heatPowerPct = Number(msg.parameters[0]);\nconst timerPaused = Boolean(msg.parameters[1] === \"1\");\nconst stepMashMode = Boolean(msg.parameters[2] === \"1\");\nconst recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nconst manualPower = Boolean(msg.parameters[4] === \"1\");\nconst spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nflow.set('timer_paused', timerPaused);\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\n//return msg;",
         "outputs": 6,
         "noerr": 0,
-        "x": 1990,
-        "y": 820,
+        "x": 1970,
+        "y": 940,
         "wires": [
             [
                 "36967178.bc09fe",
                 "f693bae1.855238"
             ],
-            [],
+            [
+                "e43ed08c.e0f55",
+                "8b92ed08.f1527"
+            ],
             [],
             [],
             [],
@@ -770,8 +776,8 @@
         "label": "Heat",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 2390,
-        "y": 780,
+        "x": 2370,
+        "y": 900,
         "wires": []
     },
     {
@@ -782,8 +788,8 @@
         "func": "if(msg.payload === 0) {\n    msg.payload = \"Off\";\n}\nelse {\n    msg.payload = msg.payload + \"%\";\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2220,
-        "y": 780,
+        "x": 2200,
+        "y": 900,
         "wires": [
             [
                 "a49530b4.09b39"
@@ -809,7 +815,7 @@
         "repair": false,
         "outputs": 2,
         "x": 2090,
-        "y": 1040,
+        "y": 1160,
         "wires": [
             [
                 "8bb616a.62b5ee8"
@@ -844,7 +850,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1020,
+        "y": 1140,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -876,7 +882,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1060,
+        "y": 1180,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -902,7 +908,7 @@
         "repair": false,
         "outputs": 2,
         "x": 2090,
-        "y": 1120,
+        "y": 1240,
         "wires": [
             [
                 "bb4f926c.9206e"
@@ -937,7 +943,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1100,
+        "y": 1220,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -969,7 +975,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1140,
+        "y": 1260,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1141,8 +1147,7 @@
         "wires": [
             [
                 "5e825722.30d588",
-                "fbd65c91.f4f7a",
-                "d1a86442.7b18f8"
+                "fbd65c91.f4f7a"
             ]
         ]
     },
@@ -1213,14 +1218,15 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n}\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_finished', false);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 450,
         "y": 240,
         "wires": [
             [
-                "96bf6cb3.8e68c"
+                "96bf6cb3.8e68c",
+                "d1a86442.7b18f8"
             ]
         ]
     },
@@ -1328,7 +1334,7 @@
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 1520,
-        "y": 500,
+        "y": 480,
         "wires": [
             []
         ]
@@ -1385,7 +1391,7 @@
         "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str;\n}\n\nvar command = Buffer.from(pad(msg.payload)).toString('hex');\n\nvar payload = {\"0003cdd200001000800000805f9b0131\":command};\nmsg.payload = payload;\n//msg.payload = JSON.stringify(payload);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3060,
+        "x": 3320,
         "y": 980,
         "wires": [
             [
@@ -1400,7 +1406,7 @@
         "z": "9dea0b26.bbbe98",
         "name": "",
         "genericBle": "3f80edac.961f72",
-        "x": 3430,
+        "x": 3690,
         "y": 1000,
         "wires": []
     },
@@ -1414,7 +1420,7 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3310,
+        "x": 3570,
         "y": 940,
         "wires": []
     },
@@ -1467,11 +1473,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2880,
-        "y": 400,
+        "x": 3100,
+        "y": 220,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -1489,7 +1495,7 @@
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 2290,
-        "y": 940,
+        "y": 1060,
         "wires": [
             []
         ]
@@ -1502,8 +1508,8 @@
         "func": "msg.payload.forEach(sendCommand);\n\nfunction sendCommand(item) {\n  node.send([{'payload':item}]);\n}\n//return msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2670,
-        "y": 920,
+        "x": 2790,
+        "y": 940,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1564,7 +1570,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 3270,
+        "x": 3530,
         "y": 1000,
         "wires": [
             [
@@ -1626,8 +1632,8 @@
         "func": "var voltage = msg.parameters[0];\nvar units = msg.parameters[1];\n\nnode.send([{'payload':voltage},null]);\nnode.send([null,{'payload':units}]);\n\n//return msg;",
         "outputs": 2,
         "noerr": 0,
-        "x": 2050,
-        "y": 720,
+        "x": 1990,
+        "y": 800,
         "wires": [
             [],
             [
@@ -1647,8 +1653,8 @@
         "func": "if(msg.payload === '0') {\n    flow.set('temperature_unit', 'F');\n}\nelse {\n    flow.set('temperature_unit', 'C');\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2380,
-        "y": 740,
+        "x": 2320,
+        "y": 820,
         "wires": [
             []
         ]
@@ -1667,7 +1673,7 @@
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 2550,
-        "y": 680,
+        "y": 660,
         "wires": [
             []
         ]
@@ -1690,8 +1696,8 @@
         "payload": "U",
         "payloadType": "str",
         "topic": "",
-        "x": 2660,
-        "y": 820,
+        "x": 2920,
+        "y": 840,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1716,8 +1722,8 @@
         "payload": "D",
         "payloadType": "str",
         "topic": "",
-        "x": 2670,
-        "y": 860,
+        "x": 2930,
+        "y": 880,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1784,8 +1790,8 @@
             "b2f36278.67c2b",
             "9ba75d3a.6302f"
         ],
-        "x": 315,
-        "y": 340,
+        "x": 575,
+        "y": 280,
         "wires": []
     },
     {
@@ -1797,7 +1803,7 @@
             "d1a86442.7b18f8"
         ],
         "x": 1915,
-        "y": 980,
+        "y": 1100,
         "wires": [
             [
                 "bb2dab1a.27cec8",
@@ -1816,8 +1822,8 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "--",
-                "tot": "str"
+                "to": "{\"timertitle\":\" \",\"timervalue\":\"--\",\"static\":\"inline\",\"flashing\":\"none\"}",
+                "tot": "json"
             }
         ],
         "action": "",
@@ -1826,7 +1832,7 @@
         "to": "",
         "reg": false,
         "x": 2380,
-        "y": 640,
+        "y": 700,
         "wires": [
             [
                 "85deae7f.7cd6b"
@@ -1841,11 +1847,13 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2255,
-        "y": 640,
+        "x": 2095,
+        "y": 720,
         "wires": [
             [
-                "e17eb87a.f8de18"
+                "e17eb87a.f8de18",
+                "8b92ed08.f1527",
+                "e43ed08c.e0f55"
             ]
         ]
     },
@@ -1869,7 +1877,7 @@
         "to": "",
         "reg": false,
         "x": 2080,
-        "y": 980,
+        "y": 1100,
         "wires": [
             [
                 "a8a28b0b.dc3ba8"
@@ -1939,11 +1947,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2890,
-        "y": 320,
+        "x": 3110,
+        "y": 140,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -1959,11 +1967,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2890,
-        "y": 360,
+        "x": 3110,
+        "y": 180,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -2053,11 +2061,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2850,
-        "y": 480,
+        "x": 3110,
+        "y": 300,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -2073,11 +2081,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2850,
-        "y": 540,
+        "x": 3110,
+        "y": 360,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -2093,11 +2101,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2850,
-        "y": 580,
+        "x": 3110,
+        "y": 400,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -2113,11 +2121,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2830,
-        "y": 620,
+        "x": 3090,
+        "y": 440,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -2133,11 +2141,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2820,
-        "y": 680,
+        "x": 3100,
+        "y": 500,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -2153,11 +2161,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2810,
-        "y": 720,
+        "x": 3090,
+        "y": 540,
         "wires": [
             [
-                "bce0ab71.378748"
+                "bc61b8e9.017228"
             ]
         ]
     },
@@ -2173,11 +2181,159 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2830,
+        "x": 3110,
+        "y": 600,
+        "wires": [
+            [
+                "bc61b8e9.017228"
+            ]
+        ]
+    },
+    {
+        "id": "2aac4ac.48a77b6",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Stop",
+        "group": "8225a265.09c9b",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Stop",
+        "tooltip": "",
+        "color": "{{textcolour}}",
+        "bgcolor": "{{colour}}",
+        "icon": "stop",
+        "payload": "C",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2570,
         "y": 780,
         "wires": [
             [
+                "1e826a71.5684b6"
+            ]
+        ]
+    },
+    {
+        "id": "cf702677.f7dfa8",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pause/Resume",
+        "group": "8225a265.09c9b",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "{{label}}",
+        "tooltip": "",
+        "color": "{{textcolour}}",
+        "bgcolor": "{{colour}}",
+        "icon": "pause",
+        "payload": "G",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2600,
+        "y": 740,
+        "wires": [
+            [
+                "1e826a71.5684b6"
+            ]
+        ]
+    },
+    {
+        "id": "bc61b8e9.017228",
+        "type": "link out",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "bad838db.5dd1c8"
+        ],
+        "x": 3380,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "bad838db.5dd1c8",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "bc61b8e9.017228"
+        ],
+        "x": 3175,
+        "y": 920,
+        "wires": [
+            [
                 "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "e43ed08c.e0f55",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Adjust stop button",
+        "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#336633\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2350,
+        "y": 780,
+        "wires": [
+            [
+                "2aac4ac.48a77b6"
+            ]
+        ]
+    },
+    {
+        "id": "8b92ed08.f1527",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Adjust pause/resume button",
+        "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nmsg.label = \"Pause\";\nvar icon = \"pause\";\nif(timerPaused) {\n    msg.label = \"Resume\";\n    icon = \"play_arrow\";\n}\nconst ui_control = {'icon':icon};\nnode.send({'ui_control':ui_control});\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#336633\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2380,
+        "y": 740,
+        "wires": [
+            [
+                "cf702677.f7dfa8"
+            ]
+        ]
+    },
+    {
+        "id": "1e826a71.5684b6",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Timer enabled?",
+        "func": "if(flow.get('timer_active') || flow.get('timer_paused')) {\n    if(flow.get('timer_finished')) {\n        msg.payload = \"C\"; // Pausing the timer when 0:00 causes wrap-around\n    }\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2840,
+        "y": 760,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "e9be2772.ca32c8",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Reset controller",
+        "topic": "",
+        "payload": "Z",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3080,
+        "y": 60,
+        "wires": [
+            [
+                "bc61b8e9.017228"
             ]
         ]
     }

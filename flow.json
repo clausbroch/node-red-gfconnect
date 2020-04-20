@@ -1329,7 +1329,7 @@
         "order": 1,
         "width": 1,
         "height": 1,
-        "format": "<div>\n<ng-md-icon ng-if=\"msg.payload === 'connected'\" icon=\"bluetooth\" size=\"40\"></ng-md-icon>\n<!-- <ng-md-icon ng-if=\"msg.payload === 'disconnected'\" icon=\"bluetooth_disabled\" size=\"40\"></ng-md-icon> -->\n</div>",
+        "format": "<div>\n<ng-md-icon ng-if=\"msg.payload === 'connected'\" icon=\"bluetooth\" size=\"36\"></ng-md-icon>\n<!-- <ng-md-icon ng-if=\"msg.payload === 'disconnected'\" icon=\"bluetooth_disabled\" size=\"40\"></ng-md-icon> -->\n</div>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",

@@ -11,11 +11,22 @@ The following features are currently supported:
 * Pump control
 * Heating power control
 * Timer control (stop, pause, resume)
+* Push notifications via Pushover
 
 ### Dependencies
 * node-red-dashboard
 * node-red-contrib-ui-level
 * node-red-contrib-generic-ble
+
+### Configuring Push Notifications
+
+<img src="pictures/GFConnectSettings.png">
+
+GF Connects support push notifications which are delivered via the Pushover App.
+
+To set up push notifications for brew events, e.g. when a timer expires, you will need to enter your Pushover user key and API key into the Notification settings. You will need to register for a new API Key in Pushover. It is also possible to use a group key instead of a user key so more than one user can receive the notifications.
+
+The Pushover keys are avaliable through the [Pushover Dashboard](https://pushover.net/)
 
 ### Contributions
 * [Claus Broch](https://github.com/clausbroch) - Main author of the Node RED flow for connecting to Grainfather

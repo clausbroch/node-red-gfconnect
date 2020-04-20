@@ -189,6 +189,17 @@
         "height": 1
     },
     {
+        "id": "486b3eb4.b3723",
+        "type": "ui_group",
+        "z": "",
+        "name": "Notifications",
+        "tab": "48a38e5e.ad6eb",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
         "id": "b3f2ec24.29c96",
         "type": "debug",
         "z": "9dea0b26.bbbe98",
@@ -578,7 +589,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Timer",
-        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            displayStatic = \"none\";\n            displayFlashing = \"inline\";\n            flow.set('timer_finished', true);\n        }\n        else {\n            flow.set('timer_finished', false);\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nif(timerActive) {\n    timerTitle = \"Timer active\";\n}\nif(timerPaused) {\n    timerTitle = \"Timer paused\";\n}\n\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nconst payload = {'timertitle':timerTitle, 'timervalue':timerFormatted, 'static': displayStatic, 'flashing':displayFlashing};\nnode.send([null, null, null, null, {'payload':payload}]);\n\n//return msg;",
+        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerElapsed = false;\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            displayStatic = \"none\";\n            displayFlashing = \"inline\";\n            timerElapsed = true;\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nflow.set('timer_elapsed', timerElapsed);\n\nif(timerActive) {\n    timerTitle = \"Timer active\";\n}\nif(timerPaused) {\n    timerTitle = \"Timer paused\";\n}\nif(timerElapsed) {\n    timerTitle = \"Timer elapsed\";\n}\n\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nconst payload = {'timertitle':timerTitle, 'timervalue':timerFormatted, 'static': displayStatic, 'flashing':displayFlashing, 'timerelapsed':timerElapsed};\nnode.send([null, null, null, null, {'payload':payload}]);\n\n//return msg;",
         "outputs": 5,
         "noerr": 0,
         "x": 2080,
@@ -592,7 +603,8 @@
             [],
             [],
             [
-                "85deae7f.7cd6b"
+                "85deae7f.7cd6b",
+                "5ed27c8f.9e9694"
             ]
         ],
         "outputLabels": [
@@ -1137,7 +1149,7 @@
         "name": "Initialize",
         "topic": "",
         "payload": "",
-        "payloadType": "date",
+        "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": true,
@@ -1147,7 +1159,8 @@
         "wires": [
             [
                 "5e825722.30d588",
-                "fbd65c91.f4f7a"
+                "fbd65c91.f4f7a",
+                "e2a4d62a.77bcd8"
             ]
         ]
     },
@@ -1218,7 +1231,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_finished', false);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 450,
@@ -1226,7 +1239,10 @@
         "wires": [
             [
                 "96bf6cb3.8e68c",
-                "d1a86442.7b18f8"
+                "d1a86442.7b18f8",
+                "423b9d6f.4141d4",
+                "e49595ca.f39708",
+                "b610ed95.9bd7e"
             ]
         ]
     },
@@ -1847,7 +1863,7 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2095,
+        "x": 2015,
         "y": 720,
         "wires": [
             [
@@ -2306,7 +2322,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Timer enabled?",
-        "func": "if(flow.get('timer_active') || flow.get('timer_paused')) {\n    if(flow.get('timer_finished')) {\n        msg.payload = \"C\"; // Pausing the timer when 0:00 causes wrap-around\n    }\n    return msg;\n}",
+        "func": "if(flow.get('timer_active') || flow.get('timer_paused')) {\n    if(flow.get('timer_elapsed')) {\n        msg.payload = \"T\"; // Pausing the timer when 0:00 causes wrap-around\n    }\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 2840,
@@ -2335,6 +2351,382 @@
             [
                 "bc61b8e9.017228"
             ]
+        ]
+    },
+    {
+        "id": "5ed27c8f.9e9694",
+        "type": "rbe",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload.timerelapsed",
+        "x": 2550,
+        "y": 620,
+        "wires": [
+            [
+                "8a3dab2c.c628e8"
+            ]
+        ]
+    },
+    {
+        "id": "8a3dab2c.c628e8",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Timer notification",
+        "func": "if(msg.payload.timerelapsed) {\n    const pushEnabled = (flow.get('pushover_enabled'))||false;\n    if(pushEnabled) {\n        const key = flow.get('pushover_key');\n        const token = flow.get('pushover_token');\n        if(key && token && key.length && token.length) {\n            msg.headers = {};\n            msg.headers['Content-type'] = 'application/json';\n            msg.url = \"https://api.pushover.net/1/messages.json\";\n            const payload =  {\n                \"token\": token,\n                \"user\": key,\n                \"title\": \"GF Connect\",\n                \"message\": msg.payload.timertitle };\n            msg.payload = JSON.stringify(payload);\n\n            return msg;\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2830,
+        "y": 680,
+        "wires": [
+            [
+                "8aaa732b.a7ea2"
+            ]
+        ]
+    },
+    {
+        "id": "5f6a18e9.fae918",
+        "type": "ui_switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pushover enabled",
+        "label": "Enable Pushover notifications",
+        "tooltip": "",
+        "group": "486b3eb4.b3723",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 470,
+        "y": 460,
+        "wires": [
+            [
+                "2fc03f42.298c2"
+            ]
+        ]
+    },
+    {
+        "id": "423b9d6f.4141d4",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "pushover_enabled",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 460,
+        "wires": [
+            [
+                "5f6a18e9.fae918"
+            ]
+        ]
+    },
+    {
+        "id": "5bb09d60.6b9a14",
+        "type": "ui_text_input",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pushover User Key",
+        "label": "User/Group Key [use RETURN to save]",
+        "tooltip": "",
+        "group": "486b3eb4.b3723",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "password",
+        "delay": "0",
+        "topic": "",
+        "x": 470,
+        "y": 540,
+        "wires": [
+            [
+                "aa059608.b2a398"
+            ]
+        ]
+    },
+    {
+        "id": "e49595ca.f39708",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "pushover_key",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 540,
+        "wires": [
+            [
+                "5bb09d60.6b9a14"
+            ]
+        ]
+    },
+    {
+        "id": "aa4337fb.bb1708",
+        "type": "ui_text_input",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pushover API Token",
+        "label": "Application Token [RETURN to save]",
+        "tooltip": "",
+        "group": "486b3eb4.b3723",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "password",
+        "delay": "0",
+        "topic": "",
+        "x": 480,
+        "y": 580,
+        "wires": [
+            [
+                "3c324e7a.1b7882"
+            ]
+        ]
+    },
+    {
+        "id": "b610ed95.9bd7e",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "pushover_token",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 580,
+        "wires": [
+            [
+                "aa4337fb.bb1708"
+            ]
+        ]
+    },
+    {
+        "id": "2fc03f42.298c2",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pushover_enabled",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa059608.b2a398",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pushover_key",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c324e7a.1b7882",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pushover_token",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8aaa732b.a7ea2",
+        "type": "http request",
+        "z": "9dea0b26.bbbe98",
+        "name": "Send pushover notification",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 3080,
+        "y": 680,
+        "wires": [
+            [
+                "d1bb908b.cfcd6"
+            ]
+        ]
+    },
+    {
+        "id": "ff7937eb.066718",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Test Message",
+        "group": "486b3eb4.b3723",
+        "order": 9,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "Send Test Message",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2340,
+        "y": 560,
+        "wires": [
+            [
+                "bbc9daad.bd2c98"
+            ]
+        ]
+    },
+    {
+        "id": "bbc9daad.bd2c98",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"timerelapsed\":\"true\",\"timertitle\":\"Test message\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2520,
+        "y": 560,
+        "wires": [
+            [
+                "8a3dab2c.c628e8"
+            ]
+        ]
+    },
+    {
+        "id": "d1bb908b.cfcd6",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pushower status",
+        "func": "if (msg.payload.status) {\n    msg.payload = \"Status: OK\";\n}\nelse {\n    msg.payload = \"Error: \" + msg.payload.errors[0];\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3310,
+        "y": 680,
+        "wires": [
+            [
+                "e2a4d62a.77bcd8"
+            ]
+        ]
+    },
+    {
+        "id": "e2a4d62a.77bcd8",
+        "type": "ui_template",
+        "z": "9dea0b26.bbbe98",
+        "group": "486b3eb4.b3723",
+        "name": "Pushover status",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 460,
+        "y": 620,
+        "wires": [
+            []
         ]
     }
 ]

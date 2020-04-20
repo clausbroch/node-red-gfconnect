@@ -22,4 +22,4 @@ The following features are currently supported:
 * [Kingpulsar](https://github.com/kingpulsar) - This project wouldn't have been possible without his reverse engineering of the Grainfather bluetooth protocol - See [kingpulsar/Grainfather-Bluetooth-Protocol](https://github.com/kingpulsar/Grainfather-Bluetooth-Protocol) for more information
 
 ### License
-This project is licensed under the MIT License - see the [LICENSE](License) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

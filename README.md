@@ -14,9 +14,10 @@ The following features are currently supported:
 * Push notifications via Pushover
 
 ### Dependencies
-* node-red-dashboard
-* node-red-contrib-ui-level
-* node-red-contrib-generic-ble
+* node-red-dashboard v3.1.0
+* node-red-contrib-ui-level v0.1.27
+* node-red-contrib-generic-ble v2.19.4
+* node-red-node-rbe v0.2.8
 
 ### Configuring Push Notifications
 

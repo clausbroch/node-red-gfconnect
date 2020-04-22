@@ -7,6 +7,88 @@
         "info": ""
     },
     {
+        "id": "4d59d092.50859",
+        "type": "subflow",
+        "name": "List Files",
+        "info": "# List files\n\nWill list files in a directory.\n\nPath can be set in `msg.payload` or by setting the `DIRECTORY` environment variable.\n\nExtensions can be filtered by settings the `EXTENSIONS` environment variable to an Array of extensions.\n",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "3e5f9707.3cbcf8"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 840,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "e6de39b0.e2c978",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "DIRECTORY",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "EXTENSIONS",
+                "type": "json",
+                "value": "[]"
+            }
+        ]
+    },
+    {
+        "id": "e3bbcfee.5583",
+        "type": "subflow",
+        "name": "File Upload",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 1140,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "91064a7c.e7d998",
+                        "port": 0
+                    },
+                    {
+                        "id": "623624a2.675eac",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "UPLOAD_DIR",
+                "type": "str",
+                "value": "."
+            },
+            {
+                "name": "EXTENSIONS",
+                "type": "json",
+                "value": "[]"
+            }
+        ],
+        "color": "#DDAA99",
+        "outputLabels": [
+            "fileWritten"
+        ]
+    },
+    {
         "id": "355d7d12.6d7412",
         "type": "ui_tab",
         "z": "",
@@ -198,6 +280,27 @@
         "disp": true,
         "width": "6",
         "collapse": false
+    },
+    {
+        "id": "6500c5a.452263c",
+        "type": "ui_group",
+        "z": "",
+        "name": "File upload",
+        "tab": "930c0a18.6b4938",
+        "order": 4,
+        "disp": true,
+        "width": "9",
+        "collapse": false
+    },
+    {
+        "id": "930c0a18.6b4938",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Brewfather",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
     },
     {
         "id": "b3f2ec24.29c96",
@@ -1404,7 +1507,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format GF command",
-        "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str;\n}\n\nvar command = Buffer.from(pad(msg.payload)).toString('hex');\n\nvar payload = {\"0003cdd200001000800000805f9b0131\":command};\nmsg.payload = payload;\n//msg.payload = JSON.stringify(payload);\n\nreturn msg;",
+        "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str.substr(0, 19);\n}\n\nvar command = Buffer.from(pad(msg.payload)).toString('hex');\n\nvar payload = {\"0003cdd200001000800000805f9b0131\":command};\nmsg.payload = payload;\n//msg.payload = JSON.stringify(payload);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 3320,
@@ -2728,5 +2831,1000 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "c791c4b0.9df1b8",
+        "type": "json",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 2630,
+        "y": 1380,
+        "wires": [
+            [
+                "ad8c0cc9.0c17c",
+                "105c2bbe.fec7b4"
+            ]
+        ]
+    },
+    {
+        "id": "61bfaf7a.88de3",
+        "type": "file in",
+        "z": "9dea0b26.bbbe98",
+        "name": "Simple Test batch",
+        "filename": "/home/pi/gfconnect-files/Brewfather_BATCH_16_SimpleTest_20200421.json",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 2450,
+        "y": 1380,
+        "wires": [
+            [
+                "c791c4b0.9df1b8"
+            ]
+        ]
+    },
+    {
+        "id": "ee16d1ca.98a71",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2260,
+        "y": 1380,
+        "wires": [
+            [
+                "61bfaf7a.88de3"
+            ]
+        ]
+    },
+    {
+        "id": "ad8c0cc9.0c17c",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 2810,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "105c2bbe.fec7b4",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode batch",
+        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\n\nvar boilTime = recipe.boilTime;\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,0,0,\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString();\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString();\n}\n\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2860,
+        "y": 1380,
+        "wires": [
+            [
+                "1abae4a5.1b726b",
+                "6cb11f95.fde87"
+            ]
+        ]
+    },
+    {
+        "id": "1abae4a5.1b726b",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 3090,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "82974fc4.a2c37",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2240,
+        "y": 1420,
+        "wires": [
+            [
+                "766fcf49.37bc8"
+            ]
+        ]
+    },
+    {
+        "id": "766fcf49.37bc8",
+        "type": "file in",
+        "z": "9dea0b26.bbbe98",
+        "name": "Full Test batch",
+        "filename": "/home/pi/gfconnect-files/Brewfather_BATCH_17_FullTest_20200421.json",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 2440,
+        "y": 1420,
+        "wires": [
+            [
+                "c791c4b0.9df1b8"
+            ]
+        ]
+    },
+    {
+        "id": "5bbc7e72.79d51",
+        "type": "exec",
+        "z": "4d59d092.50859",
+        "command": "ls",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 510,
+        "y": 60,
+        "wires": [
+            [
+                "e6de39b0.e2c978"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e6de39b0.e2c978",
+        "type": "change",
+        "z": "4d59d092.50859",
+        "name": "split and filter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "(\t    $files := [$split(payload, '\\n')[$ != \"\"]];\t    $count($env('EXTENSIONS')) = 0 ? [$files] : [$files[$split($, '.')[-1] in $env('EXTENSIONS')]];\t)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3e5f9707.3cbcf8",
+        "type": "switch",
+        "z": "4d59d092.50859",
+        "name": "",
+        "property": "$env('DIRECTORY')",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 210,
+        "y": 80,
+        "wires": [
+            [
+                "5bbc7e72.79d51"
+            ],
+            [
+                "243593fa.446c6c"
+            ]
+        ]
+    },
+    {
+        "id": "243593fa.446c6c",
+        "type": "change",
+        "z": "4d59d092.50859",
+        "name": "DIRECTORY",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "DIRECTORY",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 120,
+        "wires": [
+            [
+                "5bbc7e72.79d51"
+            ]
+        ]
+    },
+    {
+        "id": "8e9436.c8ad4bc8",
+        "type": "http in",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "url": "/fileupload",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 440,
+        "wires": [
+            [
+                "a5fd22db.a1ff",
+                "eda77493.160fa8"
+            ]
+        ]
+    },
+    {
+        "id": "f542afa3.fe31b",
+        "type": "http response",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 850,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "a615d763.141108",
+        "type": "subflow:4d59d092.50859",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "env": [
+            {
+                "name": "DIRECTORY",
+                "type": "env",
+                "value": "UPLOAD_DIR"
+            },
+            {
+                "name": "EXTENSIONS",
+                "type": "env",
+                "value": "EXTENSIONS"
+            }
+        ],
+        "x": 380,
+        "y": 140,
+        "wires": [
+            [
+                "18e2d7a2.1f11e8"
+            ]
+        ]
+    },
+    {
+        "id": "c72fdd04.282d1",
+        "type": "link in",
+        "z": "e3bbcfee.5583",
+        "name": "refreshFileDropdown",
+        "links": [
+            "252d7ee3.50d102",
+            "810b83f8.c78a8"
+        ],
+        "x": 75,
+        "y": 140,
+        "wires": [
+            [
+                "a4d2786.8445e88"
+            ]
+        ]
+    },
+    {
+        "id": "814a541f.60fb38",
+        "type": "change",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "selectedFile",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 960,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a5fd22db.a1ff",
+        "type": "change",
+        "z": "e3bbcfee.5583",
+        "name": "getFile",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "$env('UPLOAD_DIR')  & '/' & req.files[0].originalname",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "req.files[0].buffer",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "7cccdb4c.b752b4"
+            ]
+        ]
+    },
+    {
+        "id": "d39731ee.6d138",
+        "type": "file",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "x": 830,
+        "y": 340,
+        "wires": [
+            [
+                "91064a7c.e7d998"
+            ]
+        ]
+    },
+    {
+        "id": "4b0b687b.777528",
+        "type": "inject",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "a4d2786.8445e88"
+            ]
+        ]
+    },
+    {
+        "id": "79d99fc3.113a7",
+        "type": "change",
+        "z": "e3bbcfee.5583",
+        "name": "getSelectedFile",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "$env('UPLOAD_DIR')  & '/' & $flowContext('selectedFile')",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Delete File ?",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 280,
+        "y": 220,
+        "wires": [
+            [
+                "a750d179.d77f1"
+            ]
+        ]
+    },
+    {
+        "id": "623624a2.675eac",
+        "type": "file",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "delete",
+        "x": 830,
+        "y": 220,
+        "wires": [
+            [
+                "810b83f8.c78a8"
+            ]
+        ]
+    },
+    {
+        "id": "a750d179.d77f1",
+        "type": "ui_toast",
+        "z": "e3bbcfee.5583",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "Cancel",
+        "topic": "",
+        "name": "",
+        "x": 470,
+        "y": 220,
+        "wires": [
+            [
+                "fb09307c.e4454"
+            ]
+        ]
+    },
+    {
+        "id": "fb09307c.e4454",
+        "type": "switch",
+        "z": "e3bbcfee.5583",
+        "name": "OK ?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "OK",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 220,
+        "wires": [
+            [
+                "623624a2.675eac"
+            ]
+        ]
+    },
+    {
+        "id": "45106c33.4e35d4",
+        "type": "catch",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "scope": null,
+        "x": 120,
+        "y": 500,
+        "wires": [
+            [
+                "d51c2870.aabd78"
+            ]
+        ]
+    },
+    {
+        "id": "a833de2c.ad871",
+        "type": "ui_toast",
+        "z": "e3bbcfee.5583",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 530,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "d51c2870.aabd78",
+        "type": "change",
+        "z": "e3bbcfee.5583",
+        "name": "getError",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "error.message",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 500,
+        "wires": [
+            [
+                "a833de2c.ad871"
+            ]
+        ]
+    },
+    {
+        "id": "810b83f8.c78a8",
+        "type": "link out",
+        "z": "e3bbcfee.5583",
+        "name": "refreshAfterDelete",
+        "links": [
+            "c72fdd04.282d1"
+        ],
+        "x": 1135,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "252d7ee3.50d102",
+        "type": "link out",
+        "z": "e3bbcfee.5583",
+        "name": "refreshAfterUpload",
+        "links": [
+            "c72fdd04.282d1"
+        ],
+        "x": 1135,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "eda77493.160fa8",
+        "type": "change",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "'File ' & req.files[0].originalname & ' uploaded.'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "f542afa3.fe31b"
+            ]
+        ]
+    },
+    {
+        "id": "a4d2786.8445e88",
+        "type": "delay",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 190,
+        "y": 140,
+        "wires": [
+            [
+                "a615d763.141108"
+            ]
+        ]
+    },
+    {
+        "id": "c2346e4b.fa68e",
+        "type": "watch",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "files": "$(UPLOAD_DIR)",
+        "recursive": "",
+        "x": 140,
+        "y": 40,
+        "wires": [
+            [
+                "a4d2786.8445e88"
+            ]
+        ]
+    },
+    {
+        "id": "18e2d7a2.1f11e8",
+        "type": "change",
+        "z": "e3bbcfee.5583",
+        "name": "options",
+        "rules": [
+            {
+                "t": "set",
+                "p": "options",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cccdb4c.b752b4",
+        "type": "switch",
+        "z": "e3bbcfee.5583",
+        "name": "extensionAllowed ?",
+        "property": "$env('EXTENSIONS')",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "$split(filename, '.')[-1]",
+                "vt": "jsonata"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "d39731ee.6d138"
+            ],
+            [
+                "d3f6a96f.dd3868"
+            ]
+        ]
+    },
+    {
+        "id": "d3f6a96f.dd3868",
+        "type": "function",
+        "z": "e3bbcfee.5583",
+        "name": "Error",
+        "func": "node.error(`Error: only ${env.get('EXTENSIONS')} files are allowed.`, msg)\n",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 830,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "91064a7c.e7d998",
+        "type": "change",
+        "z": "e3bbcfee.5583",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 340,
+        "wires": [
+            [
+                "252d7ee3.50d102"
+            ]
+        ]
+    },
+    {
+        "id": "edc7b613.8fc7f8",
+        "type": "catch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "scope": null,
+        "x": 3460,
+        "y": 80,
+        "wires": [
+            [
+                "1ca757a6.27f6f8",
+                "f2849f20.9450f"
+            ]
+        ]
+    },
+    {
+        "id": "23c2c997.36a156",
+        "type": "ui_toast",
+        "z": "9dea0b26.bbbe98",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 3890,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "1ca757a6.27f6f8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "getError",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "error.message",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3660,
+        "y": 80,
+        "wires": [
+            [
+                "23c2c997.36a156"
+            ]
+        ]
+    },
+    {
+        "id": "8b08040.4b2ed",
+        "type": "http in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "url": "/brewfatherbatchupload",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 1980,
+        "y": 1520,
+        "wires": [
+            [
+                "b85ecacf.a49298",
+                "28602a88.72c406"
+            ]
+        ]
+    },
+    {
+        "id": "6c693001.8e7f7",
+        "type": "http response",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 2430,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "b399edae.cd45d",
+        "type": "ui_template",
+        "z": "9dea0b26.bbbe98",
+        "group": "6500c5a.452263c",
+        "name": "Upload Batch",
+        "order": 1,
+        "width": "9",
+        "height": "3",
+        "format": "<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input type=\"button\" value=\"Upload File\" onclick=\"uploadFile()\">\n    <progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>\n    <p id=\"status\"></p>\n    <p id=\"loaded_n_total\"></p>\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/brewfatherbatchupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    _(\"loaded_n_total\").innerHTML = \"Uploaded \"+event.loaded+\" bytes of \"+event.total;\n    var percent = (event.loaded / event.total) * 100;\n    _(\"progressBar\").value = Math.round(percent);\n    _(\"status\").innerHTML = Math.round(percent)+\"% uploaded... please wait\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    _(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 1940,
+        "y": 1480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b85ecacf.a49298",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "getFile",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "'/var/tmp/' & req.files[0].originalname",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "req.files[0].buffer",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2230,
+        "y": 1480,
+        "wires": [
+            [
+                "26f65fbb.a3a83"
+            ]
+        ]
+    },
+    {
+        "id": "28602a88.72c406",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "'File ' & req.files[0].originalname & ' uploaded.'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2260,
+        "y": 1520,
+        "wires": [
+            [
+                "6c693001.8e7f7"
+            ]
+        ]
+    },
+    {
+        "id": "26f65fbb.a3a83",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "extensionAllowed ?",
+        "property": "['json']",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "$split(filename, '.')[-1]",
+                "vt": "jsonata"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 2410,
+        "y": 1480,
+        "wires": [
+            [
+                "e8abea9e.6ada28"
+            ],
+            [
+                "9a617b2a.53b128"
+            ]
+        ]
+    },
+    {
+        "id": "9a617b2a.53b128",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Error",
+        "func": "node.error(`Error: only JSON files are allowed.`, msg)\n",
+        "outputs": 0,
+        "noerr": 0,
+        "x": 2630,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "e8abea9e.6ada28",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Batch JSON",
+        "func": "msg.payload = JSON.parse(msg.payload);\n\nif (msg.payload._type !== \"batch\") {\n    node.error(`Error: only Brewfather batch files are supported.`, msg)\n}\nelse {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2650,
+        "y": 1420,
+        "wires": [
+            [
+                "105c2bbe.fec7b4",
+                "ad8c0cc9.0c17c"
+            ]
+        ]
+    },
+    {
+        "id": "f2849f20.9450f",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 3650,
+        "y": 120,
+        "wires": []
     }
 ]

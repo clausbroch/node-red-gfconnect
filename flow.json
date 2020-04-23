@@ -104,7 +104,7 @@
         "z": "",
         "name": "Raw Messages",
         "tab": "355d7d12.6d7412",
-        "order": 3,
+        "order": 4,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -262,15 +262,6 @@
         "characteristics": []
     },
     {
-        "id": "f11c5aab.303e48",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "1df37c54.681d74",
-        "order": 4,
-        "width": 1,
-        "height": 1
-    },
-    {
         "id": "486b3eb4.b3723",
         "type": "ui_group",
         "z": "",
@@ -303,6 +294,26 @@
         "hidden": false
     },
     {
+        "id": "5a19c4db.dbdd2c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Brew Session",
+        "tab": "355d7d12.6d7412",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7c21fdba.2b6a34",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "1df37c54.681d74",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
         "id": "b3f2ec24.29c96",
         "type": "debug",
         "z": "9dea0b26.bbbe98",
@@ -314,7 +325,7 @@
         "complete": "payload.characteristics[\"0003cdd100001000800000805f9b0131\"]",
         "targetType": "msg",
         "x": 1010,
-        "y": 80,
+        "y": 160,
         "wires": []
     },
     {
@@ -388,7 +399,7 @@
         "repair": false,
         "outputs": 12,
         "x": 1530,
-        "y": 280,
+        "y": 360,
         "wires": [
             [
                 "efbe3f05.d87f2"
@@ -397,7 +408,8 @@
                 "a34e3d37.c0939"
             ],
             [
-                "84deb30e.2da68"
+                "84deb30e.2da68",
+                "9f3b97c9.4e4fe8"
             ],
             [
                 "b42404c3.ad47c8"
@@ -407,7 +419,8 @@
                 "6cc6d902.576598"
             ],
             [
-                "c8b01438.50c4f8"
+                "c8b01438.50c4f8",
+                "22c26e7c.acbc12"
             ],
             [
                 "4cf2931f.a6b6fc",
@@ -448,7 +461,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 420,
+        "y": 500,
         "wires": []
     },
     {
@@ -464,7 +477,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 460,
+        "y": 540,
         "wires": []
     },
     {
@@ -480,7 +493,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 300,
+        "y": 380,
         "wires": []
     },
     {
@@ -496,7 +509,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 260,
+        "y": 340,
         "wires": []
     },
     {
@@ -512,7 +525,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 380,
+        "y": 460,
         "wires": []
     },
     {
@@ -528,7 +541,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 140,
+        "y": 220,
         "wires": []
     },
     {
@@ -544,7 +557,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 60,
+        "y": 140,
         "wires": []
     },
     {
@@ -560,7 +573,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 100,
+        "y": 180,
         "wires": []
     },
     {
@@ -576,7 +589,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 180,
+        "y": 260,
         "wires": []
     },
     {
@@ -584,11 +597,11 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode response",
-        "func": "var raw = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\n\nif(raw.length > 1) {\n    msg.message = raw.substr(0, 1);\n    \n    var n = raw.indexOf(\"Z\");\n    var trimmed = raw;\n    if(n != -1) {\n        trimmed = raw.substring(1, n - 1);\n    }\n    else {\n        trimmed = raw.substring(1, raw.length - 1);\n    }\n    \n    msg.parameters = trimmed.split(\",\");\n}\n\nmsg.payload = raw;\n\nreturn msg;",
+        "func": "var raw = msg.payload;\n\nif(raw.length > 1) {\n    msg.message = raw.substr(0, 1);\n    \n    var n = raw.indexOf(\"Z\");\n    var trimmed = raw;\n    if(n != -1) {\n        trimmed = raw.substring(1, n - 1);\n    }\n    else {\n        trimmed = raw.substring(1, raw.length - 1);\n    }\n    \n    msg.parameters = trimmed.split(\",\");\n}\n\nmsg.payload = raw;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1010,
-        "y": 140,
+        "x": 1210,
+        "y": 220,
         "wires": [
             [
                 "d2eeaa0a.f44ab8",
@@ -609,8 +622,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1250,
-        "y": 140,
+        "x": 1430,
+        "y": 220,
         "wires": []
     },
     {
@@ -625,8 +638,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 1670,
-        "y": 60,
+        "x": 1710,
+        "y": 80,
         "wires": [
             [
                 "1f325fe7.4f74"
@@ -646,7 +659,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2140,
-        "y": 500,
+        "y": 580,
         "wires": []
     },
     {
@@ -661,61 +674,41 @@
         "complete": "true",
         "targetType": "full",
         "x": 2130,
-        "y": 540,
+        "y": 620,
         "wires": []
     },
     {
         "id": "ff72ff6f.df808",
         "type": "function",
         "z": "9dea0b26.bbbe98",
-        "name": "Decode Temperature",
-        "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\n// Grainfather set target temp to 120 °C during boil\nif(targetTemp > 100.0) {\n    targetTemp = 100.0;\n}\nnode.send([{'payload':targetTemp},null, null]);\nnode.send([null,{'payload':currentTemp}, null]);\n\nvar payload = {};\ntemperature_unit = flow.get('temperature_unit');\nif(temperature_unit === 'F') {\n    targetTemp = (targetTemp * 9 / 5) + 32;\n    currentTemp = (currentTemp * 9 / 5) + 32;\n}\n\npayload.temperature_unit = temperature_unit;\npayload.targetTemp = Number(targetTemp).toFixed(0);\npayload.currentTemp = Number(currentTemp).toFixed(1);\n\nmsg.payload = payload;\nnode.send([null, null, msg]);\n//return msg;",
-        "outputs": 3,
+        "name": "Decode Temperature (X)",
+        "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\n// Grainfather set target temp to 120 °C during boil\nif(targetTemp > 100.0) {\n    targetTemp = 100.0;\n}\n\nvar payload = {};\ntemperature_unit = flow.get('temperature_unit');\nif(temperature_unit === 'F') {\n    targetTemp = (targetTemp * 9 / 5) + 32;\n    currentTemp = (currentTemp * 9 / 5) + 32;\n}\n\npayload.temperature_unit = temperature_unit;\npayload.targetTemp = Number(targetTemp).toFixed(0);\npayload.currentTemp = Number(currentTemp).toFixed(1);\n\nmsg.payload = payload;\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
-        "x": 1960,
-        "y": 1040,
+        "x": 1930,
+        "y": 1120,
         "wires": [
-            [],
-            [],
             [
                 "a8a28b0b.dc3ba8"
             ]
-        ],
-        "outputLabels": [
-            "target",
-            "current",
-            "all"
         ]
     },
     {
         "id": "a8c00bf5.937f48",
         "type": "function",
         "z": "9dea0b26.bbbe98",
-        "name": "Decode Timer",
-        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerElapsed = false;\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            displayStatic = \"none\";\n            displayFlashing = \"inline\";\n            timerElapsed = true;\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nflow.set('timer_elapsed', timerElapsed);\n\nif(timerActive) {\n    timerTitle = \"Timer active\";\n}\nif(timerPaused) {\n    timerTitle = \"Timer paused\";\n}\nif(timerElapsed) {\n    timerTitle = \"Timer elapsed\";\n}\n\n\nnode.send([{'payload':timerActive}, null, null, null, null]);\nnode.send([null, {'payload':timerStartMins}], null, null, null);\nnode.send([null, null, {'payload':timerLeftMins}], null, null);\nnode.send([null, null, null, {'payload':timerLeftSecs}], null);\nconst payload = {'timertitle':timerTitle, 'timervalue':timerFormatted, 'static': displayStatic, 'flashing':displayFlashing, 'timerelapsed':timerElapsed};\nnode.send([null, null, null, null, {'payload':payload}]);\n\n//return msg;",
-        "outputs": 5,
+        "name": "Decode Timer (T)",
+        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerElapsed = false;\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            timerElapsed = true;\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nflow.set('timer_elapsed', timerElapsed);\n\nmsg.payload = {'timervalue':timerFormatted, 'timeractive':timerActive, 'timerpaused':timerPaused, 'timerelapsed':timerElapsed};\n\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
-        "x": 2080,
-        "y": 660,
+        "x": 1930,
+        "y": 780,
         "wires": [
             [
-                "e43ed08c.e0f55",
-                "8b92ed08.f1527"
-            ],
-            [],
-            [],
-            [],
-            [
-                "85deae7f.7cd6b",
-                "5ed27c8f.9e9694"
+                "5ed27c8f.9e9694",
+                "2113cd0f.134c52",
+                "dc4d7b2d.61a548"
             ]
-        ],
-        "outputLabels": [
-            "active",
-            "total",
-            "mins",
-            "secs",
-            "formatted"
         ]
     },
     {
@@ -723,34 +716,18 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Status (Y)",
-        "func": "var heatPower = Boolean(msg.parameters[0] === \"1\");\nvar pumpPower = Boolean(msg.parameters[1] === \"1\");\nvar autoMode = Boolean(msg.parameters[2] === \"1\");\nvar stageRamp = Boolean(msg.parameters[3] === \"1\");\nvar interactionMode = Boolean(msg.parameters[4] === \"1\");\nvar interactionCode = msg.parameters[5];\nvar stageNumber = Number(msg.parameters[6]);\nvar delayedHeat = Boolean(msg.parameters[7] === \"1\");\n\nnode.send([{'payload':heatPower}, null, null, null, null, null, null, null]);\nnode.send([null, {'payload':pumpPower}, null, null, null, null, null, null]);\nnode.send([null, null, {'payload':autoMode}, null, null, null, null, null]);\nnode.send([null, null, null, {'payload':stageRamp}, null, null, null, null]);\nnode.send([null, null, null, null, {'payload':interactionMode}, null, null, null]);\nnode.send([null, null, null, null, null, {'payload':interactionCode}, null, null]);\nnode.send([null, null, null, null, null, null, {'payload':stageNumber}, null]);\nnode.send([null, null, null, null, null, null, null, {'payload':delayedHeat}]);\n\n//return msg;",
-        "outputs": 8,
+        "func": "const heatPower = Boolean(msg.parameters[0] === \"1\");\nconst pumpPower = Boolean(msg.parameters[1] === \"1\");\nconst autoMode = Boolean(msg.parameters[2] === \"1\");\nconst stageRamp = Boolean(msg.parameters[3] === \"1\");\nconst interactionMode = Boolean(msg.parameters[4] === \"1\");\nconst interactionCode = msg.parameters[5];\nconst stageNumber = Number(msg.parameters[6]);\nconst delayedHeat = Boolean(msg.parameters[7] === \"1\");\n\nvar interaction = \"\";\nswitch(interactionCode) {\n    case \"1\":\n        interaction = \"Add water\";\n        break;\n    case \"2\":\n        interaction = \"Add grain\";\n        break;\n    case \"3\":\n        interaction = \"Mash finished\";\n        break;\n    case \"4\":\n        interaction = \"Sparge\";\n        break;\n    case \"5\":\n        interaction = \"Boil reached\";\n        break;\n    case \"6\":\n        interaction = \"Boil finished\";\n        //interaction = \"Start hopstand\";\n        break;\n    case \"7\":\n        interaction = \"Hopstand finished\";\n        break;\n}\n\nmsg.payload = {\n    'heatpower':heatPower,\n    'pumppower':pumpPower,\n    'automode':autoMode,\n    'stageramp':stageRamp,\n    'interactionmode':interactionMode,\n    'interactioncode':interactionCode,\n    'interaction':interaction,\n    'stagenumber':stageNumber,\n    'delayedheat':delayedHeat\n};\n\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
         "x": 1850,
-        "y": 1200,
+        "y": 1280,
         "wires": [
             [
-                "a8a972b4.9eef5"
-            ],
-            [
-                "2ceaf8ac.c4b598"
-            ],
-            [],
-            [],
-            [],
-            [],
-            [],
-            []
-        ],
-        "outputLabels": [
-            "heat power",
-            "pump status",
-            "auto mode",
-            "stage ramp",
-            "interaction mode",
-            "interaction code",
-            "stage number",
-            "delayed heat"
+                "a8a972b4.9eef5",
+                "2ceaf8ac.c4b598",
+                "adfcc5a4.e6b1a8",
+                "d68334f5.3ad848"
+            ]
         ]
     },
     {
@@ -772,7 +749,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2430,
-        "y": 1240,
+        "y": 1320,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -798,7 +775,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2430,
-        "y": 1160,
+        "y": 1240,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -842,8 +819,8 @@
         "tickmode": "off",
         "peakmode": false,
         "peaktime": 3000,
-        "x": 2270,
-        "y": 940,
+        "x": 2450,
+        "y": 1020,
         "wires": []
     },
     {
@@ -851,32 +828,17 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Status (W)",
-        "func": "const heatPowerPct = Number(msg.parameters[0]);\nconst timerPaused = Boolean(msg.parameters[1] === \"1\");\nconst stepMashMode = Boolean(msg.parameters[2] === \"1\");\nconst recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nconst manualPower = Boolean(msg.parameters[4] === \"1\");\nconst spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nflow.set('timer_paused', timerPaused);\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\n//return msg;",
-        "outputs": 6,
+        "func": "const heatPowerPct = Number(msg.parameters[0]);\nconst timerPaused = Boolean(msg.parameters[1] === \"1\");\nconst stepMashMode = Boolean(msg.parameters[2] === \"1\");\nconst recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nconst manualPower = Boolean(msg.parameters[4] === \"1\");\nconst spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nflow.set('timer_paused', timerPaused);\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\nmsg.payload = {\n    'heatpowerpct':heatPowerPct,\n    'timerpaused':timerPaused,\n    'stepmashmode':stepMashMode,\n    'recipeinterrupted¨':recipeInterrupted,\n    'manualpower':manualPower,\n    'spargeWaterAlert':spargeWaterAlert\n};\n\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
-        "x": 1970,
+        "x": 1910,
         "y": 940,
         "wires": [
             [
-                "36967178.bc09fe",
-                "f693bae1.855238"
-            ],
-            [
-                "e43ed08c.e0f55",
-                "8b92ed08.f1527"
-            ],
-            [],
-            [],
-            [],
-            []
-        ],
-        "outputLabels": [
-            "heat power pct",
-            "timer paused",
-            "step mash mode",
-            "recipe interrupted",
-            "manual power",
-            "sparge water alert"
+                "c65e1ece.7d4d6",
+                "8b92ed08.f1527",
+                "e43ed08c.e0f55"
+            ]
         ]
     },
     {
@@ -891,8 +853,8 @@
         "label": "Heat",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 2370,
-        "y": 900,
+        "x": 2530,
+        "y": 960,
         "wires": []
     },
     {
@@ -903,8 +865,8 @@
         "func": "if(msg.payload === 0) {\n    msg.payload = \"Off\";\n}\nelse {\n    msg.payload = msg.payload + \"%\";\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2200,
-        "y": 900,
+        "x": 2380,
+        "y": 960,
         "wires": [
             [
                 "a49530b4.09b39"
@@ -916,7 +878,7 @@
         "type": "switch",
         "z": "9dea0b26.bbbe98",
         "name": "",
-        "property": "payload",
+        "property": "payload.heatpower",
         "propertyType": "msg",
         "rules": [
             {
@@ -930,7 +892,7 @@
         "repair": false,
         "outputs": 2,
         "x": 2090,
-        "y": 1160,
+        "y": 1240,
         "wires": [
             [
                 "8bb616a.62b5ee8"
@@ -965,7 +927,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1140,
+        "y": 1220,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -997,7 +959,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1180,
+        "y": 1260,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -1009,7 +971,7 @@
         "type": "switch",
         "z": "9dea0b26.bbbe98",
         "name": "",
-        "property": "payload",
+        "property": "payload.pumppower",
         "propertyType": "msg",
         "rules": [
             {
@@ -1023,7 +985,7 @@
         "repair": false,
         "outputs": 2,
         "x": 2090,
-        "y": 1240,
+        "y": 1320,
         "wires": [
             [
                 "bb4f926c.9206e"
@@ -1058,7 +1020,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1220,
+        "y": 1300,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1090,7 +1052,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1260,
+        "y": 1340,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1116,11 +1078,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 140,
+        "x": 770,
+        "y": 220,
         "wires": [
             [
-                "cf0ea885.b26888"
+                "d324d344.c9bec"
             ]
         ]
     },
@@ -1148,7 +1110,7 @@
         "officon": "",
         "offcolor": "",
         "x": 860,
-        "y": 240,
+        "y": 320,
         "wires": [
             [
                 "85a75268.f463e"
@@ -1174,7 +1136,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 140,
-        "y": 80,
+        "y": 160,
         "wires": [
             [
                 "2a13b630.b9e87a"
@@ -1194,7 +1156,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 1340,
-        "y": 500,
+        "y": 580,
         "wires": []
     },
     {
@@ -1212,7 +1174,7 @@
         "bytopic": "all",
         "name": "disconnect after 15 secs",
         "x": 1050,
-        "y": 480,
+        "y": 560,
         "wires": [
             [
                 "5b7a230a.cce58c",
@@ -1236,7 +1198,7 @@
         "bytopic": "all",
         "name": "connected",
         "x": 1010,
-        "y": 560,
+        "y": 640,
         "wires": [
             [
                 "c9ea0ca5.44f82",
@@ -1258,7 +1220,7 @@
         "once": true,
         "onceDelay": 0.1,
         "x": 160,
-        "y": 280,
+        "y": 360,
         "wires": [
             [
                 "5e825722.30d588",
@@ -1294,7 +1256,7 @@
         "to": "",
         "reg": false,
         "x": 820,
-        "y": 360,
+        "y": 440,
         "wires": [
             [
                 "c9ea0ca5.44f82",
@@ -1322,7 +1284,7 @@
         "to": "",
         "reg": false,
         "x": 340,
-        "y": 80,
+        "y": 160,
         "wires": [
             [
                 "b79bbad8.1ee5f8"
@@ -1337,8 +1299,8 @@
         "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 450,
-        "y": 240,
+        "x": 410,
+        "y": 320,
         "wires": [
             [
                 "96bf6cb3.8e68c",
@@ -1369,7 +1331,7 @@
         "to": "",
         "reg": false,
         "x": 640,
-        "y": 240,
+        "y": 320,
         "wires": [
             [
                 "26bae695.25082a"
@@ -1389,7 +1351,7 @@
         "once": true,
         "onceDelay": "2",
         "x": 140,
-        "y": 160,
+        "y": 240,
         "wires": [
             [
                 "b0c3c34b.8e94"
@@ -1405,7 +1367,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 360,
-        "y": 160,
+        "y": 240,
         "wires": [
             [
                 "2a13b630.b9e87a"
@@ -1432,7 +1394,7 @@
         "to": "",
         "reg": false,
         "x": 1100,
-        "y": 240,
+        "y": 320,
         "wires": [
             [
                 "b0c3c34b.8e94"
@@ -1453,7 +1415,7 @@
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 1520,
-        "y": 480,
+        "y": 560,
         "wires": [
             []
         ]
@@ -1478,7 +1440,7 @@
         "to": "",
         "reg": false,
         "x": 1330,
-        "y": 560,
+        "y": 640,
         "wires": [
             [
                 "853fd41f.fb4a28"
@@ -1494,7 +1456,7 @@
         "useString": false,
         "notification": true,
         "x": 550,
-        "y": 80,
+        "y": 160,
         "wires": [
             [
                 "b3f2ec24.29c96",
@@ -1510,8 +1472,8 @@
         "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str.substr(0, 19);\n}\n\nvar command = Buffer.from(pad(msg.payload)).toString('hex');\n\nvar payload = {\"0003cdd200001000800000805f9b0131\":command};\nmsg.payload = payload;\n//msg.payload = JSON.stringify(payload);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3320,
-        "y": 980,
+        "x": 3500,
+        "y": 1180,
         "wires": [
             [
                 "fa3b9cc2.52978",
@@ -1525,8 +1487,8 @@
         "z": "9dea0b26.bbbe98",
         "name": "",
         "genericBle": "3f80edac.961f72",
-        "x": 3690,
-        "y": 1000,
+        "x": 3870,
+        "y": 1200,
         "wires": []
     },
     {
@@ -1539,8 +1501,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3570,
-        "y": 940,
+        "x": 3750,
+        "y": 1140,
         "wires": []
     },
     {
@@ -1561,8 +1523,8 @@
         "payload": " ",
         "payloadType": "str",
         "topic": "",
-        "x": 1840,
-        "y": 60,
+        "x": 1880,
+        "y": 80,
         "wires": [
             [
                 "efbe3f05.d87f2",
@@ -1593,7 +1555,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3100,
-        "y": 220,
+        "y": 300,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -1614,7 +1576,7 @@
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 2290,
-        "y": 1060,
+        "y": 1140,
         "wires": [
             []
         ]
@@ -1627,8 +1589,8 @@
         "func": "msg.payload.forEach(sendCommand);\n\nfunction sendCommand(item) {\n  node.send([{'payload':item}]);\n}\n//return msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2790,
-        "y": 940,
+        "x": 3090,
+        "y": 1180,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1643,8 +1605,8 @@
         "func": "msg.payload = ['g', 'X'];\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1520,
-        "y": 800,
+        "x": 1560,
+        "y": 1040,
         "wires": [
             [
                 "6cb11f95.fde87"
@@ -1666,8 +1628,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 1310,
-        "y": 800,
+        "x": 1370,
+        "y": 1040,
         "wires": [
             [
                 "79bbb1df.ad06"
@@ -1689,8 +1651,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 3530,
-        "y": 1000,
+        "x": 3710,
+        "y": 1200,
         "wires": [
             [
                 "28188956.6c5066"
@@ -1710,7 +1672,7 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 220,
+        "y": 300,
         "wires": []
     },
     {
@@ -1726,19 +1688,19 @@
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "x": 2130,
-        "y": 340,
+        "y": 420,
         "wires": []
     },
     {
         "id": "6cc6d902.576598",
         "type": "function",
         "z": "9dea0b26.bbbe98",
-        "name": "Decode Firmware",
-        "func": "var firmware = Number(msg.parameters[0]);\nnode.send({'payload':firmware});\n",
+        "name": "Decode Firmware (F)",
+        "func": "var firmware = msg.parameters[0];\nmsg.payload = firmware;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2090,
-        "y": 600,
+        "x": 1820,
+        "y": 180,
         "wires": [
             []
         ]
@@ -1747,12 +1709,12 @@
         "id": "d6756a8c.6a8ee8",
         "type": "function",
         "z": "9dea0b26.bbbe98",
-        "name": "Decode voltage and units",
+        "name": "Decode voltage and units (V)",
         "func": "var voltage = msg.parameters[0];\nvar units = msg.parameters[1];\n\nnode.send([{'payload':voltage},null]);\nnode.send([null,{'payload':units}]);\n\n//return msg;",
         "outputs": 2,
         "noerr": 0,
-        "x": 1990,
-        "y": 800,
+        "x": 1940,
+        "y": 880,
         "wires": [
             [],
             [
@@ -1773,7 +1735,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 2320,
-        "y": 820,
+        "y": 900,
         "wires": [
             []
         ]
@@ -1791,8 +1753,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 2550,
-        "y": 660,
+        "x": 2670,
+        "y": 760,
         "wires": [
             []
         ]
@@ -1816,7 +1778,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2920,
-        "y": 840,
+        "y": 920,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1842,7 +1804,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2930,
-        "y": 880,
+        "y": 960,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1862,7 +1824,7 @@
         "once": true,
         "onceDelay": 0.1,
         "x": 2360,
-        "y": 60,
+        "y": 140,
         "wires": [
             [
                 "641fed3f.0bb3b4"
@@ -1875,7 +1837,7 @@
         "z": "9dea0b26.bbbe98",
         "name": "Raw Messages Group",
         "x": 2620,
-        "y": 80,
+        "y": 160,
         "wires": [
             []
         ]
@@ -1893,7 +1855,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2360,
-        "y": 100,
+        "y": 180,
         "wires": [
             [
                 "641fed3f.0bb3b4"
@@ -1910,7 +1872,7 @@
             "9ba75d3a.6302f"
         ],
         "x": 575,
-        "y": 280,
+        "y": 360,
         "wires": []
     },
     {
@@ -1922,12 +1884,14 @@
             "d1a86442.7b18f8"
         ],
         "x": 1915,
-        "y": 1100,
+        "y": 1180,
         "wires": [
             [
                 "bb2dab1a.27cec8",
                 "eb1126f9.7cfe58",
-                "599bb149.3e0ac"
+                "599bb149.3e0ac",
+                "ffdf3fe7.d5d46",
+                "64ec676c.b5f938"
             ]
         ]
     },
@@ -1950,11 +1914,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2380,
-        "y": 700,
+        "x": 2320,
+        "y": 800,
         "wires": [
             [
-                "85deae7f.7cd6b"
+                "85deae7f.7cd6b",
+                "5585b0fa.07b77"
             ]
         ]
     },
@@ -1966,8 +1931,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2015,
-        "y": 720,
+        "x": 2155,
+        "y": 840,
         "wires": [
             [
                 "e17eb87a.f8de18",
@@ -1996,7 +1961,7 @@
         "to": "",
         "reg": false,
         "x": 2080,
-        "y": 1100,
+        "y": 1180,
         "wires": [
             [
                 "a8a28b0b.dc3ba8"
@@ -2012,7 +1977,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 2510,
-        "y": 240,
+        "y": 320,
         "wires": [
             [
                 "46b9479a.5828e8",
@@ -2033,7 +1998,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2300,
-        "y": 240,
+        "y": 320,
         "wires": [
             [
                 "5ff76da9.ada754"
@@ -2051,23 +2016,23 @@
         "tostatus": false,
         "complete": "false",
         "x": 2750,
-        "y": 240,
+        "y": 320,
         "wires": []
     },
     {
         "id": "23588e4f.8411d2",
         "type": "inject",
         "z": "9dea0b26.bbbe98",
-        "name": "Set boil temp 30°C",
+        "name": "Set boil temp 33°C",
         "topic": "",
-        "payload": "E30.0,",
+        "payload": "E33,",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "x": 3110,
-        "y": 140,
+        "y": 220,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2087,7 +2052,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3110,
-        "y": 180,
+        "y": 260,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2103,7 +2068,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 2500,
-        "y": 280,
+        "y": 360,
         "wires": [
             [
                 "46b9479a.5828e8",
@@ -2124,7 +2089,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2300,
-        "y": 280,
+        "y": 360,
         "wires": [
             [
                 "f5fa6744.cee1a8"
@@ -2140,7 +2105,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 2530,
-        "y": 320,
+        "y": 400,
         "wires": [
             [
                 "6cb11f95.fde87",
@@ -2161,7 +2126,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2300,
-        "y": 320,
+        "y": 400,
         "wires": [
             [
                 "3d45c775.350518"
@@ -2181,7 +2146,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3110,
-        "y": 300,
+        "y": 380,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2201,7 +2166,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3110,
-        "y": 360,
+        "y": 440,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2221,7 +2186,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3110,
-        "y": 400,
+        "y": 480,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2241,7 +2206,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3090,
-        "y": 440,
+        "y": 520,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2261,7 +2226,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3100,
-        "y": 500,
+        "y": 580,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2281,7 +2246,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3090,
-        "y": 540,
+        "y": 620,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2301,7 +2266,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3110,
-        "y": 600,
+        "y": 680,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2326,8 +2291,8 @@
         "payload": "C",
         "payloadType": "str",
         "topic": "",
-        "x": 2570,
-        "y": 780,
+        "x": 2870,
+        "y": 860,
         "wires": [
             [
                 "1e826a71.5684b6"
@@ -2352,8 +2317,8 @@
         "payload": "G",
         "payloadType": "str",
         "topic": "",
-        "x": 2600,
-        "y": 740,
+        "x": 2900,
+        "y": 820,
         "wires": [
             [
                 "1e826a71.5684b6"
@@ -2369,7 +2334,7 @@
             "bad838db.5dd1c8"
         ],
         "x": 3380,
-        "y": 360,
+        "y": 440,
         "wires": []
     },
     {
@@ -2380,8 +2345,8 @@
         "links": [
             "bc61b8e9.017228"
         ],
-        "x": 3175,
-        "y": 920,
+        "x": 3355,
+        "y": 1120,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -2396,8 +2361,8 @@
         "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#336633\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2350,
-        "y": 780,
+        "x": 2610,
+        "y": 860,
         "wires": [
             [
                 "2aac4ac.48a77b6"
@@ -2412,8 +2377,8 @@
         "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nmsg.label = \"Pause\";\nvar icon = \"pause\";\nif(timerPaused) {\n    msg.label = \"Resume\";\n    icon = \"play_arrow\";\n}\nconst ui_control = {'icon':icon};\nnode.send({'ui_control':ui_control});\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#336633\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2380,
-        "y": 740,
+        "x": 2640,
+        "y": 820,
         "wires": [
             [
                 "cf702677.f7dfa8"
@@ -2428,8 +2393,8 @@
         "func": "if(flow.get('timer_active') || flow.get('timer_paused')) {\n    if(flow.get('timer_elapsed')) {\n        msg.payload = \"T\"; // Pausing the timer when 0:00 causes wrap-around\n    }\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2840,
-        "y": 760,
+        "x": 3140,
+        "y": 840,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -2449,7 +2414,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3080,
-        "y": 60,
+        "y": 140,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2467,7 +2432,7 @@
         "inout": "out",
         "property": "payload.timerelapsed",
         "x": 2550,
-        "y": 620,
+        "y": 700,
         "wires": [
             [
                 "8a3dab2c.c628e8"
@@ -2482,8 +2447,8 @@
         "func": "if(msg.payload.timerelapsed) {\n    const pushEnabled = (flow.get('pushover_enabled'))||false;\n    if(pushEnabled) {\n        const key = flow.get('pushover_key');\n        const token = flow.get('pushover_token');\n        if(key && token && key.length && token.length) {\n            msg.headers = {};\n            msg.headers['Content-type'] = 'application/json';\n            msg.url = \"https://api.pushover.net/1/messages.json\";\n            const payload =  {\n                \"token\": token,\n                \"user\": key,\n                \"title\": \"GF Connect\",\n                \"message\": msg.payload.timertitle };\n            msg.payload = JSON.stringify(payload);\n\n            return msg;\n        }\n    }\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2830,
-        "y": 680,
+        "x": 2910,
+        "y": 760,
         "wires": [
             [
                 "8aaa732b.a7ea2"
@@ -2514,7 +2479,7 @@
         "officon": "",
         "offcolor": "",
         "x": 470,
-        "y": 460,
+        "y": 540,
         "wires": [
             [
                 "2fc03f42.298c2"
@@ -2541,7 +2506,7 @@
         "to": "",
         "reg": false,
         "x": 260,
-        "y": 460,
+        "y": 540,
         "wires": [
             [
                 "5f6a18e9.fae918"
@@ -2564,7 +2529,7 @@
         "delay": "0",
         "topic": "",
         "x": 470,
-        "y": 540,
+        "y": 620,
         "wires": [
             [
                 "aa059608.b2a398"
@@ -2591,7 +2556,7 @@
         "to": "",
         "reg": false,
         "x": 240,
-        "y": 540,
+        "y": 620,
         "wires": [
             [
                 "5bb09d60.6b9a14"
@@ -2614,7 +2579,7 @@
         "delay": "0",
         "topic": "",
         "x": 480,
-        "y": 580,
+        "y": 660,
         "wires": [
             [
                 "3c324e7a.1b7882"
@@ -2641,7 +2606,7 @@
         "to": "",
         "reg": false,
         "x": 240,
-        "y": 580,
+        "y": 660,
         "wires": [
             [
                 "aa4337fb.bb1708"
@@ -2668,7 +2633,7 @@
         "to": "",
         "reg": false,
         "x": 720,
-        "y": 460,
+        "y": 540,
         "wires": [
             []
         ]
@@ -2693,7 +2658,7 @@
         "to": "",
         "reg": false,
         "x": 700,
-        "y": 540,
+        "y": 620,
         "wires": [
             []
         ]
@@ -2718,7 +2683,7 @@
         "to": "",
         "reg": false,
         "x": 710,
-        "y": 580,
+        "y": 660,
         "wires": [
             []
         ]
@@ -2736,8 +2701,8 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 3080,
-        "y": 680,
+        "x": 3160,
+        "y": 760,
         "wires": [
             [
                 "d1bb908b.cfcd6"
@@ -2763,7 +2728,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2340,
-        "y": 560,
+        "y": 640,
         "wires": [
             [
                 "bbc9daad.bd2c98"
@@ -2790,7 +2755,7 @@
         "to": "",
         "reg": false,
         "x": 2520,
-        "y": 560,
+        "y": 640,
         "wires": [
             [
                 "8a3dab2c.c628e8"
@@ -2805,8 +2770,8 @@
         "func": "if (msg.payload.status) {\n    msg.payload = \"Status: OK\";\n}\nelse {\n    msg.payload = \"Error: \" + msg.payload.errors[0];\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3310,
-        "y": 680,
+        "x": 3390,
+        "y": 760,
         "wires": [
             [
                 "e2a4d62a.77bcd8"
@@ -2827,7 +2792,7 @@
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 460,
-        "y": 620,
+        "y": 700,
         "wires": [
             []
         ]
@@ -2841,7 +2806,7 @@
         "action": "obj",
         "pretty": false,
         "x": 2630,
-        "y": 1380,
+        "y": 1520,
         "wires": [
             [
                 "ad8c0cc9.0c17c",
@@ -2860,7 +2825,7 @@
         "sendError": false,
         "encoding": "none",
         "x": 2450,
-        "y": 1380,
+        "y": 1520,
         "wires": [
             [
                 "c791c4b0.9df1b8"
@@ -2880,7 +2845,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2260,
-        "y": 1380,
+        "y": 1520,
         "wires": [
             [
                 "61bfaf7a.88de3"
@@ -2898,7 +2863,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 2810,
-        "y": 1340,
+        "y": 1480,
         "wires": []
     },
     {
@@ -2906,15 +2871,16 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode batch",
-        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\n\nvar boilTime = recipe.boilTime;\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,0,0,\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString();\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString();\n}\n\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
+        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitle':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,0,0,\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString();\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString();\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitle[brewSession.stageTitle.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitle[brewSession.stageTitle.length] = \"Sparge\";\nbrewSession.stageTitle[brewSession.stageTitle.length] = \"Boil\";\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitle[brewSession.stageTitle.length] = \"Hop Stand\";\n    brewSession.stageTitle[brewSession.stageTitle.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitle[brewSession.stageTitle.length] = \" \"; //\"Boil Finished\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
         "outputs": 1,
         "noerr": 0,
         "x": 2860,
-        "y": 1380,
+        "y": 1520,
         "wires": [
             [
                 "1abae4a5.1b726b",
-                "6cb11f95.fde87"
+                "6cb11f95.fde87",
+                "7567b57e.215ffc"
             ]
         ]
     },
@@ -2928,8 +2894,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3090,
-        "y": 1380,
+        "x": 3070,
+        "y": 1520,
         "wires": []
     },
     {
@@ -2945,7 +2911,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2240,
-        "y": 1420,
+        "y": 1560,
         "wires": [
             [
                 "766fcf49.37bc8"
@@ -2963,7 +2929,7 @@
         "sendError": false,
         "encoding": "none",
         "x": 2440,
-        "y": 1420,
+        "y": 1560,
         "wires": [
             [
                 "c791c4b0.9df1b8"
@@ -3589,8 +3555,9 @@
         "z": "9dea0b26.bbbe98",
         "name": "",
         "scope": null,
-        "x": 3460,
-        "y": 80,
+        "uncaught": true,
+        "x": 3480,
+        "y": 160,
         "wires": [
             [
                 "1ca757a6.27f6f8",
@@ -3613,7 +3580,7 @@
         "topic": "",
         "name": "",
         "x": 3890,
-        "y": 80,
+        "y": 160,
         "wires": []
     },
     {
@@ -3636,7 +3603,7 @@
         "to": "",
         "reg": false,
         "x": 3660,
-        "y": 80,
+        "y": 160,
         "wires": [
             [
                 "23c2c997.36a156"
@@ -3653,7 +3620,7 @@
         "upload": true,
         "swaggerDoc": "",
         "x": 1980,
-        "y": 1520,
+        "y": 1660,
         "wires": [
             [
                 "b85ecacf.a49298",
@@ -3669,7 +3636,7 @@
         "statusCode": "",
         "headers": {},
         "x": 2430,
-        "y": 1520,
+        "y": 1660,
         "wires": []
     },
     {
@@ -3686,7 +3653,7 @@
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 1940,
-        "y": 1480,
+        "y": 1620,
         "wires": [
             []
         ]
@@ -3718,7 +3685,7 @@
         "to": "",
         "reg": false,
         "x": 2230,
-        "y": 1480,
+        "y": 1620,
         "wires": [
             [
                 "26f65fbb.a3a83"
@@ -3745,7 +3712,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1520,
+        "y": 1660,
         "wires": [
             [
                 "6c693001.8e7f7"
@@ -3773,7 +3740,7 @@
         "repair": false,
         "outputs": 2,
         "x": 2410,
-        "y": 1480,
+        "y": 1620,
         "wires": [
             [
                 "e8abea9e.6ada28"
@@ -3792,7 +3759,7 @@
         "outputs": 0,
         "noerr": 0,
         "x": 2630,
-        "y": 1500,
+        "y": 1640,
         "wires": []
     },
     {
@@ -3804,7 +3771,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 2650,
-        "y": 1420,
+        "y": 1600,
         "wires": [
             [
                 "105c2bbe.fec7b4",
@@ -3824,7 +3791,371 @@
         "complete": "true",
         "targetType": "full",
         "x": 3650,
-        "y": 120,
+        "y": 200,
         "wires": []
+    },
+    {
+        "id": "c65e1ece.7d4d6",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.heatpowerpct",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2160,
+        "y": 980,
+        "wires": [
+            [
+                "36967178.bc09fe",
+                "f693bae1.855238"
+            ]
+        ]
+    },
+    {
+        "id": "d324d344.c9bec",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Slice message stream",
+        "func": "var buffer = context.get('overflow');\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"];\nif(buffer) {\n    buffer = Buffer.concat([buffer, newMsg]);\n}\nelse {\n    buffer = newMsg;\n}\n\nif(buffer.length > 17) {\n    msg.payload = buffer.slice(0, 16).toString();\n    context.set('overflow', buffer.slice(17));\n    \n    // Re-synchronize in case something goes wrong\n    const check = msg.payload.substr(16,1);\n    if(check !== \"Z\" && check !== \",\") {\n        context.set('overflow', null);\n    }\n}\nelse {\n    msg.payload = buffer.toString();\n    context.set('overflow', null);\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 980,
+        "y": 220,
+        "wires": [
+            [
+                "cf0ea885.b26888"
+            ]
+        ]
+    },
+    {
+        "id": "ffdf3fe7.d5d46",
+        "type": "ui_text",
+        "z": "9dea0b26.bbbe98",
+        "group": "5a19c4db.dbdd2c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Stage Alert",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 2470,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "5585b0fa.07b77",
+        "type": "ui_template",
+        "z": "9dea0b26.bbbe98",
+        "group": "5a19c4db.dbdd2c",
+        "name": "Brew Timer",
+        "order": 2,
+        "width": 6,
+        "height": 2,
+        "format": "<style>\n    .nr-dashboard-template h1 {\n    font-size: .875em;\n    font-weight: normal;\n    text-align: center;\n    margin-top: 0;\n    margin-bottom: 0;\n    }\n    \n    .nr-dashboard-template h2 {\n    font-size: 3.5em;\n    text-align: center;\n    margin-top: 0;\n    margin-bottom: 0;\n    }\n    \n   \n   div {\n    max-width: 100%;\n   }\n   \n   a:link {\n    color: white; \n    background-color: transparent; \n    text-decoration: none;\n}\n\na:visited {\n    color: white;\n    background-color: transparent;\n    text-decoration: none;\n}\n\n.blinking {\n  animation: blinker 1s linear infinite;\n}\n\n@keyframes blinker {\n  50% {\n    opacity: 0;\n  }\n}\n#Timer-Display-Div-Static {\n    display: {{msg.payload.static}};\n   }  \n#Timer-Display-Div-Flashing {\n    display: {{msg.payload.flashing}};\n   }  \n</style>\n\n<div id = \"Timer-Display-Div-Static\">\n<h1>{{msg.payload.timertitle}}</h1>\n<h2>{{msg.payload.timervalue}}</h2>\n</div>\n<div id = \"Timer-Display-Div-Flashing\">\n<h1>{{msg.payload.timertitle}}</h1>\n<h2 class=\"blinking\">{{msg.payload.timervalue}}</h2>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 2790,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "adfcc5a4.e6b1a8",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "Active brew session",
+        "property": "payload.automode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2080,
+        "y": 1440,
+        "wires": [
+            [
+                "2fb3cabe.8af616"
+            ],
+            [
+                "64ec676c.b5f938"
+            ]
+        ]
+    },
+    {
+        "id": "2fb3cabe.8af616",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "brew_stage",
+                "pt": "flow",
+                "to": "payload.stagenumber",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"GF_Connect_Timer\"],\"show\":[\"GF_Connect_Brew_Session\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2340,
+        "y": 1420,
+        "wires": [
+            [
+                "3ab32ce6.cf1a74"
+            ]
+        ]
+    },
+    {
+        "id": "3ab32ce6.cf1a74",
+        "type": "ui_ui_control",
+        "z": "9dea0b26.bbbe98",
+        "name": "Timer or Brew Session",
+        "events": "all",
+        "x": 2580,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "64ec676c.b5f938",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"GF_Connect_Brew_Session\"],\"show\":[\"GF_Connect_Timer\"]}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "brew_stage",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2340,
+        "y": 1460,
+        "wires": [
+            [
+                "3ab32ce6.cf1a74"
+            ]
+        ]
+    },
+    {
+        "id": "b6bb3cce.52cbc",
+        "type": "ui_template",
+        "z": "9dea0b26.bbbe98",
+        "group": "5a19c4db.dbdd2c",
+        "name": "Brew Session Name",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n\n#BrewSession-Div {\n    visibility: visible;\n    text-align: center;\n   }  \n</style>\n\n<div id = \"BrewSession-Div\">\n    <p>{{msg.payload.batchName}} #{{msg.payload.batchNumber}} - {{msg.payload.recipeName}}\n    </p>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 3340,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7567b57e.215ffc",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "brewSession",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3100,
+        "y": 1420,
+        "wires": [
+            [
+                "b6bb3cce.52cbc"
+            ]
+        ]
+    },
+    {
+        "id": "c5084a80.e840b8",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "5a19c4db.dbdd2c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "SET",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "T",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2960,
+        "y": 1680,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "61f315d.b2b4aec",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "5a19c4db.dbdd2c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Dismiss Boil Alert",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "A",
+        "payloadType": "str",
+        "topic": "",
+        "x": 3000,
+        "y": 1740,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "9f3b97c9.4e4fe8",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode boil temperature (C)",
+        "func": "var boilTemp = msg.parameters[0];\n\ntemperature_unit = flow.get('temperature_unit');\nif(temperature_unit === 'F') {\n    boilTemp = (boilTemp * 9 / 5) + 32;\n}\n\nvar payload = {};\npayload.temperature_unit = temperature_unit;\npayload.boilTemp = Number(boilTemp).toFixed(1);\n\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1830,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "22c26e7c.acbc12",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode interaction code (I)",
+        "func": "var interaction = msg.parameters[0];\nmsg.payload = interaction;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1980,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d68334f5.3ad848",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Format brew session alert",
+        "func": "const interactionCode = msg.payload.interactioncode;\nconst brewSession = flow.get(\"brewSession\");\nvar payload = \"\";\n\nswitch(interactionCode) {\n    case \"1\":\n        payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n        // button: \"Start Heating\" -> \"T\"\n        break;\n    case \"2\":\n        payload = \"Add grain\";\n        // button: \"Start Mash\" -> \"T\"\n        break;\n    case \"3\":\n        payload = \"Mash finished\";\n        // button: \"Start sparge\" -> \"T\"\n        break;\n    case \"4\":\n        payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n        // button: \"Skip to boil\" -> \"T\"\n        break;\n    case \"5\":\n        payload = \"Boil reached\";\n        // button: \"Start boil timer\" -> \"T\"\n        break;\n    case \"6\":\n        if(brewSession.hopStandTime) {\n            payload = \"Add hops\"\n            //button: \"Start hop stand timer\" -> \"T\"\n        }\n        else {\n            payload = \"Boil finished\";\n            //button: \"Finish brew session\" -> \"T\"\n        }\n        break;\n    case \"7\":\n        payload = \"Hop stand finished\";\n        //button: \"Finish brew session\" -> \"T\"\n        break;\n}\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2210,
+        "y": 1740,
+        "wires": [
+            [
+                "ffdf3fe7.d5d46"
+            ]
+        ]
+    },
+    {
+        "id": "2113cd0f.134c52",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Set stage title",
+        "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nif(stageNumber > 0) {\n    msg.payload.timertitle = brewSession.stageTitle[stageNumber - 1];\n}\nelse {\n    msg.payload.timertitle = \"\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2540,
+        "y": 1100,
+        "wires": [
+            [
+                "5585b0fa.07b77"
+            ]
+        ]
+    },
+    {
+        "id": "dc4d7b2d.61a548",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Format timer",
+        "func": "var timerTitle = \" \";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nif(msg.payload.timeractive) {\n    timerTitle = \"Timer active\";\n}\nif(msg.payload.timerpaused) {\n    timerTitle = \"Timer paused\";\n}\nif(msg.payload.timerelapsed) {\n    timerTitle = \"Timer elapsed\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\nmsg.payload.timertitle = timerTitle;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2330,
+        "y": 760,
+        "wires": [
+            [
+                "85deae7f.7cd6b",
+                "8b92ed08.f1527",
+                "e43ed08c.e0f55"
+            ]
+        ]
     }
 ]

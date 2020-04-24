@@ -402,7 +402,8 @@
         "y": 360,
         "wires": [
             [
-                "efbe3f05.d87f2"
+                "efbe3f05.d87f2",
+                "3b351db2.6a8832"
             ],
             [
                 "a34e3d37.c0939"
@@ -412,7 +413,9 @@
                 "9f3b97c9.4e4fe8"
             ],
             [
-                "b42404c3.ad47c8"
+                "b42404c3.ad47c8",
+                "3c5278cd.ca2a78",
+                "7e0e682f.5b34a8"
             ],
             [
                 "e9c8c4ea.a08158",
@@ -444,7 +447,7 @@
             ],
             [
                 "2133a47e.5d109c",
-                "411c53b4.5f7cbc"
+                "83b06089.5c7af"
             ]
         ]
     },
@@ -698,7 +701,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Timer (T)",
-        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerElapsed = false;\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            timerElapsed = true;\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nflow.set('timer_elapsed', timerElapsed);\n\nmsg.payload = {'timervalue':timerFormatted, 'timeractive':timerActive, 'timerpaused':timerPaused, 'timerelapsed':timerElapsed};\n\nreturn msg;",
+        "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerElapsed = false;\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            timerElapsed = true;\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nflow.set('timer_elapsed', timerElapsed);\nflow.set('timer_start_mins', timerStartMins);\nflow.set('timer_left_mins', timerLeftMins);\nflow.set('timer_left_secs', timerLeftSecs);\n\nmsg.payload = {\n    'timervalue':timerFormatted,\n    'timerleftmins':timerLeftMins,\n    'timerleftmecs':timerLeftSecs,\n    'timerstartmins':timerStartMins,\n    'timeractive':timerActive,\n    'timerpaused':timerPaused,\n    'timerelapsed':timerElapsed};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 1930,
@@ -726,7 +729,8 @@
                 "a8a972b4.9eef5",
                 "2ceaf8ac.c4b598",
                 "adfcc5a4.e6b1a8",
-                "d68334f5.3ad848"
+                "787fce9c.18755",
+                "dcb368c9.45a218"
             ]
         ]
     },
@@ -1296,7 +1300,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -1602,7 +1606,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Get controller settings",
-        "func": "msg.payload = ['g', 'X'];\nreturn msg;",
+        "func": "msg.payload = ['g', 'X', 'M'];\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 1560,
@@ -2358,7 +2362,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Adjust stop button",
-        "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#336633\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
+        "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2610,
@@ -2374,7 +2378,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Adjust pause/resume button",
-        "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nmsg.label = \"Pause\";\nvar icon = \"pause\";\nif(timerPaused) {\n    msg.label = \"Resume\";\n    icon = \"play_arrow\";\n}\nconst ui_control = {'icon':icon};\nnode.send({'ui_control':ui_control});\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#336633\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
+        "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nmsg.label = \"Pause\";\nvar icon = \"pause\";\nif(timerPaused) {\n    msg.label = \"Resume\";\n    icon = \"play_arrow\";\n}\nconst ui_control = {'icon':icon};\nnode.send({'ui_control':ui_control});\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2640,
@@ -2871,7 +2875,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode batch",
-        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitle':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,0,0,\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString();\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString();\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitle[brewSession.stageTitle.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitle[brewSession.stageTitle.length] = \"Sparge\";\nbrewSession.stageTitle[brewSession.stageTitle.length] = \"Boil\";\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitle[brewSession.stageTitle.length] = \"Hop Stand\";\n    brewSession.stageTitle[brewSession.stageTitle.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitle[brewSession.stageTitle.length] = \" \"; //\"Boil Finished\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
+        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,0,0,\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString();\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString();\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
         "outputs": 1,
         "noerr": 0,
         "x": 2860,
@@ -3827,15 +3831,22 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Slice message stream",
-        "func": "var buffer = context.get('overflow');\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"];\nif(buffer) {\n    buffer = Buffer.concat([buffer, newMsg]);\n}\nelse {\n    buffer = newMsg;\n}\n\nif(buffer.length > 17) {\n    msg.payload = buffer.slice(0, 16).toString();\n    context.set('overflow', buffer.slice(17));\n    \n    // Re-synchronize in case something goes wrong\n    const check = msg.payload.substr(16,1);\n    if(check !== \"Z\" && check !== \",\") {\n        context.set('overflow', null);\n    }\n}\nelse {\n    msg.payload = buffer.toString();\n    context.set('overflow', null);\n}\n\nreturn msg;",
-        "outputs": 1,
+        "func": "var buffer = context.get('overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\n// Clean start of buffer for garbage in case something got lost earlier\nwhile(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n    buffer = buffer.substr(1);\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nif(buffer.length >= 17) {\n    msg.payload = buffer.substr(0, 17);\n    const overflow = buffer.substr(17);\n    context.set('overflow', overflow);\n    \n    logMsg.out = msg.payload;\n    logMsg.overflow = overflow;\n    \n    // Re-synchronize in case something goes wrong\n    const end = msg.payload.substr(-1,1);\n    if(end !== \"Z\" && end !== \",\") {\n        logMsg.error = true;\n        node.send([null, {'error':logMsg, 'previous':previous}]);\n    }\n}\nelse {\n    if(buffer.substr(-1,1) === \"Z\") {\n        msg.payload = buffer;\n        logMsg.out = msg.payload;\n        context.set('overflow', null);\n    }\n    else {\n        msg.payload = null;\n        logMsg.out = null;\n        context.set('overflow', null);\n    }\n}\n\n//node.send([null, {'error':logMsg, 'previous':previous}]);\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n\nif(msg.payload) {\n    node.send([msg, null]);\n}",
+        "outputs": 2,
         "noerr": 0,
         "x": 980,
         "y": 220,
         "wires": [
             [
                 "cf0ea885.b26888"
+            ],
+            [
+                "d1590ab4.6fed78"
             ]
+        ],
+        "outputLabels": [
+            "",
+            "error"
         ]
     },
     {
@@ -3850,8 +3861,8 @@
         "label": "",
         "format": "{{msg.payload}}",
         "layout": "row-center",
-        "x": 2470,
-        "y": 1740,
+        "x": 2550,
+        "y": 1780,
         "wires": []
     },
     {
@@ -3867,8 +3878,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 2790,
-        "y": 1100,
+        "x": 2810,
+        "y": 1120,
         "wires": [
             []
         ]
@@ -4029,58 +4040,6 @@
         ]
     },
     {
-        "id": "c5084a80.e840b8",
-        "type": "ui_button",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "group": "5a19c4db.dbdd2c",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "SET",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "T",
-        "payloadType": "str",
-        "topic": "",
-        "x": 2960,
-        "y": 1680,
-        "wires": [
-            [
-                "bce0ab71.378748"
-            ]
-        ]
-    },
-    {
-        "id": "61f315d.b2b4aec",
-        "type": "ui_button",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "group": "5a19c4db.dbdd2c",
-        "order": 5,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "Dismiss Boil Alert",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "A",
-        "payloadType": "str",
-        "topic": "",
-        "x": 3000,
-        "y": 1740,
-        "wires": [
-            [
-                "bce0ab71.378748"
-            ]
-        ]
-    },
-    {
         "id": "9f3b97c9.4e4fe8",
         "type": "function",
         "z": "9dea0b26.bbbe98",
@@ -4099,13 +4058,16 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode interaction code (I)",
-        "func": "var interaction = msg.parameters[0];\nmsg.payload = interaction;\n\nreturn msg;",
+        "func": "var interaction = msg.parameters[0];\nswitch(interaction) {\n    case \"C\":\n        msg.payload = \"interaction_cleared\";\n        break;\n        \n    default:\n        msg.payload = interaction;\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1980,
-        "y": 680,
+        "x": 1620,
+        "y": 1500,
         "wires": [
-            []
+            [
+                "787fce9c.18755",
+                "276d2c11.6ef0b4"
+            ]
         ]
     },
     {
@@ -4113,14 +4075,15 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format brew session alert",
-        "func": "const interactionCode = msg.payload.interactioncode;\nconst brewSession = flow.get(\"brewSession\");\nvar payload = \"\";\n\nswitch(interactionCode) {\n    case \"1\":\n        payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n        // button: \"Start Heating\" -> \"T\"\n        break;\n    case \"2\":\n        payload = \"Add grain\";\n        // button: \"Start Mash\" -> \"T\"\n        break;\n    case \"3\":\n        payload = \"Mash finished\";\n        // button: \"Start sparge\" -> \"T\"\n        break;\n    case \"4\":\n        payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n        // button: \"Skip to boil\" -> \"T\"\n        break;\n    case \"5\":\n        payload = \"Boil reached\";\n        // button: \"Start boil timer\" -> \"T\"\n        break;\n    case \"6\":\n        if(brewSession.hopStandTime) {\n            payload = \"Add hops\"\n            //button: \"Start hop stand timer\" -> \"T\"\n        }\n        else {\n            payload = \"Boil finished\";\n            //button: \"Finish brew session\" -> \"T\"\n        }\n        break;\n    case \"7\":\n        payload = \"Hop stand finished\";\n        //button: \"Finish brew session\" -> \"T\"\n        break;\n}\nmsg.payload = payload;\n\nreturn msg;",
+        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                buttonTitle = \"Start Heating\";\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                break;\n            case \"4\":\n                payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2210,
-        "y": 1740,
+        "x": 2250,
+        "y": 1800,
         "wires": [
             [
-                "ffdf3fe7.d5d46"
+                "ffdf3fe7.d5d46",
+                "6d170045.566eb"
             ]
         ]
     },
@@ -4129,7 +4092,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set stage title",
-        "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nif(stageNumber > 0) {\n    msg.payload.timertitle = brewSession.stageTitle[stageNumber - 1];\n}\nelse {\n    msg.payload.timertitle = \"\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nreturn msg;",
+        "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nif(stageNumber > 0) {\n    msg.payload.timertitle = brewSession.stageTitles[stageNumber - 1];\n}\nelse {\n    msg.payload.timertitle = \"\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2540,
@@ -4156,6 +4119,365 @@
                 "8b92ed08.f1527",
                 "e43ed08c.e0f55"
             ]
+        ]
+    },
+    {
+        "id": "6d170045.566eb",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Dismiss Alert",
+        "group": "5a19c4db.dbdd2c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "{{msg.button_title}}",
+        "tooltip": "",
+        "color": "{{textcolour}}",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "alert_dismiss_code",
+        "payloadType": "flow",
+        "topic": "",
+        "x": 2550,
+        "y": 1820,
+        "wires": [
+            [
+                "27bb0cb7.24f754"
+            ]
+        ]
+    },
+    {
+        "id": "27bb0cb7.24f754",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Validate dismiss",
+        "func": "const interactionMode = flow.get('interaction_mode') || false;\nconst stickyBoilAdditionAlert = flow.get('sticky_boil_addition_alert') || false;\nconst stickyTemperatureAlarm = flow.get('sticky_temperature_alarm') || false;\nconst timerElapsedAlarm = flow.get('timer_elapsed') || false;\n\nif(stickyBoilAdditionAlert && msg.payload == \"A\") {\n    flow.set('sticky_boil_addition_alert', false);\n    return msg;\n}\n\nif(stickyTemperatureAlarm && msg.payload == \"T\") {\n    flow.set('sticky_temperature_alarm', false);\n    return msg;\n}\n\nif(interactionMode && msg.payload === \"T\") {\n    return msg;\n}\n\nif(timerElapsedAlarm && msg.payload === \"T\") {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2740,
+        "y": 1820,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "3b351db2.6a8832",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode Boil Addition Alert (A)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "boil_addition_alert",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1530,
+        "y": 1740,
+        "wires": [
+            [
+                "787fce9c.18755"
+            ]
+        ]
+    },
+    {
+        "id": "787fce9c.18755",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Sticky alert",
+        "func": "if(msg.payload === \"boil_addition_alert\") {\n    flow.set('sticky_boil_addition_alert', true);\n    return msg;\n}\nif(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_boil_addition_alert', false);\n}\nelse if(flow.get('sticky_boil_addition_alert') === false) {\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1910,
+        "y": 1720,
+        "wires": [
+            [
+                "276d2c11.6ef0b4"
+            ]
+        ]
+    },
+    {
+        "id": "d1590ab4.6fed78",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1190,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3c5278cd.ca2a78",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ble_messages",
+                "pt": "msg",
+                "to": "ble_messages",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1720,
+        "y": 40,
+        "wires": [
+            [
+                "3eedaa2c.774446"
+            ]
+        ]
+    },
+    {
+        "id": "3eedaa2c.774446",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1890,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "83b06089.5c7af",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ble_messages",
+                "pt": "msg",
+                "to": "ble_messages",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1940,
+        "y": 620,
+        "wires": [
+            [
+                "411c53b4.5f7cbc"
+            ]
+        ]
+    },
+    {
+        "id": "7e0e682f.5b34a8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode Alarm (E)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "alarm",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1450,
+        "y": 1800,
+        "wires": [
+            [
+                "276d2c11.6ef0b4"
+            ]
+        ]
+    },
+    {
+        "id": "276d2c11.6ef0b4",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Sticky temperature alarm",
+        "func": "if(msg.payload === \"alarm\") {\n    const interactionMode = flow.get('interaction_mode');\n    const stageRamp = flow.get('stage_ramp');\n    const brewSession = flow.get('brewSession');\n    const stage = flow.get('brew_stage');\n    if(!interactionMode && stageRamp && (stage === brewSession.boilStage)) {\n        flow.set('sticky_temperature_alarm', true);\n        \n        msg.payload = \"temperature_alarm\";\n        return msg;\n    }\n}\nelse if(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_temperature_alarm', false);\n}\nelse if(flow.get('sticky_temperature_alarm') === false) {\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1910,
+        "y": 1800,
+        "wires": [
+            [
+                "d68334f5.3ad848",
+                "fa9bca6f.4c65c8"
+            ]
+        ]
+    },
+    {
+        "id": "dcb368c9.45a218",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "stage_ramp",
+                "pt": "flow",
+                "to": "payload.stageramp",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1820,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa9bca6f.4c65c8",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "temperature_alarm",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 2150,
+        "y": 1920,
+        "wires": [
+            [
+                "9d7dc8be.35b698"
+            ]
+        ]
+    },
+    {
+        "id": "9d7dc8be.35b698",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "stage_ramp",
+                "pt": "msg",
+                "to": "stage_ramp",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "ble_messages",
+                "pt": "msg",
+                "to": "ble_messages",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "brew_stage",
+                "pt": "msg",
+                "to": "brew_stage",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "interaction_mode",
+                "pt": "msg",
+                "to": "interaction_mode",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "sticky_temperature_alarm",
+                "pt": "msg",
+                "to": "sticky_temperature_alarm",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "timer_active",
+                "pt": "msg",
+                "to": "timer_active",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2320,
+        "y": 1920,
+        "wires": [
+            [
+                "c810e6be.b74f58"
+            ]
+        ]
+    },
+    {
+        "id": "c810e6be.b74f58",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 2490,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "6ec8c28c.5490bc",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Slice message stream (backup)",
+        "func": "var buffer = context.get('overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"];\nif(buffer) {\n    buffer = Buffer.concat([buffer, newMsg]);\n}\nelse {\n    buffer = newMsg;\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nif(buffer.length >= 17) {\n    msg.payload = buffer.slice(0, 16).toString();\n    const overflow = buffer.slice(17);\n    context.set('overflow', overflow);\n    \n    logMsg.out = msg.payload;\n    logMsg.overflow = overflow;\n    \n    // Re-synchronize in case something goes wrong\n    const end = msg.payload.substr(16,1);\n    const start = msg.payload.substr(0,1);\n    if((\"0123456789,Z\".indexof(start) !== -1) || (end !== \"Z\" && end !== \",\") ) {\n        logMsg.error = true;\n        node.send([null, {'error':logMsg, 'previous':previous}]);\n        context.set('overflow', null);\n    }\n}\nelse {\n    msg.payload = buffer.toString();\n    logMsg.out = msg.payload;\n    context.set('overflow', null);\n}\n\n//node.send([null, {'error':logMsg, 'previous':previous}]);\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n\nnode.send([msg, null]);\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1010,
+        "y": 60,
+        "wires": [
+            [],
+            []
+        ],
+        "outputLabels": [
+            "",
+            "error"
         ]
     }
 ]

@@ -1300,7 +1300,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -1436,6 +1436,11 @@
                 "pt": "flow",
                 "to": "payload",
                 "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "ble_overflow",
+                "pt": "flow"
             }
         ],
         "action": "",
@@ -1443,7 +1448,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1330,
+        "x": 1320,
         "y": 640,
         "wires": [
             [
@@ -3831,7 +3836,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Slice message stream",
-        "func": "var buffer = context.get('overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\n// Clean start of buffer for garbage in case something got lost earlier\nwhile(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n    buffer = buffer.substr(1);\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nif(buffer.length >= 17) {\n    msg.payload = buffer.substr(0, 17);\n    const overflow = buffer.substr(17);\n    context.set('overflow', overflow);\n    \n    logMsg.out = msg.payload;\n    logMsg.overflow = overflow;\n    \n    // Re-synchronize in case something goes wrong\n    const end = msg.payload.substr(-1,1);\n    if(end !== \"Z\" && end !== \",\") {\n        logMsg.error = true;\n        node.send([null, {'error':logMsg, 'previous':previous}]);\n    }\n}\nelse {\n    if(buffer.substr(-1,1) === \"Z\") {\n        msg.payload = buffer;\n        logMsg.out = msg.payload;\n        context.set('overflow', null);\n    }\n    else {\n        msg.payload = null;\n        logMsg.out = null;\n        context.set('overflow', null);\n    }\n}\n\n//node.send([null, {'error':logMsg, 'previous':previous}]);\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n\nif(msg.payload) {\n    node.send([msg, null]);\n}",
+        "func": "var buffer = flow.get('ble_overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\n// Clean start of buffer for garbage in case something got lost earlier\nwhile(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n    logMsg.error = true;\n    buffer = buffer.substr(1);\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nif(buffer.length >= 17) {\n    msg.payload = buffer.substr(0, 17);\n    const overflow = buffer.substr(17);\n    flow.set('ble_overflow', overflow);\n    \n    if(overflow.length >= 17) {\n        logMsg.error = true;\n    }\n    logMsg.out = msg.payload;\n    logMsg.overflow = overflow;\n    \n    // Re-synchronize in case something goes wrong\n    const end = msg.payload.substr(-1,1);\n    if(end !== \"Z\" && end !== \",\") {\n        logMsg.error = true;\n    }\n}\nelse {\n    if(buffer.substr(-1,1) === \"Z\") {\n        msg.payload = buffer;\n        logMsg.out = msg.payload;\n        flow.set('ble_overflow', null);\n    }\n    else {\n        msg.payload = null;\n        logMsg.out = null;\n        logMsg.error = true;\n        flow.set('ble_overflow', buffer);\n    }\n}\n\nif(logMsg.error) {\n    node.send([null, {'error':logMsg, 'previous':previous}]);\n}\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n\nif(msg.payload) {\n    node.send([msg, null]);\n}",
         "outputs": 2,
         "noerr": 0,
         "x": 980,
@@ -4075,7 +4080,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format brew session alert",
-        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                buttonTitle = \"Start Heating\";\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                break;\n            case \"4\":\n                payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\n\nreturn msg;",
+        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                buttonTitle = \"Start Heating\";\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2250,
@@ -4478,6 +4483,26 @@
         "outputLabels": [
             "",
             "error"
+        ]
+    },
+    {
+        "id": "1ed8aea6.839e01",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Pause/resume timer",
+        "topic": "",
+        "payload": "G",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3090,
+        "y": 340,
+        "wires": [
+            [
+                "bc61b8e9.017228"
+            ]
         ]
     }
 ]

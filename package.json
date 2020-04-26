@@ -1,7 +1,7 @@
 {
-    "name": "RedConnect",
-    "description": "A Node-RED Project for connecting with Grainfather Connect brew system",
-    "version": "0.0.1",
+    "name": "node-red-gfconnect",
+    "description": "A Node-RED Project for connecting with Grainfather Connect G30 brewing system",
+    "version": "0.5.0",
     "dependencies": {
         "node-red-contrib-generic-ble": "3.1.0",
         "node-red-dashboard": "2.19.4",

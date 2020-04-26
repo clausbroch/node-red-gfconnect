@@ -12,7 +12,7 @@ The following features are currently supported:
 * Heating power control
 * Timer control (stop, pause, resume)
 * Loading of brew session from Brewfather batch json files
-* Sending timer and brew alerts as sush notifications via Pushover
+* Sending timer and brew alerts as push notifications via Pushover
 
 ### Dependencies
 * node-red-dashboard

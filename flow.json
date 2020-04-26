@@ -93,7 +93,7 @@
         "type": "ui_tab",
         "z": "",
         "name": "GF Connect",
-        "icon": "fa-chain",
+        "icon": "fa-beer",
         "order": 1,
         "disabled": false,
         "hidden": false
@@ -708,7 +708,6 @@
         "y": 780,
         "wires": [
             [
-                "5ed27c8f.9e9694",
                 "2113cd0f.134c52",
                 "dc4d7b2d.61a548"
             ]
@@ -1300,7 +1299,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -1786,7 +1785,7 @@
         "payload": "U",
         "payloadType": "str",
         "topic": "",
-        "x": 2920,
+        "x": 3080,
         "y": 920,
         "wires": [
             [
@@ -1812,7 +1811,7 @@
         "payload": "D",
         "payloadType": "str",
         "topic": "",
-        "x": 2930,
+        "x": 3090,
         "y": 960,
         "wires": [
             [
@@ -2440,7 +2439,7 @@
         "start": "",
         "inout": "out",
         "property": "payload.timerelapsed",
-        "x": 2550,
+        "x": 2530,
         "y": 700,
         "wires": [
             [
@@ -2453,14 +2452,14 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Timer notification",
-        "func": "if(msg.payload.timerelapsed) {\n    const pushEnabled = (flow.get('pushover_enabled'))||false;\n    if(pushEnabled) {\n        const key = flow.get('pushover_key');\n        const token = flow.get('pushover_token');\n        if(key && token && key.length && token.length) {\n            msg.headers = {};\n            msg.headers['Content-type'] = 'application/json';\n            msg.url = \"https://api.pushover.net/1/messages.json\";\n            const payload =  {\n                \"token\": token,\n                \"user\": key,\n                \"title\": \"GF Connect\",\n                \"message\": msg.payload.timertitle };\n            msg.payload = JSON.stringify(payload);\n\n            return msg;\n        }\n    }\n}",
+        "func": "if(msg.payload.timerelapsed && (flow.get('brew_session_active') === false)) {\n    msg.payload = msg.payload.timertitle;\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2910,
-        "y": 760,
+        "x": 2730,
+        "y": 700,
         "wires": [
             [
-                "8aaa732b.a7ea2"
+                "9e057e41.c8ba8"
             ]
         ]
     },
@@ -2710,8 +2709,8 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 3160,
-        "y": 760,
+        "x": 540,
+        "y": 780,
         "wires": [
             [
                 "d1bb908b.cfcd6"
@@ -2779,8 +2778,8 @@
         "func": "if (msg.payload.status) {\n    msg.payload = \"Status: OK\";\n}\nelse {\n    msg.payload = \"Error: \" + msg.payload.errors[0];\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3390,
-        "y": 760,
+        "x": 790,
+        "y": 780,
         "wires": [
             [
                 "e2a4d62a.77bcd8"
@@ -2800,8 +2799,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 460,
-        "y": 700,
+        "x": 1020,
+        "y": 780,
         "wires": [
             []
         ]
@@ -3883,8 +3882,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 2810,
-        "y": 1120,
+        "x": 2790,
+        "y": 1040,
         "wires": [
             []
         ]
@@ -3930,6 +3929,13 @@
                 "pt": "flow",
                 "to": "payload.stagenumber",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "brew_session_active",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
             },
             {
                 "t": "set",
@@ -3983,6 +3989,13 @@
                 "pt": "flow",
                 "to": "0",
                 "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "brew_session_active",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -4080,7 +4093,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format brew session alert",
-        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                buttonTitle = \"Start Heating\";\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\n\nreturn msg;",
+        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\nvar sendPushAlert = false;\nvar pushAlertTitle = \"\";\nvar pushAlertMessage = \"\";\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n    pushAlertTitle = \"Add boil additions\";\n    pushAlertMessage = payload;\n    sendPushAlert = true;\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n        pushAlertTitle = \"Boil temperature reached\";\n        pushAlertMessage = \"Ready to start boil timer\";\n        sendPushAlert = true;\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                buttonTitle = \"Start Heating\";\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                pushAlertTitle = \"Mash water ready\";\n                pushAlertMessage = \"Mash water is ready for adding grain\";\n                sendPushAlert = true;\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                pushAlertTitle = \"Mash finished\";\n                pushAlertMessage = \"Ready to start sparge\";\n                sendPushAlert = true;\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                pushAlertTitle = \"Hop stand finished\";\n                pushAlertMessage = \"The hop stand timer has elapsed.\";\n                sendPushAlert = true;\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\nmsg.pushalert = sendPushAlert;\nmsg.pushtitle = pushAlertTitle;\nmsg.pushmessage = pushAlertMessage;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2250,
@@ -4088,7 +4101,8 @@
         "wires": [
             [
                 "ffdf3fe7.d5d46",
-                "6d170045.566eb"
+                "6d170045.566eb",
+                "40d566f1.9a0798"
             ]
         ]
     },
@@ -4122,7 +4136,8 @@
             [
                 "85deae7f.7cd6b",
                 "8b92ed08.f1527",
-                "e43ed08c.e0f55"
+                "e43ed08c.e0f55",
+                "5ed27c8f.9e9694"
             ]
         ]
     },
@@ -4258,7 +4273,7 @@
         "type": "debug",
         "z": "9dea0b26.bbbe98",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -4504,5 +4519,112 @@
                 "bc61b8e9.017228"
             ]
         ]
+    },
+    {
+        "id": "74e0e099.77a4e",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "9e057e41.c8ba8",
+            "96d4eaea.3a2de8"
+        ],
+        "x": 115,
+        "y": 780,
+        "wires": [
+            [
+                "409c0204.fd2d8c"
+            ]
+        ]
+    },
+    {
+        "id": "9e057e41.c8ba8",
+        "type": "link out",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "74e0e099.77a4e"
+        ],
+        "x": 2895,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "409c0204.fd2d8c",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Format push message",
+        "func": "\nconst pushEnabled = (flow.get('pushover_enabled'))||false;\nif(pushEnabled) {\n    const key = flow.get('pushover_key');\n    const token = flow.get('pushover_token');\n    if(key && token && key.length && token.length) {\n        var title;\n        msg.headers = {};\n        msg.headers['Content-type'] = 'application/json';\n        msg.url = \"https://api.pushover.net/1/messages.json\";\n        if(msg.topic && msg.topic.length) {\n            title = msg.topic;\n        }\n        else {\n            title = \"GF Connect\";\n        }\n        const payload =  {\n            \"token\": token,\n            \"user\": key,\n            \"title\": title,\n            \"message\": msg.payload };\n        msg.payload = JSON.stringify(payload);\n\n        return msg;\n    }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 780,
+        "wires": [
+            [
+                "8aaa732b.a7ea2"
+            ]
+        ]
+    },
+    {
+        "id": "40d566f1.9a0798",
+        "type": "rbe",
+        "z": "9dea0b26.bbbe98",
+        "name": "push alert",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "pushalert",
+        "x": 2540,
+        "y": 1860,
+        "wires": [
+            [
+                "b373a6f3.956418"
+            ]
+        ]
+    },
+    {
+        "id": "b373a6f3.956418",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Format brew alert",
+        "func": "if(msg.pushalert) {\n    msg.topic = msg.pushtitle;\n    msg.payload = msg.pushmessage;\n    \n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2730,
+        "y": 1860,
+        "wires": [
+            [
+                "b46080d6.551",
+                "96d4eaea.3a2de8"
+            ]
+        ]
+    },
+    {
+        "id": "b46080d6.551",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 2950,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "96d4eaea.3a2de8",
+        "type": "link out",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "74e0e099.77a4e"
+        ],
+        "x": 2915,
+        "y": 1860,
+        "wires": []
     }
 ]

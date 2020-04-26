@@ -280,7 +280,7 @@
         "tab": "930c0a18.6b4938",
         "order": 4,
         "disp": true,
-        "width": "9",
+        "width": 6,
         "collapse": false
     },
     {
@@ -288,7 +288,7 @@
         "type": "ui_tab",
         "z": "",
         "name": "Brewfather",
-        "icon": "dashboard",
+        "icon": "fa-list-alt",
         "order": 4,
         "disabled": false,
         "hidden": false
@@ -3655,9 +3655,9 @@
         "group": "6500c5a.452263c",
         "name": "Upload Batch",
         "order": 1,
-        "width": "9",
-        "height": "3",
-        "format": "<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input type=\"button\" value=\"Upload File\" onclick=\"uploadFile()\">\n    <progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>\n    <p id=\"status\"></p>\n    <p id=\"loaded_n_total\"></p>\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/brewfatherbatchupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    _(\"loaded_n_total\").innerHTML = \"Uploaded \"+event.loaded+\" bytes of \"+event.total;\n    var percent = (event.loaded / event.total) * 100;\n    _(\"progressBar\").value = Math.round(percent);\n    _(\"status\").innerHTML = Math.round(percent)+\"% uploaded... please wait\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    _(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
+        "width": 6,
+        "height": 2,
+        "format": "<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input type=\"button\" value=\"Upload\" onclick=\"uploadFile()\">\n    <progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>\n    <p id=\"status\"></p>\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/brewfatherbatchupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    var percent = (event.loaded / event.total) * 100;\n    _(\"progressBar\").value = Math.round(percent);\n    _(\"status\").innerHTML = Math.round(percent)+\"% uploaded...\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    _(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -3711,7 +3711,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "'File ' & req.files[0].originalname & ' uploaded.'",
+                "to": "'File uploaded.'",
                 "tot": "jsonata"
             }
         ],

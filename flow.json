@@ -225,7 +225,7 @@
         "z": "",
         "name": "Settings",
         "icon": "settings",
-        "order": 2,
+        "order": 3,
         "disabled": false,
         "hidden": false
     },
@@ -233,7 +233,7 @@
         "id": "d9188a2e.55c2a8",
         "type": "ui_group",
         "z": "",
-        "name": "Connection",
+        "name": "Grainfather Controller",
         "tab": "48a38e5e.ad6eb",
         "order": 1,
         "disp": true,
@@ -268,7 +268,7 @@
         "z": "",
         "name": "Notifications",
         "tab": "48a38e5e.ad6eb",
-        "order": 2,
+        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -277,11 +277,11 @@
         "id": "6500c5a.452263c",
         "type": "ui_group",
         "z": "",
-        "name": "File upload",
+        "name": "Batch selection",
         "tab": "930c0a18.6b4938",
-        "order": 4,
+        "order": 1,
         "disp": true,
-        "width": 6,
+        "width": "6",
         "collapse": false
     },
     {
@@ -290,7 +290,7 @@
         "z": "",
         "name": "Brewfather",
         "icon": "fa-list-alt",
-        "order": 4,
+        "order": 2,
         "disabled": false,
         "hidden": false
     },
@@ -313,6 +313,28 @@
         "order": 4,
         "width": 1,
         "height": 1
+    },
+    {
+        "id": "a56d0f41.236f6",
+        "type": "ui_group",
+        "z": "",
+        "name": "Brewfather",
+        "tab": "48a38e5e.ad6eb",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f64cef87.3ae2e",
+        "type": "ui_group",
+        "z": "",
+        "name": "Current batch",
+        "tab": "930c0a18.6b4938",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
     },
     {
         "id": "b3f2ec24.29c96",
@@ -1300,7 +1322,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -1598,7 +1620,7 @@
         "func": "msg.payload.forEach(sendCommand);\n\nfunction sendCommand(item) {\n  node.send([{'payload':item}]);\n}\n//return msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3090,
+        "x": 3170,
         "y": 1180,
         "wires": [
             [
@@ -1878,7 +1900,9 @@
         "name": "",
         "links": [
             "b2f36278.67c2b",
-            "9ba75d3a.6302f"
+            "9ba75d3a.6302f",
+            "e328018c.e2a5f",
+            "87a9f7aa.085638"
         ],
         "x": 575,
         "y": 360,
@@ -2724,9 +2748,9 @@
         "z": "9dea0b26.bbbe98",
         "name": "Test Message",
         "group": "486b3eb4.b3723",
-        "order": 9,
-        "width": "0",
-        "height": "0",
+        "order": 5,
+        "width": 0,
+        "height": 0,
         "passthru": false,
         "label": "Send Test Message",
         "tooltip": "",
@@ -2793,7 +2817,7 @@
         "z": "9dea0b26.bbbe98",
         "group": "486b3eb4.b3723",
         "name": "Pushover status",
-        "order": 5,
+        "order": 4,
         "width": 0,
         "height": 0,
         "format": "<div ng-bind-html=\"msg.payload\"></div>",
@@ -2819,7 +2843,7 @@
         "wires": [
             [
                 "ad8c0cc9.0c17c",
-                "105c2bbe.fec7b4"
+                "a60a3068.d2378"
             ]
         ]
     },
@@ -2871,8 +2895,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 2810,
-        "y": 1480,
+        "x": 2870,
+        "y": 1520,
         "wires": []
     },
     {
@@ -2883,8 +2907,8 @@
         "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,0,0,\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString();\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString();\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
         "outputs": 1,
         "noerr": 0,
-        "x": 2860,
-        "y": 1520,
+        "x": 2920,
+        "y": 1380,
         "wires": [
             [
                 "1abae4a5.1b726b",
@@ -2903,8 +2927,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3070,
-        "y": 1520,
+        "x": 3150,
+        "y": 1420,
         "wires": []
     },
     {
@@ -3657,7 +3681,7 @@
         "order": 1,
         "width": 6,
         "height": 2,
-        "format": "<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input type=\"button\" value=\"Upload\" onclick=\"uploadFile()\">\n    <progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>\n    <p id=\"status\"></p>\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/brewfatherbatchupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    var percent = (event.loaded / event.total) * 100;\n    _(\"progressBar\").value = Math.round(percent);\n    _(\"status\").innerHTML = Math.round(percent)+\"% uploaded...\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    _(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
+        "format": "<style>\n\n\n#status {\n    font-size: 0.8em;\n    font-weight: normal;\n   }  \n\n</style>\n\n<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input type=\"button\" value=\"Upload\" onclick=\"uploadFile()\">\n    <!--<progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>-->\n    <p id=\"status\">&nbsp;</p>\n    <hr color=\"#555555\">\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/brewfatherbatchupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    //var percent = (event.loaded / event.total) * 100;\n    //_(\"progressBar\").value = Math.round(percent);\n    //_(\"status\").innerHTML = Math.round(percent)+\"% uploaded...\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    //_(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
@@ -3783,8 +3807,8 @@
         "y": 1600,
         "wires": [
             [
-                "105c2bbe.fec7b4",
-                "ad8c0cc9.0c17c"
+                "ad8c0cc9.0c17c",
+                "a60a3068.d2378"
             ]
         ]
     },
@@ -3836,7 +3860,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Slice message stream",
-        "func": "var buffer = flow.get('ble_overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\n// Clean start of buffer for garbage in case something got lost earlier\nwhile(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n    logMsg.error = true;\n    buffer = buffer.substr(1);\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nif(buffer.length >= 17) {\n    msg.payload = buffer.substr(0, 17);\n    const overflow = buffer.substr(17);\n    flow.set('ble_overflow', overflow);\n    \n    if(overflow.length >= 17) {\n        logMsg.error = true;\n    }\n    logMsg.out = msg.payload;\n    logMsg.overflow = overflow;\n    \n    // Re-synchronize in case something goes wrong\n    const end = msg.payload.substr(-1,1);\n    if(end !== \"Z\" && end !== \",\") {\n        logMsg.error = true;\n    }\n}\nelse {\n    if(buffer.substr(-1,1) === \"Z\") {\n        msg.payload = buffer;\n        logMsg.out = msg.payload;\n        flow.set('ble_overflow', null);\n    }\n    else {\n        msg.payload = null;\n        logMsg.out = null;\n        logMsg.error = true;\n        flow.set('ble_overflow', buffer);\n    }\n}\n\nif(logMsg.error) {\n    node.send([null, {'error':logMsg, 'previous':previous}]);\n}\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n\nif(msg.payload) {\n    node.send([msg, null]);\n}",
+        "func": "var buffer = flow.get('ble_overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\nvar didSend = false;\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nwhile(buffer.length >= 17) {\n    // Clean start of buffer for garbage in case something got lost earlier\n    while(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n       logMsg.error = true;\n       buffer = buffer.substr(1);\n    }\n\n    if(buffer.length >= 17) {\n        msg.payload = buffer.substr(0, 17);\n        const overflow = buffer.substr(17);\n        flow.set('ble_overflow', overflow);\n        buffer = overflow;\n        \n        if(overflow.length >= 17) {\n            logMsg.error = true;\n        }\n        logMsg.out = msg.payload;\n        logMsg.overflow = overflow;\n        \n        // Re-synchronize in case something goes wrong\n        const end = msg.payload.substr(-1,1);\n        if(end !== \"Z\" && end !== \",\") {\n            logMsg.error = true;\n        }\n        \n        didSend = true;\n        node.send([msg, null]);\n        if(logMsg.error) {\n            node.send([null, {'error':logMsg, 'previous':previous}]);\n            logMsg.error = false;\n        }\n    }\n    else {\n        flow.set('ble_overflow', buffer);\n        logMsg.out = null;\n    }\n}\n\nif(!didSend) {\n    flow.set('ble_overflow', buffer);\n    logMsg.out = null;\n}\n\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n",
         "outputs": 2,
         "noerr": 0,
         "x": 980,
@@ -4025,8 +4049,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 3340,
-        "y": 1420,
+        "x": 3360,
+        "y": 1360,
         "wires": [
             []
         ]
@@ -4050,8 +4074,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3100,
-        "y": 1420,
+        "x": 3140,
+        "y": 1360,
         "wires": [
             [
                 "b6bb3cce.52cbc"
@@ -4080,8 +4104,8 @@
         "func": "var interaction = msg.parameters[0];\nswitch(interaction) {\n    case \"C\":\n        msg.payload = \"interaction_cleared\";\n        break;\n        \n    default:\n        msg.payload = interaction;\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1620,
-        "y": 1500,
+        "x": 1540,
+        "y": 1700,
         "wires": [
             [
                 "787fce9c.18755",
@@ -4203,8 +4227,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1530,
-        "y": 1740,
+        "x": 1490,
+        "y": 1800,
         "wires": [
             [
                 "787fce9c.18755"
@@ -4219,8 +4243,8 @@
         "func": "if(msg.payload === \"boil_addition_alert\") {\n    flow.set('sticky_boil_addition_alert', true);\n    return msg;\n}\nif(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_boil_addition_alert', false);\n}\nelse if(flow.get('sticky_boil_addition_alert') === false) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1910,
-        "y": 1720,
+        "x": 1770,
+        "y": 1800,
         "wires": [
             [
                 "276d2c11.6ef0b4"
@@ -4330,8 +4354,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1450,
-        "y": 1800,
+        "x": 1590,
+        "y": 1620,
         "wires": [
             [
                 "276d2c11.6ef0b4"
@@ -4346,12 +4370,11 @@
         "func": "if(msg.payload === \"alarm\") {\n    const interactionMode = flow.get('interaction_mode');\n    const stageRamp = flow.get('stage_ramp');\n    const brewSession = flow.get('brewSession');\n    const stage = flow.get('brew_stage');\n    if(!interactionMode && stageRamp && (stage === brewSession.boilStage)) {\n        flow.set('sticky_temperature_alarm', true);\n        \n        msg.payload = \"temperature_alarm\";\n        return msg;\n    }\n}\nelse if(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_temperature_alarm', false);\n}\nelse if(flow.get('sticky_temperature_alarm') === false) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1910,
+        "x": 1990,
         "y": 1800,
         "wires": [
             [
-                "d68334f5.3ad848",
-                "fa9bca6f.4c65c8"
+                "d68334f5.3ad848"
             ]
         ]
     },
@@ -4379,108 +4402,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "fa9bca6f.4c65c8",
-        "type": "switch",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "temperature_alarm",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 2150,
-        "y": 1920,
-        "wires": [
-            [
-                "9d7dc8be.35b698"
-            ]
-        ]
-    },
-    {
-        "id": "9d7dc8be.35b698",
-        "type": "change",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "stage_ramp",
-                "pt": "msg",
-                "to": "stage_ramp",
-                "tot": "flow"
-            },
-            {
-                "t": "set",
-                "p": "ble_messages",
-                "pt": "msg",
-                "to": "ble_messages",
-                "tot": "flow"
-            },
-            {
-                "t": "set",
-                "p": "brew_stage",
-                "pt": "msg",
-                "to": "brew_stage",
-                "tot": "flow"
-            },
-            {
-                "t": "set",
-                "p": "interaction_mode",
-                "pt": "msg",
-                "to": "interaction_mode",
-                "tot": "flow"
-            },
-            {
-                "t": "set",
-                "p": "sticky_temperature_alarm",
-                "pt": "msg",
-                "to": "sticky_temperature_alarm",
-                "tot": "flow"
-            },
-            {
-                "t": "set",
-                "p": "timer_active",
-                "pt": "msg",
-                "to": "timer_active",
-                "tot": "flow"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 2320,
-        "y": 1920,
-        "wires": [
-            [
-                "c810e6be.b74f58"
-            ]
-        ]
-    },
-    {
-        "id": "c810e6be.b74f58",
-        "type": "debug",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 2490,
-        "y": 1920,
-        "wires": []
     },
     {
         "id": "6ec8c28c.5490bc",
@@ -4627,5 +4548,885 @@
         "x": 2915,
         "y": 1860,
         "wires": []
+    },
+    {
+        "id": "706d9f4d.22536",
+        "type": "ui_switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "Brewfather enabled",
+        "label": "Enable Brewfather connection",
+        "tooltip": "",
+        "group": "a56d0f41.236f6",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 430,
+        "y": 860,
+        "wires": [
+            [
+                "e89a906.d7d817",
+                "28156b92.d1f184"
+            ]
+        ]
+    },
+    {
+        "id": "4676395.9dac2c8",
+        "type": "ui_text_input",
+        "z": "9dea0b26.bbbe98",
+        "name": "Brewfather User ID",
+        "label": "User ID [Use RETURN to save]",
+        "tooltip": "",
+        "group": "a56d0f41.236f6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "x": 430,
+        "y": 920,
+        "wires": [
+            [
+                "3123c1fb.59830e"
+            ]
+        ]
+    },
+    {
+        "id": "8a21da68.c2f608",
+        "type": "ui_text_input",
+        "z": "9dea0b26.bbbe98",
+        "name": "Brewfather API Key",
+        "label": "API Key [Use RETURN to save]",
+        "tooltip": "",
+        "group": "a56d0f41.236f6",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "x": 430,
+        "y": 980,
+        "wires": [
+            [
+                "b45b6518.2dc8f8"
+            ]
+        ]
+    },
+    {
+        "id": "a4b5088.db903f8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "brewfather_enabled",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 860,
+        "wires": [
+            [
+                "706d9f4d.22536"
+            ]
+        ]
+    },
+    {
+        "id": "6f8b75ab.018b7c",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "brewfather_user_id",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 920,
+        "wires": [
+            [
+                "4676395.9dac2c8"
+            ]
+        ]
+    },
+    {
+        "id": "4189aa49.51f184",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "brewfather_api_key",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 980,
+        "wires": [
+            [
+                "8a21da68.c2f608"
+            ]
+        ]
+    },
+    {
+        "id": "e89a906.d7d817",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "brewfather_enabled",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 860,
+        "wires": [
+            [
+                "e6a2e1dc.32dfa"
+            ]
+        ]
+    },
+    {
+        "id": "3123c1fb.59830e",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "brewfather_user_id",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 920,
+        "wires": [
+            [
+                "e6a2e1dc.32dfa"
+            ]
+        ]
+    },
+    {
+        "id": "b45b6518.2dc8f8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "brewfather_api_key",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 980,
+        "wires": [
+            [
+                "e6a2e1dc.32dfa"
+            ]
+        ]
+    },
+    {
+        "id": "e6a2e1dc.32dfa",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Format Brewfather command",
+        "func": "const brewfatherEnabled = (flow.get('brewfather_enabled'))||false;\nif(brewfatherEnabled) {\n    const userID = flow.get('brewfather_user_id');\n    const apiKey = flow.get('brewfather_api_key');\n    if(userID && apiKey && userID.length && apiKey.length) {\n        authKey = Buffer.from(userID + \":\" + apiKey).toString(\"base64\");\n        const batchStatus = msg.payload.batchstatus || \"Planning\";\n        const batchLimit = msg.payload.batchlimit || 1;\n        const batchID = msg.payload.batchID;\n        \n        var title;\n        msg.headers = []\n        //msg.headers['Content-type'] = 'application/json';\n        msg.headers['Authorization'] = \"Basic \" + authKey;\n        if(batchID) {\n             msg.url = \"https://api.brewfather.app/v1/batches/\" + batchID;\n        }\n        else {\n            msg.url = \"https://api.brewfather.app/v1/batches?status=\" + batchStatus + \"&limit=\" + batchLimit;\n        }\n        msg.method = \"GET\";\n        msg.cookies = msg.payload.cookies;\n        msg.payload = null;\n\n        return msg;\n    }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 940,
+        "wires": [
+            [
+                "a7faefe.ccda81",
+                "28c3cec9.240022"
+            ]
+        ]
+    },
+    {
+        "id": "a7faefe.ccda81",
+        "type": "http request",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 850,
+        "y": 1120,
+        "wires": [
+            [
+                "c91850e2.3deaa",
+                "53471228.8f556c",
+                "702be1b3.704b2"
+            ]
+        ]
+    },
+    {
+        "id": "c91850e2.3deaa",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1170,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "28c3cec9.240022",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1330,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "d0e026e0.86fc58",
+        "type": "ui_template",
+        "z": "9dea0b26.bbbe98",
+        "group": "a56d0f41.236f6",
+        "name": "Brewfather connection status",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 1130,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "53471228.8f556c",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Brewfather status",
+        "func": "if(msg.statusCode === 200) {\n    msg.payload = \"Connected\";\n} \nelse if(msg.statusCode) {\n    msg.payload = \"Error \" + msg.statusCode + \": \" + msg.payload;\n}\nelse {\n    msg.payload = \"\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 870,
+        "y": 1360,
+        "wires": [
+            [
+                "d0e026e0.86fc58"
+            ]
+        ]
+    },
+    {
+        "id": "28156b92.d1f184",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 1040,
+        "wires": [
+            [
+                "9b1f9f36.e76f8"
+            ]
+        ]
+    },
+    {
+        "id": "9b1f9f36.e76f8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": " ",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 1360,
+        "wires": [
+            [
+                "53471228.8f556c"
+            ]
+        ]
+    },
+    {
+        "id": "e328018c.e2a5f",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "d1a86442.7b18f8"
+        ],
+        "x": 35,
+        "y": 940,
+        "wires": [
+            [
+                "4189aa49.51f184",
+                "6f8b75ab.018b7c",
+                "a4b5088.db903f8",
+                "9b1f9f36.e76f8",
+                "f3135e7.2cfb9a"
+            ]
+        ]
+    },
+    {
+        "id": "a60a3068.d2378",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "selected_batch",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "batch_load_method",
+                "pt": "flow",
+                "to": "file",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2880,
+        "y": 1600,
+        "wires": [
+            [
+                "f3ea1063.7eb96"
+            ]
+        ]
+    },
+    {
+        "id": "87a9f7aa.085638",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "d1a86442.7b18f8"
+        ],
+        "x": 3055,
+        "y": 1660,
+        "wires": [
+            [
+                "9e9dc494.f7e598"
+            ]
+        ]
+    },
+    {
+        "id": "f3ea1063.7eb96",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.batch_id_status",
+                "pt": "msg",
+                "to": " $flowContext('selected_batch').name & ' #' &  $flowContext('selected_batch').batchNo &\t ' - ' &  $flowContext('selected_batch').status\t",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload.recipe_name",
+                "pt": "msg",
+                "to": "selected_batch.recipe.name",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "payload.recipe_style",
+                "pt": "msg",
+                "to": " $flowContext('selected_batch').recipe.style.name & ' (' &  $flowContext('selected_batch').recipe.type & ')'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3180,
+        "y": 1620,
+        "wires": [
+            [
+                "43139386.cd6c0c",
+                "86b68b18.e59ea8"
+            ]
+        ]
+    },
+    {
+        "id": "43139386.cd6c0c",
+        "type": "ui_template",
+        "z": "9dea0b26.bbbe98",
+        "group": "f64cef87.3ae2e",
+        "name": "Selected Batch Info",
+        "order": 1,
+        "width": 6,
+        "height": 2,
+        "format": "<style>\n\n#BatchInformation-Div {\n    visibility: visible;\n    text-align: left;\n   }  \n   \n#Batch_id_status {\n    font-size: 1.2em;\n    font-weight: bold;\n   }  \n\n   \n#Batch_recipe_name {\n    font-size: 1em;\n    font-weight: bold;\n   }  \n\n#Batch_recipe_style {\n    font-size: 0.8em;\n    font-weight: normal;\n   }  \n\n</style>\n\n<div id = \"BatchInformation-Div\">\n    <p id = \"Batch_id_status\">{{msg.payload.batch_id_status}}</p>\n    <p id = \"Batch_recipe_name\">{{msg.payload.recipe_name}}</p>\n    <p id = \"Batch_recipe_style\">{{msg.payload.recipe_style}}</p>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 3410,
+        "y": 1620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9e9dc494.f7e598",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.batch_id_status",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.recipe_name",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload.recipe_style",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3180,
+        "y": 1660,
+        "wires": [
+            [
+                "43139386.cd6c0c"
+            ]
+        ]
+    },
+    {
+        "id": "f2d17010.6d11d",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "f64cef87.3ae2e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Start Brew Session",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "selected_batch",
+        "payloadType": "flow",
+        "topic": "",
+        "x": 2550,
+        "y": 1380,
+        "wires": [
+            [
+                "50c989e2.79bb68"
+            ]
+        ]
+    },
+    {
+        "id": "6a51924.7dbca6c",
+        "type": "ui_dropdown",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select brewfather batch",
+        "group": "6500c5a.452263c",
+        "order": 3,
+        "width": 5,
+        "height": 1,
+        "passthru": false,
+        "options": [],
+        "payload": "",
+        "topic": "",
+        "x": 990,
+        "y": 1260,
+        "wires": [
+            [
+                "220a6643.82d1da",
+                "dbfbfc50.bf6c"
+            ]
+        ]
+    },
+    {
+        "id": "58cc8c11.e1c434",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "Refresh",
+        "group": "6500c5a.452263c",
+        "order": 2,
+        "width": 1,
+        "height": 1,
+        "passthru": true,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "refresh",
+        "payload": "{\"batchstatus\":\"Planning\",\"batchlimit\":25,\"cookies\":{\"request\":\"refresh_list\"}}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 480,
+        "y": 1100,
+        "wires": [
+            [
+                "e6a2e1dc.32dfa",
+                "b9e599ac.bde388"
+            ]
+        ]
+    },
+    {
+        "id": "961041e0.0dd63",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Fill batch dropdown",
+        "func": "var batchDropdown;\nconst cookies = msg.cookies || {};\n\nfunction getBatchInfo(value, index, array) {\n  var batch = {};\n  batch.value = value._id;\n  batch.number = value.batchNo;\n  batch.label = value.name + \" #\" + value.batchNo + \" (\" + value.status + \")\";\n  batchDropdown[batchDropdown.length] = batch;\n}\n\nfunction sortBatch(a, b) {\n    return a.number - b.number;\n}\n\nvar dropdownList;\n\nfunction makeDropdownList(item, index, array) {\n    dropdownItem = {};\n    dropdownItem[item.label] = item.value; \n    dropdownList.push(dropdownItem);   \n}\n\nbatchDropdown = flow.get(\"batch_dropdown\") || [];\npayload = JSON.parse(msg.payload);\n\npayload.forEach(getBatchInfo);\nbatchDropdown.sort(sortBatch);\ndropdownList = [];\nbatchDropdown.forEach(makeDropdownList);\n\nmsg = { \"options\":dropdownList };\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1260,
+        "y": 1120,
+        "wires": [
+            [
+                "6a51924.7dbca6c"
+            ]
+        ]
+    },
+    {
+        "id": "b9e599ac.bde388",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "options",
+                "pt": "msg",
+                "to": "[]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 1260,
+        "wires": [
+            [
+                "6a51924.7dbca6c"
+            ]
+        ]
+    },
+    {
+        "id": "220a6643.82d1da",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1310,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "20877e31.2c8f82",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Get batch info",
+        "func": "\npayload = JSON.parse(msg.payload);\nmsg = {};\nflow.set('selected_batch', payload);\nflow.set('batch_load_method', 'api');\nmsg.payload = payload;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1980,
+        "y": 1720,
+        "wires": [
+            [
+                "f3ea1063.7eb96",
+                "58e16d57.866344"
+            ]
+        ]
+    },
+    {
+        "id": "702be1b3.704b2",
+        "type": "switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "property": "cookies.request",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "refresh_list",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "select_batch",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1050,
+        "y": 1120,
+        "wires": [
+            [
+                "961041e0.0dd63"
+            ],
+            [
+                "20877e31.2c8f82",
+                "e5010f46.55b17"
+            ]
+        ]
+    },
+    {
+        "id": "ae1cb688.742918",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1450,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "dbfbfc50.bf6c",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Get batch ID",
+        "func": "var payload = {};\n\npayload.batchID = msg.payload;\npayload.cookies = {\"request\":\"select_batch\"}\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1250,
+        "y": 1260,
+        "wires": [
+            [
+                "e6a2e1dc.32dfa",
+                "ae1cb688.742918"
+            ]
+        ]
+    },
+    {
+        "id": "f3135e7.2cfb9a",
+        "type": "delay",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 340,
+        "y": 1100,
+        "wires": [
+            [
+                "58cc8c11.e1c434"
+            ]
+        ]
+    },
+    {
+        "id": "58e16d57.866344",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 2200,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "e5010f46.55b17",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1360,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "86b68b18.e59ea8",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 3360,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "50c989e2.79bb68",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "selected_batch",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2740,
+        "y": 1380,
+        "wires": [
+            [
+                "105c2bbe.fec7b4"
+            ]
+        ]
     }
 ]

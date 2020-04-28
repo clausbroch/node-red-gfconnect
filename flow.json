@@ -5416,7 +5416,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Update batch status",
-        "func": "var payload = {};\n\npayload.batchID = msg.payload._id;\npayload.cookies = {\"request\":\"set_batch_status\"}\npayload.command = \"set\";\npayload.batchstatus = \"Brewing\";\nmsg.payload = payload;\n\nreturn msg;",
+        "func": "if(flow.get('batch_load_method') === \"api\") {\n    var payload = {};\n    \n    payload.batchID = msg.payload._id;\n    payload.cookies = {\"request\":\"set_batch_status\"}\n    payload.command = \"set\";\n    payload.batchstatus = \"Brewing\";\n    msg.payload = payload;\n    \n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 2960,

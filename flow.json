@@ -102,7 +102,6 @@
         "id": "321f8fea.8d69d",
         "type": "ui_group",
         "z": "",
-        "d": true,
         "name": "Raw Messages",
         "tab": "355d7d12.6d7412",
         "order": 4,
@@ -776,7 +775,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2430,
-        "y": 1320,
+        "y": 1340,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -802,7 +801,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 2430,
-        "y": 1240,
+        "y": 1260,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -918,8 +917,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 2090,
-        "y": 1240,
+        "x": 2050,
+        "y": 1260,
         "wires": [
             [
                 "8bb616a.62b5ee8"
@@ -954,7 +953,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1220,
+        "y": 1240,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -986,7 +985,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1260,
+        "y": 1280,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -1011,8 +1010,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 2090,
-        "y": 1320,
+        "x": 2050,
+        "y": 1340,
         "wires": [
             [
                 "bb4f926c.9206e"
@@ -1047,7 +1046,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1300,
+        "y": 1320,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1079,7 +1078,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1340,
+        "y": 1360,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1323,7 +1322,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -1637,8 +1636,8 @@
         "func": "msg.payload = ['g', 'X', 'M'];\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1920,
-        "y": 1040,
+        "x": 1960,
+        "y": 1060,
         "wires": [
             [
                 "6cb11f95.fde87"
@@ -1660,7 +1659,7 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 1690,
+        "x": 1710,
         "y": 1040,
         "wires": [
             [
@@ -1900,13 +1899,17 @@
         "id": "d1a86442.7b18f8",
         "type": "link out",
         "z": "9dea0b26.bbbe98",
-        "name": "",
+        "name": "defaults set out",
         "links": [
-            "b2f36278.67c2b",
-            "9ba75d3a.6302f",
-            "e328018c.e2a5f",
+            "18ef90.616fd071",
+            "4296f61b.e2b988",
+            "6c5f2523.9f24ac",
             "87a9f7aa.085638",
-            "6c5f2523.9f24ac"
+            "9ba75d3a.6302f",
+            "a100da8f.0b0ff8",
+            "b2f36278.67c2b",
+            "d9db71ec.8911c",
+            "e328018c.e2a5f"
         ],
         "x": 575,
         "y": 360,
@@ -1920,15 +1923,13 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 1995,
-        "y": 1280,
+        "x": 2095,
+        "y": 1220,
         "wires": [
             [
                 "bb2dab1a.27cec8",
                 "eb1126f9.7cfe58",
-                "599bb149.3e0ac",
-                "ffdf3fe7.d5d46",
-                "64ec676c.b5f938"
+                "599bb149.3e0ac"
             ]
         ]
     },
@@ -1998,7 +1999,7 @@
         "to": "",
         "reg": false,
         "x": 2240,
-        "y": 1180,
+        "y": 1200,
         "wires": [
             [
                 "a8a28b0b.dc3ba8"
@@ -2138,7 +2139,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Simple with delay recipe",
-        "func": "var testRecipe = [\n    \"R2,1,5,6,\", // 2 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,1,0,\", // No water tratment alert, no sparge counter, no sparge alert, delayed session, do not skip start\n    \"SIMPLE DELAY\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 2 boil additions, no boil power mode, no strike temp mode\n    \"1\", // Boil addition 1 at 3 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"1,60,\" // Delay session 1:00\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
+        "func": "var testRecipe = [\n    \"R2,1,5,6,\", // 2 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,1,0,\", // No water tratment alert, no sparge counter, no sparge alert, delayed session, do not skip start\n    \"SIMPLE DELAY\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 2 boil additions, no boil power mode, no strike temp mode\n    \"1\", // Boil addition 1 at 3 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"1,60\" // Delay session 1:00\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 3690,
@@ -2843,7 +2844,7 @@
         "action": "obj",
         "pretty": false,
         "x": 2630,
-        "y": 1520,
+        "y": 1580,
         "wires": [
             [
                 "ad8c0cc9.0c17c",
@@ -2862,7 +2863,7 @@
         "sendError": false,
         "encoding": "none",
         "x": 2450,
-        "y": 1520,
+        "y": 1580,
         "wires": [
             [
                 "c791c4b0.9df1b8"
@@ -2882,7 +2883,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2260,
-        "y": 1520,
+        "y": 1580,
         "wires": [
             [
                 "61bfaf7a.88de3"
@@ -2900,7 +2901,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 2870,
-        "y": 1520,
+        "y": 1580,
         "wires": []
     },
     {
@@ -2908,11 +2909,11 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode batch",
-        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,0,0,\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
+        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\nvar delayedSessionVal = msg.delay > 0 ? \"1\" : \"0\";\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,\" + delayedSessionVal + \",0,\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Delayed session starting in\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nif(msg.delay) {\n  gfRecipe[gfRecipe.length] = \"\" + msg.delay + \",60\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
         "outputs": 1,
         "noerr": 0,
-        "x": 2920,
-        "y": 1380,
+        "x": 2980,
+        "y": 2000,
         "wires": [
             [
                 "1abae4a5.1b726b",
@@ -2931,8 +2932,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3150,
-        "y": 1420,
+        "x": 3230,
+        "y": 1940,
         "wires": []
     },
     {
@@ -2948,7 +2949,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 2240,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "766fcf49.37bc8"
@@ -2966,7 +2967,7 @@
         "sendError": false,
         "encoding": "none",
         "x": 2440,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "c791c4b0.9df1b8"
@@ -3657,7 +3658,7 @@
         "upload": true,
         "swaggerDoc": "",
         "x": 1980,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "b85ecacf.a49298",
@@ -3673,7 +3674,7 @@
         "statusCode": "",
         "headers": {},
         "x": 2430,
-        "y": 1660,
+        "y": 1720,
         "wires": []
     },
     {
@@ -3684,13 +3685,13 @@
         "name": "Upload Batch",
         "order": 1,
         "width": 6,
-        "height": 2,
-        "format": "<style>\n\n\n#status {\n    font-size: 0.8em;\n    font-weight: normal;\n   }  \n\n</style>\n\n<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input type=\"button\" value=\"Upload\" onclick=\"uploadFile()\">\n    <!--<progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>-->\n    <p id=\"status\">&nbsp;</p>\n    <hr color=\"#555555\">\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/brewfatherbatchupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    //var percent = (event.loaded / event.total) * 100;\n    //_(\"progressBar\").value = Math.round(percent);\n    //_(\"status\").innerHTML = Math.round(percent)+\"% uploaded...\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    //_(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
+        "height": "3",
+        "format": "<style>\n\n\n#status {\n    font-size: 0.8em;\n    font-weight: normal;\n   }  \n#upload_form {\n    margin: 0 -6px;\n}\n#file1 {\n    margin: 0 6px;\n}\n#upload_form_button {\n    width: 100% !important;\n    height: 48px;\n}\n</style>\n\n<form id=\"upload_form\" enctype=\"multipart/form-data\" method=\"post\">\n    <input type=\"file\" name=\"file1\" id=\"file1\"><br>\n    <input id=\"upload_form_button\" type=\"button\" value=\"Upload File\" onclick=\"uploadFile()\" class=\"md-raised md-button md-ink-ripple\">\n    <!--<progress id=\"progressBar\" value=\"0\" max=\"100\" style=\"width:300px;\"></progress>-->\n    <p id=\"status\">&nbsp;</p>\n    <!--<hr color=\"#555555\">-->\n</form>\n\n<script>\n    function _(el){\n    return document.getElementById(el);\n}\nfunction uploadFile(){\n    var file = _(\"file1\").files[0];\n    // alert(file.name+\" | \"+file.size+\" | \"+file.type);\n    var formdata = new FormData();\n    formdata.append(\"file1\", file);\n    var ajax = new XMLHttpRequest();\n    ajax.upload.addEventListener(\"progress\", progressHandler, false);\n    ajax.addEventListener(\"load\", completeHandler, false);\n    ajax.addEventListener(\"error\", errorHandler, false);\n    ajax.addEventListener(\"abort\", abortHandler, false);\n    ajax.open(\"POST\", \"/brewfatherbatchupload\");\n    ajax.send(formdata);\n}\nfunction progressHandler(event){\n    //var percent = (event.loaded / event.total) * 100;\n    //_(\"progressBar\").value = Math.round(percent);\n    //_(\"status\").innerHTML = Math.round(percent)+\"% uploaded...\";\n}\nfunction completeHandler(event){\n    _(\"status\").innerHTML = event.target.responseText;\n    //_(\"progressBar\").value = 0;\n}\nfunction errorHandler(event){\n    _(\"status\").innerHTML = \"Upload Failed\";\n}\nfunction abortHandler(event){\n    _(\"status\").innerHTML = \"Upload Aborted\";\n}\n</script>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
         "x": 1940,
-        "y": 1620,
+        "y": 1680,
         "wires": [
             []
         ]
@@ -3722,7 +3723,7 @@
         "to": "",
         "reg": false,
         "x": 2230,
-        "y": 1620,
+        "y": 1680,
         "wires": [
             [
                 "26f65fbb.a3a83"
@@ -3749,7 +3750,7 @@
         "to": "",
         "reg": false,
         "x": 2260,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "6c693001.8e7f7"
@@ -3777,7 +3778,7 @@
         "repair": false,
         "outputs": 2,
         "x": 2410,
-        "y": 1620,
+        "y": 1680,
         "wires": [
             [
                 "e8abea9e.6ada28"
@@ -3796,7 +3797,7 @@
         "outputs": 0,
         "noerr": 0,
         "x": 2630,
-        "y": 1640,
+        "y": 1700,
         "wires": []
     },
     {
@@ -3808,7 +3809,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 2650,
-        "y": 1600,
+        "y": 1660,
         "wires": [
             [
                 "ad8c0cc9.0c17c",
@@ -3936,7 +3937,7 @@
         "repair": false,
         "outputs": 2,
         "x": 2080,
-        "y": 1440,
+        "y": 1500,
         "wires": [
             [
                 "2fb3cabe.8af616"
@@ -3980,7 +3981,7 @@
         "to": "",
         "reg": false,
         "x": 2340,
-        "y": 1420,
+        "y": 1480,
         "wires": [
             [
                 "3ab32ce6.cf1a74"
@@ -3994,7 +3995,7 @@
         "name": "Timer or Brew Session",
         "events": "all",
         "x": 2580,
-        "y": 1440,
+        "y": 1500,
         "wires": [
             []
         ]
@@ -4033,7 +4034,7 @@
         "to": "",
         "reg": false,
         "x": 2340,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "3ab32ce6.cf1a74"
@@ -4053,8 +4054,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 3360,
-        "y": 1360,
+        "x": 3460,
+        "y": 2000,
         "wires": [
             []
         ]
@@ -4078,8 +4079,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3140,
-        "y": 1360,
+        "x": 3220,
+        "y": 2000,
         "wires": [
             [
                 "b6bb3cce.52cbc"
@@ -4124,7 +4125,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format brew session alert",
-        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\nvar sendPushAlert = false;\nvar pushAlertTitle = \"\";\nvar pushAlertMessage = \"\";\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n    pushAlertTitle = \"Add boil additions\";\n    pushAlertMessage = payload;\n    sendPushAlert = true;\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n        pushAlertTitle = \"Boil temperature reached\";\n        pushAlertMessage = \"Ready to start boil timer\";\n        sendPushAlert = true;\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                buttonTitle = \"Start Heating\";\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                pushAlertTitle = \"Mash water ready\";\n                pushAlertMessage = \"Mash water is ready for adding grain\";\n                sendPushAlert = true;\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                pushAlertTitle = \"Mash finished\";\n                pushAlertMessage = \"Ready to start sparge\";\n                sendPushAlert = true;\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                pushAlertTitle = \"Hop stand finished\";\n                pushAlertMessage = \"The hop stand timer has elapsed.\";\n                sendPushAlert = true;\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\nmsg.pushalert = sendPushAlert;\nmsg.pushtitle = pushAlertTitle;\nmsg.pushmessage = pushAlertMessage;\n\nreturn msg;",
+        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst delayedHeat = msg.payload.delayedheat || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\nvar sendPushAlert = false;\nvar pushAlertTitle = \"\";\nvar pushAlertMessage = \"\";\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n    pushAlertTitle = \"Add boil additions\";\n    pushAlertMessage = payload;\n    sendPushAlert = true;\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n        pushAlertTitle = \"Boil temperature reached\";\n        pushAlertMessage = \"Ready to start boil timer\";\n        sendPushAlert = true;\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                if(delayedHeat) {\n                    buttonTitle = \"Override Delay\";\n                }\n                else {\n                    buttonTitle = \"Start Heating\";\n                }\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                pushAlertTitle = \"Mash water ready\";\n                pushAlertMessage = \"Mash water is ready for adding grain\";\n                sendPushAlert = true;\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                pushAlertTitle = \"Mash finished\";\n                pushAlertMessage = \"Ready to start sparge\";\n                sendPushAlert = true;\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                pushAlertTitle = \"Hop stand finished\";\n                pushAlertMessage = \"The hop stand timer has elapsed.\";\n                sendPushAlert = true;\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\nmsg.pushalert = sendPushAlert;\nmsg.pushtitle = pushAlertTitle;\nmsg.pushmessage = pushAlertMessage;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2210,
@@ -4142,11 +4143,11 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set stage title",
-        "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nif(stageNumber > 0) {\n    msg.payload.timertitle = brewSession.stageTitles[stageNumber - 1];\n}\nelse {\n    msg.payload.timertitle = \"\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nreturn msg;",
+        "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nmsg.payload.timertitle = brewSession.stageTitles[stageNumber];\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2540,
-        "y": 1100,
+        "x": 2460,
+        "y": 1060,
         "wires": [
             [
                 "5585b0fa.07b77"
@@ -4203,7 +4204,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Validate dismiss",
-        "func": "const interactionMode = flow.get('interaction_mode') || false;\nconst stickyBoilAdditionAlert = flow.get('sticky_boil_addition_alert') || false;\nconst stickyTemperatureAlarm = flow.get('sticky_temperature_alarm') || false;\nconst timerElapsedAlarm = flow.get('timer_elapsed') || false;\n\nif(stickyBoilAdditionAlert && msg.payload == \"A\") {\n    flow.set('sticky_boil_addition_alert', false);\n    return msg;\n}\n\nif(stickyTemperatureAlarm && msg.payload == \"T\") {\n    flow.set('sticky_temperature_alarm', false);\n    return msg;\n}\n\nif(interactionMode && msg.payload === \"T\") {\n    return msg;\n}\n\nif(timerElapsedAlarm && msg.payload === \"T\") {\n    return msg;\n}",
+        "func": "const interactionMode = flow.get('interaction_mode') || false;\nconst stickyBoilAdditionAlert = flow.get('sticky_boil_addition_alert') || false;\nconst stickyTemperatureAlarm = flow.get('sticky_temperature_alarm') || false;\nconst timerElapsedAlarm = flow.get('timer_elapsed') || false;\nconst delayedHeat = flow.get('delayed_heat') || false;\n\nif(stickyBoilAdditionAlert && msg.payload == \"A\") {\n    flow.set('sticky_boil_addition_alert', false);\n    return msg;\n}\n\nif(stickyTemperatureAlarm && msg.payload == \"T\") {\n    flow.set('sticky_temperature_alarm', false);\n    return msg;\n}\n\nif(interactionMode && msg.payload === \"T\") {\n    return msg;\n}\n\nif(timerElapsedAlarm && msg.payload === \"T\") {\n    return msg;\n}\n\nif(delayedHeat && msg.payload === \"T\") {\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 2740,
@@ -4410,8 +4411,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1940,
-        "y": 1200,
+        "x": 1980,
+        "y": 1180,
         "wires": [
             [
                 "f02efb47.4ccc68"
@@ -4855,7 +4856,7 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 650,
+        "x": 930,
         "y": 1200,
         "wires": []
     },
@@ -5006,7 +5007,7 @@
         "to": "",
         "reg": false,
         "x": 2880,
-        "y": 1600,
+        "y": 1660,
         "wires": [
             [
                 "f3ea1063.7eb96",
@@ -5022,8 +5023,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 3295,
-        "y": 1640,
+        "x": 3355,
+        "y": 1700,
         "wires": [
             [
                 "9e9dc494.f7e598"
@@ -5063,8 +5064,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3440,
-        "y": 1600,
+        "x": 3500,
+        "y": 1660,
         "wires": [
             [
                 "43139386.cd6c0c"
@@ -5084,10 +5085,12 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 3670,
-        "y": 1640,
+        "x": 3730,
+        "y": 1700,
         "wires": [
-            []
+            [
+                "5b7c9271.25ca2c"
+            ]
         ]
     },
     {
@@ -5123,8 +5126,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3440,
-        "y": 1660,
+        "x": 3500,
+        "y": 1720,
         "wires": [
             [
                 "43139386.cd6c0c"
@@ -5138,22 +5141,22 @@
         "name": "",
         "group": "f64cef87.3ae2e",
         "order": 2,
-        "width": 0,
-        "height": 0,
+        "width": 6,
+        "height": 1,
         "passthru": false,
-        "label": "Start Brew Session",
+        "label": "Start Session",
         "tooltip": "",
-        "color": "",
-        "bgcolor": "",
+        "color": "{{textcolour}}",
+        "bgcolor": "{{colour}}",
         "icon": "",
-        "payload": "selected_batch",
-        "payloadType": "flow",
+        "payload": "start session",
+        "payloadType": "str",
         "topic": "",
-        "x": 2550,
-        "y": 1380,
+        "x": 2530,
+        "y": 2020,
         "wires": [
             [
-                "50c989e2.79bb68"
+                "c2cf6b49.b5d4d8"
             ]
         ]
     },
@@ -5212,7 +5215,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Fill batch dropdown",
-        "func": "var batchDropdown;\nconst cookies = msg.cookies || {};\n\nfunction getBatchInfo(value, index, array) {\n  var batch = {};\n  batch.value = value._id;\n  batch.number = value.batchNo;\n  batch.label = \"#\" + value.batchNo + \": \" + value.recipe.name + \" (\" + value.status + \")\";\n  //batch.label = value.name + \" #\" + value.batchNo + \" (\" + value.status + \")\";\n  batchDropdown[batchDropdown.length] = batch;\n}\n\nfunction sortBatch(a, b) {\n    return a.number - b.number;\n}\n\nvar dropdownList;\n\nfunction makeDropdownList(item, index, array) {\n    dropdownItem = {};\n    dropdownItem[item.label] = item.value; \n    dropdownList.push(dropdownItem);   \n}\n\nbatchDropdown = flow.get(\"batch_dropdown\") || [];\npayload = JSON.parse(msg.payload);\n\npayload.forEach(getBatchInfo);\nbatchDropdown.sort(sortBatch);\ndropdownList = [];\nbatchDropdown.forEach(makeDropdownList);\nflow.set(\"batch_dropdown\", batchDropdown);\n\nmsg = { \"options\":dropdownList };\nnode.send(msg);\nmsg = {};\n\nlet selectedBatch = flow.get('selected_batch');\nif(selectedBatch) {\n    msg.payload = selectedBatch._id;\n    return msg;\n}\n\n",
+        "func": "var batchDropdown;\nconst cookies = msg.cookies || {};\n\nfunction getBatchInfo(value, index, array) {\n  var batch = {};\n  batch.value = value._id;\n  batch.number = value.batchNo;\n  batch.label = \"#\" + value.batchNo + \": \" + value.recipe.name + \" (\" + value.status + \")\";\n  //batch.label = value.name + \" #\" + value.batchNo + \" (\" + value.status + \")\";\n  batchDropdown[batchDropdown.length] = batch;\n}\n\nfunction sortBatch(a, b) {\n    return a.number - b.number;\n}\n\nvar dropdownList;\n\nfunction makeDropdownList(item, index, array) {\n    dropdownItem = {};\n    dropdownItem[item.label] = item.value; \n    dropdownList.push(dropdownItem);   \n}\n\nbatchDropdown = flow.get(\"batch_dropdown\") || [];\npayload = JSON.parse(msg.payload);\n\npayload.forEach(getBatchInfo);\nbatchDropdown.sort(sortBatch);\ndropdownList = [];\nbatchDropdown.forEach(makeDropdownList);\nflow.set(\"batch_dropdown\", batchDropdown);\n\nif(cookies.batchstatus === 'planning') {\n    flow.set('brewfather_pending_batch_request', false);\n}\nelse if(cookies.batchstatus === 'brewing') {\n    flow.set('brewfather_brewing_batch_request', false);\n}\n\nif(!flow.get('brewfather_pending_batch_request') && !flow.get('brewfather_brewing_batch_request')) {\n    msg = { \"options\":dropdownList };\n    node.send(msg);\n}\nmsg = {};\n\nlet selectedBatch = flow.get('selected_batch');\nif(selectedBatch) {\n    msg.payload = selectedBatch._id;\n    return msg;\n}\n\n",
         "outputs": 1,
         "noerr": 0,
         "x": 1160,
@@ -5220,7 +5223,8 @@
         "wires": [
             [
                 "6a51924.7dbca6c",
-                "1de955a2.fa64ca"
+                "1de955a2.fa64ca",
+                "648476d8.0ce148"
             ]
         ]
     },
@@ -5243,6 +5247,20 @@
                 "pt": "flow",
                 "to": "[]",
                 "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "brewfather_pending_batch_request",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "brewfather_brewing_batch_request",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -5255,7 +5273,8 @@
         "wires": [
             [
                 "6a51924.7dbca6c",
-                "50c25e86.abfa3"
+                "50c25e86.abfa3",
+                "648476d8.0ce148"
             ]
         ]
     },
@@ -5357,34 +5376,6 @@
         ]
     },
     {
-        "id": "50c989e2.79bb68",
-        "type": "change",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "selected_batch",
-                "tot": "flow"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 2740,
-        "y": 1380,
-        "wires": [
-            [
-                "105c2bbe.fec7b4",
-                "fff72b47.ea0f18"
-            ]
-        ]
-    },
-    {
         "id": "8adfb00d.dbe53",
         "type": "change",
         "z": "9dea0b26.bbbe98",
@@ -5417,8 +5408,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3440,
-        "y": 1720,
+        "x": 3500,
+        "y": 1780,
         "wires": [
             [
                 "43139386.cd6c0c"
@@ -5433,8 +5424,8 @@
         "func": "if(flow.get('batch_load_method') === \"api\") {\n    var payload = {};\n    \n    payload.batchID = msg.payload._id;\n    payload.cookies = {\"request\":\"set_batch_status\"}\n    payload.command = \"set\";\n    payload.batchstatus = \"Brewing\";\n    msg.payload = payload;\n    \n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2960,
-        "y": 1460,
+        "x": 3000,
+        "y": 2080,
         "wires": [
             [
                 "75017d5f.2d8f04",
@@ -5450,8 +5441,8 @@
         "links": [
             "a38061b1.72337"
         ],
-        "x": 3175,
-        "y": 1460,
+        "x": 3155,
+        "y": 2060,
         "wires": []
     },
     {
@@ -5474,8 +5465,8 @@
         "id": "50c25e86.abfa3",
         "type": "trigger",
         "z": "9dea0b26.bbbe98",
-        "op1": "{\"batchstatus\":\"Brewing\",\"batchlimit\":25,\"cookies\":{\"request\":\"refresh_list\"}}",
-        "op2": "{\"batchstatus\":\"Planning\",\"batchlimit\":25,\"cookies\":{\"request\":\"refresh_list\"}}",
+        "op1": "{\"batchstatus\":\"Brewing\",\"batchlimit\":25,\"cookies\":{\"request\":\"refresh_list\",\"batchstatus\":\"brewing\"}}",
+        "op2": "{\"batchstatus\":\"Planning\",\"batchlimit\":25,\"cookies\":{\"request\":\"refresh_list\",\"batchstatus\":\"planning\"}}",
         "op1type": "json",
         "op2type": "json",
         "duration": "250",
@@ -5523,8 +5514,8 @@
         "links": [
             "49c7f927.213f08"
         ],
-        "x": 3295,
-        "y": 1580,
+        "x": 3355,
+        "y": 1640,
         "wires": [
             [
                 "f3ea1063.7eb96"
@@ -5551,8 +5542,8 @@
         "links": [
             "35ca3744.455308"
         ],
-        "x": 3295,
-        "y": 1700,
+        "x": 3355,
+        "y": 1760,
         "wires": [
             [
                 "8adfb00d.dbe53"
@@ -5618,7 +5609,7 @@
         "to": "",
         "reg": false,
         "x": 3100,
-        "y": 1680,
+        "y": 1740,
         "wires": [
             [
                 "6a51924.7dbca6c"
@@ -5640,8 +5631,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 3190,
-        "y": 1500,
+        "x": 3230,
+        "y": 2120,
         "wires": [
             [
                 "5a06d81.1c5d028"
@@ -5667,8 +5658,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3360,
-        "y": 1500,
+        "x": 3440,
+        "y": 2120,
         "wires": [
             [
                 "be54db91.507ff8"
@@ -5683,8 +5674,8 @@
         "links": [
             "c6b58732.5d6fa8"
         ],
-        "x": 3475,
-        "y": 1500,
+        "x": 3555,
+        "y": 2120,
         "wires": []
     },
     {
@@ -6016,5 +6007,294 @@
                 "8906fc40.505e6"
             ]
         ]
+    },
+    {
+        "id": "144faf71.e45f11",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "f64cef87.3ae2e",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Start Delayed Session",
+        "tooltip": "",
+        "color": "{{textcolour}}",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "delayed session",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2520,
+        "y": 1980,
+        "wires": [
+            [
+                "c2cf6b49.b5d4d8"
+            ]
+        ]
+    },
+    {
+        "id": "b1ccae28.53456",
+        "type": "ui_numeric",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "Hours",
+        "tooltip": "",
+        "group": "f64cef87.3ae2e",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "wrap": true,
+        "passthru": false,
+        "topic": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "48",
+        "step": 1,
+        "x": 1630,
+        "y": 1980,
+        "wires": [
+            [
+                "c1317a98.2f2e68"
+            ]
+        ]
+    },
+    {
+        "id": "56bbb891.cbf6b8",
+        "type": "ui_numeric",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "Minutes",
+        "tooltip": "",
+        "group": "f64cef87.3ae2e",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "wrap": true,
+        "passthru": false,
+        "topic": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "59",
+        "step": 1,
+        "x": 1640,
+        "y": 2020,
+        "wires": [
+            [
+                "c845f093.194a5"
+            ]
+        ]
+    },
+    {
+        "id": "648476d8.0ce148",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Set spinner",
+        "func": "\nvar ui_control = {'icon':''};\nif(flow.get('brewfather_pending_batch_request') || flow.get('brewfather_brewing_batch_request')) {\n    ui_control.icon = \"fa-refresh fa-spin\";\n}\nnode.send({'ui_control':ui_control});\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 1260,
+        "wires": [
+            [
+                "58cc8c11.e1c434"
+            ]
+        ]
+    },
+    {
+        "id": "e8e01e5a.df5c7",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Adjust start session buttons",
+        "func": "var minutes = flow.get('delayed_session_minutes');\nvar hours = flow.get('delayed_session_hours');\nvar timerVal = hours * 60 + minutes;\nconst connected = flow.get('connection') === \"connected\";\nconst sessionActive = flow.get('brew_session_active');\n\nmsgDelayed = {};\nmsgDelayed.colour = \"#444444\";\nmsgDelayed.textcolour =\"#333333\"\nmsgStart = {};\nmsgStart.colour = \"#444444\";\nmsgStart.textcolour =\"#333333\"\n\nif(connected && !sessionActive) {\n    msgStart.colour = \"#4B7930\";\n    msgStart.textcolour = \"#FFFFFF\"\n    if(timerVal > 0) {\n        msgDelayed.colour = \"#4B7930\";\n        msgDelayed.textcolour = \"#FFFFFF\"\n    }\n}\n\nnode.send([msgDelayed, msgStart]);\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 2220,
+        "y": 2000,
+        "wires": [
+            [
+                "144faf71.e45f11"
+            ],
+            [
+                "f2d17010.6d11d"
+            ]
+        ]
+    },
+    {
+        "id": "c1317a98.2f2e68",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "delayed_session_hours",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1890,
+        "y": 1980,
+        "wires": [
+            [
+                "e8e01e5a.df5c7"
+            ]
+        ]
+    },
+    {
+        "id": "c845f093.194a5",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "delayed_session_minutes",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1880,
+        "y": 2020,
+        "wires": [
+            [
+                "e8e01e5a.df5c7"
+            ]
+        ]
+    },
+    {
+        "id": "70ab2998.70e028",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1460,
+        "y": 2000,
+        "wires": [
+            [
+                "b1ccae28.53456",
+                "56bbb891.cbf6b8"
+            ]
+        ]
+    },
+    {
+        "id": "d9db71ec.8911c",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "d1a86442.7b18f8"
+        ],
+        "x": 2375,
+        "y": 1780,
+        "wires": [
+            [
+                "ffdf3fe7.d5d46"
+            ]
+        ]
+    },
+    {
+        "id": "c2cf6b49.b5d4d8",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Set session start",
+        "func": "var delay = 0;\nif(msg.payload === \"delayed session\") {\n    var minutes = flow.get('delayed_session_minutes');\n    var hours = flow.get('delayed_session_hours');\n    delay = hours * 60 + minutes;\n}\n\nmsg = {};\npayload = flow.get('selected_batch');\n\nmsg.delay = delay;\nmsg.payload = payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2750,
+        "y": 2020,
+        "wires": [
+            [
+                "105c2bbe.fec7b4",
+                "fff72b47.ea0f18"
+            ]
+        ]
+    },
+    {
+        "id": "18ef90.616fd071",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "d1a86442.7b18f8"
+        ],
+        "x": 2075,
+        "y": 1560,
+        "wires": [
+            [
+                "64ec676c.b5f938"
+            ]
+        ]
+    },
+    {
+        "id": "a100da8f.0b0ff8",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "d1a86442.7b18f8"
+        ],
+        "x": 1275,
+        "y": 2000,
+        "wires": [
+            [
+                "70ab2998.70e028"
+            ]
+        ]
+    },
+    {
+        "id": "4296f61b.e2b988",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "d1a86442.7b18f8",
+            "5b7c9271.25ca2c"
+        ],
+        "x": 1995,
+        "y": 1940,
+        "wires": [
+            [
+                "e8e01e5a.df5c7"
+            ]
+        ]
+    },
+    {
+        "id": "5b7c9271.25ca2c",
+        "type": "link out",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "4296f61b.e2b988"
+        ],
+        "x": 3875,
+        "y": 1700,
+        "wires": []
     }
 ]

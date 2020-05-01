@@ -306,15 +306,6 @@
         "collapse": false
     },
     {
-        "id": "7c21fdba.2b6a34",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "1df37c54.681d74",
-        "order": 4,
-        "width": 1,
-        "height": 1
-    },
-    {
         "id": "a56d0f41.236f6",
         "type": "ui_group",
         "z": "",
@@ -335,6 +326,15 @@
         "disp": true,
         "width": "6",
         "collapse": false
+    },
+    {
+        "id": "1539fca2.e3e2c3",
+        "type": "ui_spacer",
+        "name": "spacer",
+        "group": "1df37c54.681d74",
+        "order": 4,
+        "width": 1,
+        "height": 1
     },
     {
         "id": "b3f2ec24.29c96",
@@ -732,7 +732,8 @@
         "wires": [
             [
                 "2113cd0f.134c52",
-                "dc4d7b2d.61a548"
+                "dc4d7b2d.61a548",
+                "f02efb47.4ccc68"
             ]
         ]
     },
@@ -744,8 +745,8 @@
         "func": "const heatPower = Boolean(msg.parameters[0] === \"1\");\nconst pumpPower = Boolean(msg.parameters[1] === \"1\");\nconst autoMode = Boolean(msg.parameters[2] === \"1\");\nconst stageRamp = Boolean(msg.parameters[3] === \"1\");\nconst interactionMode = Boolean(msg.parameters[4] === \"1\");\nconst interactionCode = msg.parameters[5];\nconst stageNumber = Number(msg.parameters[6]);\nconst delayedHeat = Boolean(msg.parameters[7] === \"1\");\n\nvar interaction = \"\";\nswitch(interactionCode) {\n    case \"1\":\n        interaction = \"Add water\";\n        break;\n    case \"2\":\n        interaction = \"Add grain\";\n        break;\n    case \"3\":\n        interaction = \"Mash finished\";\n        break;\n    case \"4\":\n        interaction = \"Sparge\";\n        break;\n    case \"5\":\n        interaction = \"Boil reached\";\n        break;\n    case \"6\":\n        interaction = \"Boil finished\";\n        //interaction = \"Start hopstand\";\n        break;\n    case \"7\":\n        interaction = \"Hopstand finished\";\n        break;\n}\n\nmsg.payload = {\n    'heatpower':heatPower,\n    'pumppower':pumpPower,\n    'automode':autoMode,\n    'stageramp':stageRamp,\n    'interactionmode':interactionMode,\n    'interactioncode':interactionCode,\n    'interaction':interaction,\n    'stagenumber':stageNumber,\n    'delayedheat':delayedHeat\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1850,
-        "y": 1280,
+        "x": 1730,
+        "y": 1260,
         "wires": [
             [
                 "a8a972b4.9eef5",
@@ -1251,8 +1252,7 @@
             [
                 "5e825722.30d588",
                 "fbd65c91.f4f7a",
-                "e2a4d62a.77bcd8",
-                "d3fa7778.8eb398"
+                "e2a4d62a.77bcd8"
             ]
         ]
     },
@@ -1323,7 +1323,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -1586,8 +1586,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3100,
-        "y": 300,
+        "x": 3520,
+        "y": 440,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -1607,7 +1607,7 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 2290,
+        "x": 2430,
         "y": 1140,
         "wires": [
             []
@@ -1905,7 +1905,8 @@
             "b2f36278.67c2b",
             "9ba75d3a.6302f",
             "e328018c.e2a5f",
-            "87a9f7aa.085638"
+            "87a9f7aa.085638",
+            "6c5f2523.9f24ac"
         ],
         "x": 575,
         "y": 360,
@@ -1919,8 +1920,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 1915,
-        "y": 1180,
+        "x": 1995,
+        "y": 1280,
         "wires": [
             [
                 "bb2dab1a.27cec8",
@@ -1996,7 +1997,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2080,
+        "x": 2240,
         "y": 1180,
         "wires": [
             [
@@ -2012,12 +2013,12 @@
         "func": "var testRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2510,
-        "y": 320,
+        "x": 3670,
+        "y": 880,
         "wires": [
             [
                 "46b9479a.5828e8",
-                "6cb11f95.fde87"
+                "972a9ebc.ebca7"
             ]
         ]
     },
@@ -2033,8 +2034,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2300,
-        "y": 320,
+        "x": 3460,
+        "y": 880,
         "wires": [
             [
                 "5ff76da9.ada754"
@@ -2051,8 +2052,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 2750,
-        "y": 320,
+        "x": 3950,
+        "y": 880,
         "wires": []
     },
     {
@@ -2067,8 +2068,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3110,
-        "y": 220,
+        "x": 3530,
+        "y": 360,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2087,8 +2088,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3110,
-        "y": 260,
+        "x": 3530,
+        "y": 400,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2103,12 +2104,12 @@
         "func": "var testRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2500,
-        "y": 360,
+        "x": 3660,
+        "y": 920,
         "wires": [
             [
                 "46b9479a.5828e8",
-                "6cb11f95.fde87"
+                "972a9ebc.ebca7"
             ]
         ]
     },
@@ -2124,8 +2125,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2300,
-        "y": 360,
+        "x": 3460,
+        "y": 920,
         "wires": [
             [
                 "f5fa6744.cee1a8"
@@ -2137,15 +2138,15 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Simple with delay recipe",
-        "func": "var testRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,1,0,\", // No water tratment alert, no sparge counter, no sparge alert, delayed session, do not skip start\n    \"SIMPLE DELAY\", // Name of recipe\n    \"0,2,0,0,\", // No hop stand, 2 boil additions, no boil power mode, no strike temp mode\n    \"7\", // Boil addition 1 at 7 mins remaining\n    \"3\", // Boil addition 1 at 3 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"4,60\" // Delay session 4:00\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
+        "func": "var testRecipe = [\n    \"R2,1,5,6,\", // 2 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,1,0,\", // No water tratment alert, no sparge counter, no sparge alert, delayed session, do not skip start\n    \"SIMPLE DELAY\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 2 boil additions, no boil power mode, no strike temp mode\n    \"1\", // Boil addition 1 at 3 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"1,60,\" // Delay session 1:00\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2530,
-        "y": 400,
+        "x": 3690,
+        "y": 960,
         "wires": [
             [
-                "6cb11f95.fde87",
-                "46b9479a.5828e8"
+                "46b9479a.5828e8",
+                "972a9ebc.ebca7"
             ]
         ]
     },
@@ -2161,8 +2162,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2300,
-        "y": 400,
+        "x": 3460,
+        "y": 960,
         "wires": [
             [
                 "3d45c775.350518"
@@ -2181,8 +2182,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3110,
-        "y": 380,
+        "x": 3530,
+        "y": 520,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2201,8 +2202,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3110,
-        "y": 440,
+        "x": 3530,
+        "y": 580,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2221,8 +2222,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3110,
-        "y": 480,
+        "x": 3530,
+        "y": 620,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2241,8 +2242,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3090,
-        "y": 520,
+        "x": 3510,
+        "y": 660,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2261,8 +2262,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3100,
-        "y": 580,
+        "x": 3520,
+        "y": 720,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2281,8 +2282,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3090,
-        "y": 620,
+        "x": 3510,
+        "y": 760,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2301,8 +2302,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3110,
-        "y": 680,
+        "x": 3530,
+        "y": 820,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2369,8 +2370,8 @@
         "links": [
             "bad838db.5dd1c8"
         ],
-        "x": 3380,
-        "y": 440,
+        "x": 3800,
+        "y": 580,
         "wires": []
     },
     {
@@ -2381,8 +2382,8 @@
         "links": [
             "bc61b8e9.017228"
         ],
-        "x": 3355,
-        "y": 1120,
+        "x": 3275,
+        "y": 1140,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -2449,8 +2450,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3080,
-        "y": 140,
+        "x": 3500,
+        "y": 280,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -4157,7 +4158,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format timer",
-        "func": "var timerTitle = \" \";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nif(msg.payload.timeractive) {\n    timerTitle = \"Timer active\";\n}\nif(msg.payload.timerpaused) {\n    timerTitle = \"Timer paused\";\n}\nif(msg.payload.timerelapsed) {\n    timerTitle = \"Timer elapsed\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\nmsg.payload.timertitle = timerTitle;\n\nreturn msg;",
+        "func": "var timerTitle = \" \";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nvar delayedHeat = flow.get(\"delayed_heat\");\n\nif(msg.payload.timeractive) {\n    timerTitle = delayedHeat ? \"Delayed heat\" : \"Timer active\";\n}\nif(msg.payload.timerpaused) {\n    timerTitle = delayedHeat ? \"Delayed heat paused\" : \"Timer paused\";\n}\nif(msg.payload.timerelapsed) {\n    timerTitle = delayedHeat ? \"Delayed heat started\" : \"Timer elapsed\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\nmsg.payload.timertitle = timerTitle;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2330,
@@ -4395,6 +4396,13 @@
                 "pt": "flow",
                 "to": "payload.stageramp",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "delayed_heat",
+                "pt": "flow",
+                "to": "payload.delayedheat",
+                "tot": "msg"
             }
         ],
         "action": "",
@@ -4402,10 +4410,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1820,
-        "y": 1400,
+        "x": 1940,
+        "y": 1200,
         "wires": [
-            []
+            [
+                "f02efb47.4ccc68"
+            ]
         ]
     },
     {
@@ -4439,8 +4449,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3090,
-        "y": 340,
+        "x": 3510,
+        "y": 480,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -5562,20 +5572,6 @@
         "wires": []
     },
     {
-        "id": "d3fa7778.8eb398",
-        "type": "debug",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 190,
-        "y": 420,
-        "wires": []
-    },
-    {
         "id": "3a3bac0d.0c52e4",
         "type": "change",
         "z": "9dea0b26.bbbe98",
@@ -5755,6 +5751,270 @@
         "y": 40,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "1cbebfac.37bf8",
+        "type": "ui_numeric",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "Hours",
+        "tooltip": "",
+        "group": "8225a265.09c9b",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "wrap": true,
+        "passthru": false,
+        "topic": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "48",
+        "step": 1,
+        "x": 2590,
+        "y": 340,
+        "wires": [
+            [
+                "8fd350fe.14c6c"
+            ]
+        ]
+    },
+    {
+        "id": "956201f.f96f5",
+        "type": "ui_numeric",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "Minutes",
+        "tooltip": "",
+        "group": "8225a265.09c9b",
+        "order": 5,
+        "width": 3,
+        "height": 1,
+        "wrap": true,
+        "passthru": false,
+        "topic": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "59",
+        "step": 1,
+        "x": 2580,
+        "y": 400,
+        "wires": [
+            [
+                "a22dee44.cf751"
+            ]
+        ]
+    },
+    {
+        "id": "f1e1ca3a.9bab38",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "8225a265.09c9b",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Start Timer",
+        "tooltip": "",
+        "color": "{{textcolour}}",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "start timer",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2830,
+        "y": 500,
+        "wires": [
+            [
+                "be406293.7f228"
+            ]
+        ]
+    },
+    {
+        "id": "be406293.7f228",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Calculate timer",
+        "func": "if(flow.get('connection') === \"connected\" && !flow.get('timer_active') && !flow.get('timer_paused') && !flow.get('timer_elapsed')) {\n    var minutes = flow.get('new_timer_minutes');\n    var hours = flow.get('new_timer_hours');\n    var timerVal = hours * 60 + minutes;\n    \n    if(timerVal) {\n        if(msg.payload === \"start timer\") {\n            msg.payload = \"W\" + timerVal + \",60,\";\n            return msg;\n        }\n        else if(msg.payload === \"delayed heat\") {\n            flow.set(\"delayed_heat\", true); // Prevent title showing \"timer started\" first second\n            msg.payload = \"B\" + timerVal + \",60,\";\n            return msg;\n        }\n   }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3040,
+        "y": 520,
+        "wires": [
+            [
+                "bce0ab71.378748"
+            ]
+        ]
+    },
+    {
+        "id": "8fd350fe.14c6c",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "new_timer_hours",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2790,
+        "y": 340,
+        "wires": [
+            [
+                "f02efb47.4ccc68"
+            ]
+        ]
+    },
+    {
+        "id": "a22dee44.cf751",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "new_timer_minutes",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2800,
+        "y": 400,
+        "wires": [
+            [
+                "f02efb47.4ccc68"
+            ]
+        ]
+    },
+    {
+        "id": "972a9ebc.ebca7",
+        "type": "link out",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "1f58d751.316199"
+        ],
+        "x": 3935,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "1f58d751.316199",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "972a9ebc.ebca7"
+        ],
+        "x": 2955,
+        "y": 1140,
+        "wires": [
+            [
+                "6cb11f95.fde87"
+            ]
+        ]
+    },
+    {
+        "id": "fb404aad.c48cd8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2400,
+        "y": 360,
+        "wires": [
+            [
+                "1cbebfac.37bf8",
+                "956201f.f96f5"
+            ]
+        ]
+    },
+    {
+        "id": "6c5f2523.9f24ac",
+        "type": "link in",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "links": [
+            "d1a86442.7b18f8"
+        ],
+        "x": 2275,
+        "y": 360,
+        "wires": [
+            [
+                "fb404aad.c48cd8",
+                "f02efb47.4ccc68"
+            ]
+        ]
+    },
+    {
+        "id": "8906fc40.505e6",
+        "type": "ui_button",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "group": "8225a265.09c9b",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Delayed Heat",
+        "tooltip": "",
+        "color": "{{textcolour}}",
+        "bgcolor": "{{colour}}",
+        "icon": "",
+        "payload": "delayed heat",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2820,
+        "y": 560,
+        "wires": [
+            [
+                "be406293.7f228"
+            ]
+        ]
+    },
+    {
+        "id": "f02efb47.4ccc68",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Adjust start timer buttons",
+        "func": "var minutes = flow.get('new_timer_minutes');\nvar hours = flow.get('new_timer_hours');\nvar timerVal = hours * 60 + minutes;\nconst connected = flow.get('connection') === \"connected\";\nconst timerInactive = !flow.get('timer_active') && !flow.get('timer_paused') && !flow.get('timer_elapsed');\n\nmsg = {};\n\nif(connected && timerInactive && timerVal > 0) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2560,
+        "y": 540,
+        "wires": [
+            [
+                "f1e1ca3a.9bab38",
+                "8906fc40.505e6"
+            ]
         ]
     }
 ]

@@ -2,7 +2,7 @@ Node Red GFConnect
 ===========
 
 ### About
-Node Red GFConnect is a Node-RED flow for connecting with the Grainfather Connect (G30) brewing system.
+Node Red GFConnect is a Node-RED flow for controlling the Grainfather Connect (G30) brewing system from Raspberry Pi. It can be used as a replacement for the official Grainfather App.
 
 <img src="pictures/GFConnectMainControl.png">
 
@@ -10,7 +10,8 @@ The following features are currently supported:
 * Temperature control
 * Pump control
 * Heating power control
-* Timer control (stop, pause, resume)
+* Timer control (set, stop, pause, resume)
+* Delayed heat control (set, stop, pause, resume)
 * Loading of brew session from Brewfather batch json files
 * Sending timer and brew alerts as push notifications via Pushover
 

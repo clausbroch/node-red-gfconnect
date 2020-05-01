@@ -346,8 +346,8 @@
         "tostatus": false,
         "complete": "payload.characteristics[\"0003cdd100001000800000805f9b0131\"]",
         "targetType": "msg",
-        "x": 1010,
-        "y": 160,
+        "x": 1290,
+        "y": 220,
         "wires": []
     },
     {
@@ -420,8 +420,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 12,
-        "x": 1530,
-        "y": 360,
+        "x": 1810,
+        "y": 420,
         "wires": [
             [
                 "efbe3f05.d87f2",
@@ -485,8 +485,8 @@
         "label": "X",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 500,
+        "x": 2410,
+        "y": 560,
         "wires": []
     },
     {
@@ -501,8 +501,8 @@
         "label": "Y",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 540,
+        "x": 2410,
+        "y": 600,
         "wires": []
     },
     {
@@ -517,8 +517,8 @@
         "label": "T",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 380,
+        "x": 2410,
+        "y": 440,
         "wires": []
     },
     {
@@ -533,8 +533,8 @@
         "label": "I",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 340,
+        "x": 2410,
+        "y": 400,
         "wires": []
     },
     {
@@ -549,8 +549,8 @@
         "label": "W",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 460,
+        "x": 2410,
+        "y": 520,
         "wires": []
     },
     {
@@ -565,8 +565,8 @@
         "label": "C",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 220,
+        "x": 2410,
+        "y": 280,
         "wires": []
     },
     {
@@ -581,8 +581,8 @@
         "label": "A",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 140,
+        "x": 2410,
+        "y": 200,
         "wires": []
     },
     {
@@ -597,8 +597,8 @@
         "label": "B",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 180,
+        "x": 2410,
+        "y": 240,
         "wires": []
     },
     {
@@ -613,8 +613,8 @@
         "label": "E",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 260,
+        "x": 2410,
+        "y": 320,
         "wires": []
     },
     {
@@ -625,8 +625,8 @@
         "func": "var raw = msg.payload;\n\nif(raw.length > 1) {\n    msg.message = raw.substr(0, 1);\n    \n    var n = raw.indexOf(\"Z\");\n    var trimmed = raw;\n    if(n != -1) {\n        trimmed = raw.substring(1, n - 1);\n    }\n    else {\n        trimmed = raw.substring(1, raw.length - 1);\n    }\n    \n    msg.parameters = trimmed.split(\",\");\n}\n\nmsg.payload = raw;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1210,
-        "y": 220,
+        "x": 1490,
+        "y": 280,
         "wires": [
             [
                 "d2eeaa0a.f44ab8",
@@ -647,8 +647,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1430,
-        "y": 220,
+        "x": 1710,
+        "y": 280,
         "wires": []
     },
     {
@@ -663,8 +663,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 1710,
-        "y": 80,
+        "x": 1990,
+        "y": 140,
         "wires": [
             [
                 "1f325fe7.4f74"
@@ -683,8 +683,8 @@
         "label": "Unknown",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2140,
-        "y": 580,
+        "x": 2420,
+        "y": 640,
         "wires": []
     },
     {
@@ -698,8 +698,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 2130,
-        "y": 620,
+        "x": 2410,
+        "y": 680,
         "wires": []
     },
     {
@@ -710,8 +710,8 @@
         "func": "var targetTemp = msg.parameters[0];\nvar currentTemp = msg.parameters[1];\n\n// Grainfather set target temp to 120 °C during boil\nif(targetTemp > 100.0) {\n    targetTemp = 100.0;\n}\n\nvar payload = {};\ntemperature_unit = flow.get('temperature_unit');\nif(temperature_unit === 'F') {\n    targetTemp = (targetTemp * 9 / 5) + 32;\n    currentTemp = (currentTemp * 9 / 5) + 32;\n}\n\npayload.temperature_unit = temperature_unit;\npayload.targetTemp = Number(targetTemp).toFixed(0);\npayload.currentTemp = Number(currentTemp).toFixed(1);\n\nmsg.payload = payload;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1930,
-        "y": 1120,
+        "x": 2210,
+        "y": 1180,
         "wires": [
             [
                 "a8a28b0b.dc3ba8"
@@ -726,8 +726,8 @@
         "func": "function zeropad(num) {\n    var s = \"0\" + num;\n    return s.substr(s.length - 2);\n}\n\nconst timerActive = Boolean(msg.parameters[0] === \"1\");\nconst timerPaused = flow.get('timer_paused');\nvar timerElapsed = false;\nvar timerLeftMins = 0;\nvar timerStartMins = 0;\nvar timerLeftSecs = 0;\nvar timerTitle = \" \";\nvar timerFormatted = \"--\";\n\nflow.set('timer_active', timerActive);\ntimerLeftSecs = Number(msg.parameters[3]);\ntimerLeftMins = Number(msg.parameters[1]) - 1 + Math.floor(timerLeftSecs / 60);\ntimerStartMins = Number(msg.parameters[2]);\n    \ntimerLeftSecs = timerLeftSecs % 60;\nif(timerLeftMins < 0) {\n    timerLeftMins = 0;\n}\n\nif(timerActive || timerLeftMins > 0 || timerLeftSecs > 0) {\n    if(timerLeftMins <= 59) {\n        //timerFormatted = \"MM:SS\";\n        if(timerLeftMins === 0 && timerLeftSecs === 0) {\n            timerElapsed = true;\n        }\n        timerFormatted = timerLeftMins.toString() + \":\" + zeropad(timerLeftSecs);\n    }\n    else {\n        //timerFormatted = \"H:MM:SS\";\n        var hours = Math.floor(timerLeftMins / 60);\n        var mins = timerLeftMins % 60;\n        timerFormatted = hours.toString() + \":\" + zeropad(mins) + \":\" + zeropad(timerLeftSecs);\n    }\n}\n\nflow.set('timer_elapsed', timerElapsed);\nflow.set('timer_start_mins', timerStartMins);\nflow.set('timer_left_mins', timerLeftMins);\nflow.set('timer_left_secs', timerLeftSecs);\n\nmsg.payload = {\n    'timervalue':timerFormatted,\n    'timerleftmins':timerLeftMins,\n    'timerleftmecs':timerLeftSecs,\n    'timerstartmins':timerStartMins,\n    'timeractive':timerActive,\n    'timerpaused':timerPaused,\n    'timerelapsed':timerElapsed};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1930,
-        "y": 780,
+        "x": 2210,
+        "y": 840,
         "wires": [
             [
                 "2113cd0f.134c52",
@@ -744,8 +744,8 @@
         "func": "const heatPower = Boolean(msg.parameters[0] === \"1\");\nconst pumpPower = Boolean(msg.parameters[1] === \"1\");\nconst autoMode = Boolean(msg.parameters[2] === \"1\");\nconst stageRamp = Boolean(msg.parameters[3] === \"1\");\nconst interactionMode = Boolean(msg.parameters[4] === \"1\");\nconst interactionCode = msg.parameters[5];\nconst stageNumber = Number(msg.parameters[6]);\nconst delayedHeat = Boolean(msg.parameters[7] === \"1\");\n\nvar interaction = \"\";\nswitch(interactionCode) {\n    case \"1\":\n        interaction = \"Add water\";\n        break;\n    case \"2\":\n        interaction = \"Add grain\";\n        break;\n    case \"3\":\n        interaction = \"Mash finished\";\n        break;\n    case \"4\":\n        interaction = \"Sparge\";\n        break;\n    case \"5\":\n        interaction = \"Boil reached\";\n        break;\n    case \"6\":\n        interaction = \"Boil finished\";\n        //interaction = \"Start hopstand\";\n        break;\n    case \"7\":\n        interaction = \"Hopstand finished\";\n        break;\n}\n\nmsg.payload = {\n    'heatpower':heatPower,\n    'pumppower':pumpPower,\n    'automode':autoMode,\n    'stageramp':stageRamp,\n    'interactionmode':interactionMode,\n    'interactioncode':interactionCode,\n    'interaction':interaction,\n    'stagenumber':stageNumber,\n    'delayedheat':delayedHeat\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1730,
-        "y": 1260,
+        "x": 2010,
+        "y": 1320,
         "wires": [
             [
                 "a8a972b4.9eef5",
@@ -774,8 +774,8 @@
         "payload": "P",
         "payloadType": "str",
         "topic": "",
-        "x": 2430,
-        "y": 1340,
+        "x": 2710,
+        "y": 1400,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -800,8 +800,8 @@
         "payload": "H",
         "payloadType": "str",
         "topic": "",
-        "x": 2430,
-        "y": 1260,
+        "x": 2710,
+        "y": 1320,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -845,8 +845,8 @@
         "tickmode": "off",
         "peakmode": false,
         "peaktime": 3000,
-        "x": 2450,
-        "y": 1020,
+        "x": 2730,
+        "y": 1080,
         "wires": []
     },
     {
@@ -857,8 +857,8 @@
         "func": "const heatPowerPct = Number(msg.parameters[0]);\nconst timerPaused = Boolean(msg.parameters[1] === \"1\");\nconst stepMashMode = Boolean(msg.parameters[2] === \"1\");\nconst recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nconst manualPower = Boolean(msg.parameters[4] === \"1\");\nconst spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nflow.set('timer_paused', timerPaused);\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\nmsg.payload = {\n    'heatpowerpct':heatPowerPct,\n    'timerpaused':timerPaused,\n    'stepmashmode':stepMashMode,\n    'recipeinterrupted¨':recipeInterrupted,\n    'manualpower':manualPower,\n    'spargeWaterAlert':spargeWaterAlert\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1910,
-        "y": 940,
+        "x": 2190,
+        "y": 1000,
         "wires": [
             [
                 "c65e1ece.7d4d6",
@@ -879,8 +879,8 @@
         "label": "Heat",
         "format": "{{msg.payload}}",
         "layout": "col-center",
-        "x": 2530,
-        "y": 960,
+        "x": 2810,
+        "y": 1020,
         "wires": []
     },
     {
@@ -891,8 +891,8 @@
         "func": "if(msg.payload === 0) {\n    msg.payload = \"Off\";\n}\nelse {\n    msg.payload = msg.payload + \"%\";\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2380,
-        "y": 960,
+        "x": 2660,
+        "y": 1020,
         "wires": [
             [
                 "a49530b4.09b39"
@@ -917,8 +917,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 2050,
-        "y": 1260,
+        "x": 2330,
+        "y": 1320,
         "wires": [
             [
                 "8bb616a.62b5ee8"
@@ -952,8 +952,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2260,
-        "y": 1240,
+        "x": 2540,
+        "y": 1300,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -984,8 +984,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2260,
-        "y": 1280,
+        "x": 2540,
+        "y": 1340,
         "wires": [
             [
                 "2752d604.f66c0a"
@@ -1010,8 +1010,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 2050,
-        "y": 1340,
+        "x": 2330,
+        "y": 1400,
         "wires": [
             [
                 "bb4f926c.9206e"
@@ -1045,8 +1045,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2260,
-        "y": 1320,
+        "x": 2540,
+        "y": 1380,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1077,8 +1077,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2260,
-        "y": 1360,
+        "x": 2540,
+        "y": 1420,
         "wires": [
             [
                 "77e120cb.3a7ec"
@@ -1104,8 +1104,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 770,
-        "y": 220,
+        "x": 1050,
+        "y": 280,
         "wires": [
             [
                 "d324d344.c9bec"
@@ -1135,8 +1135,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 860,
-        "y": 320,
+        "x": 1140,
+        "y": 380,
         "wires": [
             [
                 "85a75268.f463e"
@@ -1161,8 +1161,8 @@
         "payload": "connect",
         "payloadType": "str",
         "topic": "",
-        "x": 140,
-        "y": 160,
+        "x": 420,
+        "y": 220,
         "wires": [
             [
                 "2a13b630.b9e87a"
@@ -1181,8 +1181,8 @@
         "label": "Status:",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1340,
-        "y": 580,
+        "x": 1620,
+        "y": 640,
         "wires": []
     },
     {
@@ -1199,8 +1199,8 @@
         "reset": "",
         "bytopic": "all",
         "name": "disconnect after 15 secs",
-        "x": 1050,
-        "y": 560,
+        "x": 1330,
+        "y": 620,
         "wires": [
             [
                 "5b7a230a.cce58c",
@@ -1223,8 +1223,8 @@
         "reset": "disconnected",
         "bytopic": "all",
         "name": "connected",
-        "x": 1010,
-        "y": 640,
+        "x": 1290,
+        "y": 700,
         "wires": [
             [
                 "c9ea0ca5.44f82",
@@ -1245,8 +1245,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 160,
-        "y": 360,
+        "x": 440,
+        "y": 420,
         "wires": [
             [
                 "5e825722.30d588",
@@ -1281,8 +1281,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 820,
-        "y": 440,
+        "x": 1100,
+        "y": 500,
         "wires": [
             [
                 "c9ea0ca5.44f82",
@@ -1309,8 +1309,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 160,
+        "x": 620,
+        "y": 220,
         "wires": [
             [
                 "b79bbad8.1ee5f8"
@@ -1322,18 +1322,19 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n    flow.set('display_sparge_counter', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 410,
-        "y": 320,
+        "x": 690,
+        "y": 380,
         "wires": [
             [
                 "96bf6cb3.8e68c",
                 "d1a86442.7b18f8",
                 "423b9d6f.4141d4",
                 "e49595ca.f39708",
-                "b610ed95.9bd7e"
+                "b610ed95.9bd7e",
+                "d95c93f4.63de3"
             ]
         ]
     },
@@ -1356,8 +1357,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 640,
-        "y": 320,
+        "x": 920,
+        "y": 380,
         "wires": [
             [
                 "26bae695.25082a"
@@ -1376,8 +1377,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": "2",
-        "x": 140,
-        "y": 240,
+        "x": 420,
+        "y": 300,
         "wires": [
             [
                 "b0c3c34b.8e94"
@@ -1392,8 +1393,8 @@
         "func": "var auto_connect = flow.get('auto_connect') || false;\nvar connected = (flow.get('connection') === \"connected\") || false;\n\nif(auto_connect && !connected) {\n    msg.payload = \"auto connect\";\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 360,
-        "y": 240,
+        "x": 640,
+        "y": 300,
         "wires": [
             [
                 "2a13b630.b9e87a"
@@ -1419,8 +1420,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1100,
-        "y": 320,
+        "x": 1380,
+        "y": 380,
         "wires": [
             [
                 "b0c3c34b.8e94"
@@ -1440,8 +1441,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 1520,
-        "y": 560,
+        "x": 1800,
+        "y": 620,
         "wires": [
             []
         ]
@@ -1470,8 +1471,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1320,
-        "y": 640,
+        "x": 1600,
+        "y": 700,
         "wires": [
             [
                 "853fd41f.fb4a28"
@@ -1486,8 +1487,8 @@
         "genericBle": "3f80edac.961f72",
         "useString": false,
         "notification": true,
-        "x": 550,
-        "y": 160,
+        "x": 830,
+        "y": 220,
         "wires": [
             [
                 "b3f2ec24.29c96",
@@ -1503,8 +1504,8 @@
         "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str.substr(0, 19);\n}\n\nvar command = Buffer.from(pad(msg.payload)).toString('hex');\n\nvar payload = {\"0003cdd200001000800000805f9b0131\":command};\nmsg.payload = payload;\n//msg.payload = JSON.stringify(payload);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3500,
-        "y": 1180,
+        "x": 3780,
+        "y": 1240,
         "wires": [
             [
                 "fa3b9cc2.52978",
@@ -1518,8 +1519,8 @@
         "z": "9dea0b26.bbbe98",
         "name": "",
         "genericBle": "3f80edac.961f72",
-        "x": 3870,
-        "y": 1200,
+        "x": 4150,
+        "y": 1260,
         "wires": []
     },
     {
@@ -1532,8 +1533,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3750,
-        "y": 1140,
+        "x": 4030,
+        "y": 1200,
         "wires": []
     },
     {
@@ -1554,8 +1555,8 @@
         "payload": " ",
         "payloadType": "str",
         "topic": "",
-        "x": 1880,
-        "y": 80,
+        "x": 2160,
+        "y": 140,
         "wires": [
             [
                 "efbe3f05.d87f2",
@@ -1585,8 +1586,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3520,
-        "y": 440,
+        "x": 3800,
+        "y": 500,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -1606,8 +1607,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 2430,
-        "y": 1140,
+        "x": 2710,
+        "y": 1200,
         "wires": [
             []
         ]
@@ -1620,8 +1621,8 @@
         "func": "msg.payload.forEach(sendCommand);\n\nfunction sendCommand(item) {\n  node.send([{'payload':item}]);\n}\n//return msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3170,
-        "y": 1180,
+        "x": 3450,
+        "y": 1240,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1636,8 +1637,8 @@
         "func": "msg.payload = ['g', 'X', 'M'];\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1960,
-        "y": 1060,
+        "x": 2240,
+        "y": 1120,
         "wires": [
             [
                 "6cb11f95.fde87"
@@ -1659,8 +1660,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 1710,
-        "y": 1040,
+        "x": 2010,
+        "y": 1120,
         "wires": [
             [
                 "79bbb1df.ad06"
@@ -1682,8 +1683,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 3710,
-        "y": 1200,
+        "x": 3990,
+        "y": 1260,
         "wires": [
             [
                 "28188956.6c5066"
@@ -1702,8 +1703,8 @@
         "label": "F",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 300,
+        "x": 2410,
+        "y": 360,
         "wires": []
     },
     {
@@ -1718,8 +1719,8 @@
         "label": "V",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 2130,
-        "y": 420,
+        "x": 2410,
+        "y": 480,
         "wires": []
     },
     {
@@ -1730,8 +1731,8 @@
         "func": "var firmware = msg.parameters[0];\nmsg.payload = firmware;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1820,
-        "y": 180,
+        "x": 2100,
+        "y": 240,
         "wires": [
             [
                 "22f23340.8e75fc"
@@ -1746,8 +1747,8 @@
         "func": "var voltage = msg.parameters[0];\nvar units = msg.parameters[1];\n\nnode.send([{'payload':voltage},null]);\nnode.send([null,{'payload':units}]);\n\n//return msg;",
         "outputs": 2,
         "noerr": 0,
-        "x": 1940,
-        "y": 880,
+        "x": 2220,
+        "y": 940,
         "wires": [
             [],
             [
@@ -1767,8 +1768,8 @@
         "func": "if(msg.payload === '0') {\n    flow.set('temperature_unit', 'F');\n}\nelse {\n    flow.set('temperature_unit', 'C');\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2320,
-        "y": 900,
+        "x": 2600,
+        "y": 960,
         "wires": [
             []
         ]
@@ -1786,8 +1787,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 2670,
-        "y": 760,
+        "x": 2950,
+        "y": 820,
         "wires": [
             []
         ]
@@ -1810,8 +1811,8 @@
         "payload": "U",
         "payloadType": "str",
         "topic": "",
-        "x": 3080,
-        "y": 920,
+        "x": 3360,
+        "y": 980,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1836,8 +1837,8 @@
         "payload": "D",
         "payloadType": "str",
         "topic": "",
-        "x": 3090,
-        "y": 960,
+        "x": 3370,
+        "y": 1020,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -1856,8 +1857,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 2360,
-        "y": 140,
+        "x": 2640,
+        "y": 200,
         "wires": [
             [
                 "641fed3f.0bb3b4"
@@ -1869,8 +1870,8 @@
         "type": "ui_ui_control",
         "z": "9dea0b26.bbbe98",
         "name": "Raw Messages Group",
-        "x": 2620,
-        "y": 160,
+        "x": 2900,
+        "y": 220,
         "wires": [
             []
         ]
@@ -1887,8 +1888,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2360,
-        "y": 180,
+        "x": 2640,
+        "y": 240,
         "wires": [
             [
                 "641fed3f.0bb3b4"
@@ -1911,7 +1912,7 @@
             "d9db71ec.8911c",
             "e328018c.e2a5f"
         ],
-        "x": 575,
+        "x": 795,
         "y": 360,
         "wires": []
     },
@@ -1923,8 +1924,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2095,
-        "y": 1220,
+        "x": 2375,
+        "y": 1280,
         "wires": [
             [
                 "bb2dab1a.27cec8",
@@ -1952,8 +1953,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2320,
-        "y": 800,
+        "x": 2600,
+        "y": 860,
         "wires": [
             [
                 "85deae7f.7cd6b",
@@ -1969,8 +1970,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2155,
-        "y": 840,
+        "x": 2435,
+        "y": 900,
         "wires": [
             [
                 "e17eb87a.f8de18",
@@ -1998,8 +1999,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2240,
-        "y": 1200,
+        "x": 2520,
+        "y": 1260,
         "wires": [
             [
                 "a8a28b0b.dc3ba8"
@@ -2014,8 +2015,8 @@
         "func": "var testRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3670,
-        "y": 880,
+        "x": 3950,
+        "y": 940,
         "wires": [
             [
                 "46b9479a.5828e8",
@@ -2035,8 +2036,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3460,
-        "y": 880,
+        "x": 3740,
+        "y": 940,
         "wires": [
             [
                 "5ff76da9.ada754"
@@ -2053,8 +2054,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3950,
-        "y": 880,
+        "x": 4230,
+        "y": 940,
         "wires": []
     },
     {
@@ -2069,8 +2070,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3530,
-        "y": 360,
+        "x": 3810,
+        "y": 420,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2089,8 +2090,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3530,
-        "y": 400,
+        "x": 3810,
+        "y": 460,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2105,8 +2106,8 @@
         "func": "var testRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3660,
-        "y": 920,
+        "x": 3940,
+        "y": 980,
         "wires": [
             [
                 "46b9479a.5828e8",
@@ -2126,8 +2127,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3460,
-        "y": 920,
+        "x": 3740,
+        "y": 980,
         "wires": [
             [
                 "f5fa6744.cee1a8"
@@ -2142,8 +2143,8 @@
         "func": "var testRecipe = [\n    \"R2,1,5,6,\", // 2 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,1,0,\", // No water tratment alert, no sparge counter, no sparge alert, delayed session, do not skip start\n    \"SIMPLE DELAY\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 2 boil additions, no boil power mode, no strike temp mode\n    \"1\", // Boil addition 1 at 3 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"1,60\" // Delay session 1:00\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 3690,
-        "y": 960,
+        "x": 3970,
+        "y": 1020,
         "wires": [
             [
                 "46b9479a.5828e8",
@@ -2163,8 +2164,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3460,
-        "y": 960,
+        "x": 3740,
+        "y": 1020,
         "wires": [
             [
                 "3d45c775.350518"
@@ -2183,8 +2184,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3530,
-        "y": 520,
+        "x": 3810,
+        "y": 580,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2203,8 +2204,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3530,
-        "y": 580,
+        "x": 3810,
+        "y": 640,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2223,8 +2224,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3530,
-        "y": 620,
+        "x": 3810,
+        "y": 680,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2243,8 +2244,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3510,
-        "y": 660,
+        "x": 3790,
+        "y": 720,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2263,8 +2264,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3520,
-        "y": 720,
+        "x": 3800,
+        "y": 780,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2283,8 +2284,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3510,
-        "y": 760,
+        "x": 3790,
+        "y": 820,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2303,8 +2304,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3530,
-        "y": 820,
+        "x": 3810,
+        "y": 880,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2329,8 +2330,8 @@
         "payload": "C",
         "payloadType": "str",
         "topic": "",
-        "x": 2870,
-        "y": 860,
+        "x": 3150,
+        "y": 920,
         "wires": [
             [
                 "1e826a71.5684b6"
@@ -2355,8 +2356,8 @@
         "payload": "G",
         "payloadType": "str",
         "topic": "",
-        "x": 2900,
-        "y": 820,
+        "x": 3180,
+        "y": 880,
         "wires": [
             [
                 "1e826a71.5684b6"
@@ -2371,8 +2372,8 @@
         "links": [
             "bad838db.5dd1c8"
         ],
-        "x": 3800,
-        "y": 580,
+        "x": 4080,
+        "y": 640,
         "wires": []
     },
     {
@@ -2383,8 +2384,8 @@
         "links": [
             "bc61b8e9.017228"
         ],
-        "x": 3275,
-        "y": 1140,
+        "x": 3555,
+        "y": 1200,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -2399,8 +2400,8 @@
         "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2610,
-        "y": 860,
+        "x": 2890,
+        "y": 920,
         "wires": [
             [
                 "2aac4ac.48a77b6"
@@ -2415,8 +2416,8 @@
         "func": "const timerPaused = flow.get('timer_paused');\nconst timerActive = flow.get('timer_active');\n\nmsg.label = \"Pause\";\nvar icon = \"pause\";\nif(timerPaused) {\n    msg.label = \"Resume\";\n    icon = \"play_arrow\";\n}\nconst ui_control = {'icon':icon};\nnode.send({'ui_control':ui_control});\n\nif(timerPaused || timerActive) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2640,
-        "y": 820,
+        "x": 2920,
+        "y": 880,
         "wires": [
             [
                 "cf702677.f7dfa8"
@@ -2431,8 +2432,8 @@
         "func": "if(flow.get('timer_active') || flow.get('timer_paused')) {\n    if(flow.get('timer_elapsed')) {\n        msg.payload = \"T\"; // Pausing the timer when 0:00 causes wrap-around\n    }\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 3140,
-        "y": 840,
+        "x": 3420,
+        "y": 900,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -2451,8 +2452,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3500,
-        "y": 280,
+        "x": 3780,
+        "y": 340,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2469,8 +2470,8 @@
         "start": "",
         "inout": "out",
         "property": "payload.timerelapsed",
-        "x": 2530,
-        "y": 700,
+        "x": 2810,
+        "y": 760,
         "wires": [
             [
                 "8a3dab2c.c628e8"
@@ -2485,8 +2486,8 @@
         "func": "if(msg.payload.timerelapsed && (flow.get('brew_session_active') === false)) {\n    msg.payload = msg.payload.timertitle;\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2730,
-        "y": 700,
+        "x": 3010,
+        "y": 760,
         "wires": [
             [
                 "9e057e41.c8ba8"
@@ -2516,8 +2517,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 470,
-        "y": 540,
+        "x": 750,
+        "y": 600,
         "wires": [
             [
                 "2fc03f42.298c2"
@@ -2543,8 +2544,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 260,
-        "y": 540,
+        "x": 540,
+        "y": 600,
         "wires": [
             [
                 "5f6a18e9.fae918"
@@ -2566,8 +2567,8 @@
         "mode": "password",
         "delay": "0",
         "topic": "",
-        "x": 470,
-        "y": 620,
+        "x": 750,
+        "y": 680,
         "wires": [
             [
                 "aa059608.b2a398"
@@ -2593,8 +2594,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 240,
-        "y": 620,
+        "x": 520,
+        "y": 680,
         "wires": [
             [
                 "5bb09d60.6b9a14"
@@ -2616,8 +2617,8 @@
         "mode": "password",
         "delay": "0",
         "topic": "",
-        "x": 480,
-        "y": 660,
+        "x": 760,
+        "y": 720,
         "wires": [
             [
                 "3c324e7a.1b7882"
@@ -2643,8 +2644,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 240,
-        "y": 660,
+        "x": 520,
+        "y": 720,
         "wires": [
             [
                 "aa4337fb.bb1708"
@@ -2670,8 +2671,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
-        "y": 540,
+        "x": 1000,
+        "y": 600,
         "wires": [
             []
         ]
@@ -2695,8 +2696,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 700,
-        "y": 620,
+        "x": 980,
+        "y": 680,
         "wires": [
             []
         ]
@@ -2720,8 +2721,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 710,
-        "y": 660,
+        "x": 990,
+        "y": 720,
         "wires": [
             []
         ]
@@ -2739,8 +2740,8 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 540,
-        "y": 780,
+        "x": 820,
+        "y": 840,
         "wires": [
             [
                 "d1bb908b.cfcd6"
@@ -2765,8 +2766,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 2340,
-        "y": 640,
+        "x": 2620,
+        "y": 700,
         "wires": [
             [
                 "bbc9daad.bd2c98"
@@ -2792,8 +2793,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2520,
-        "y": 640,
+        "x": 2800,
+        "y": 700,
         "wires": [
             [
                 "8a3dab2c.c628e8"
@@ -2808,8 +2809,8 @@
         "func": "if (msg.payload.status) {\n    msg.payload = \"Status: OK\";\n}\nelse {\n    msg.payload = \"Error: \" + msg.payload.errors[0];\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 790,
-        "y": 780,
+        "x": 1070,
+        "y": 840,
         "wires": [
             [
                 "e2a4d62a.77bcd8"
@@ -2829,8 +2830,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 1020,
-        "y": 780,
+        "x": 1300,
+        "y": 840,
         "wires": [
             []
         ]
@@ -2843,8 +2844,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 2630,
-        "y": 1580,
+        "x": 2910,
+        "y": 1640,
         "wires": [
             [
                 "ad8c0cc9.0c17c",
@@ -2862,8 +2863,8 @@
         "chunk": false,
         "sendError": false,
         "encoding": "none",
-        "x": 2450,
-        "y": 1580,
+        "x": 2730,
+        "y": 1640,
         "wires": [
             [
                 "c791c4b0.9df1b8"
@@ -2882,8 +2883,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2260,
-        "y": 1580,
+        "x": 2540,
+        "y": 1640,
         "wires": [
             [
                 "61bfaf7a.88de3"
@@ -2900,8 +2901,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 2870,
-        "y": 1580,
+        "x": 3150,
+        "y": 1640,
         "wires": []
     },
     {
@@ -2909,11 +2910,11 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode batch",
-        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\nvar delayedSessionVal = msg.delay > 0 ? \"1\" : \"0\";\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,0,0,\" + delayedSessionVal + \",0,\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Delayed session starting in\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nif(msg.delay) {\n  gfRecipe[gfRecipe.length] = \"\" + msg.delay + \",60\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
+        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\nvar delayedSessionVal = msg.delay > 0 ? \"1\" : \"0\";\nvar displaySpargeCounter = flow.get('display_sparge_counter') ? \"1\" : \"0\";\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,\" + displaySpargeCounter + \",0,\" + delayedSessionVal + \",0,\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Delayed session starting in\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nif(msg.delay) {\n  gfRecipe[gfRecipe.length] = \"\" + msg.delay + \",60\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
         "outputs": 1,
         "noerr": 0,
-        "x": 2980,
-        "y": 2000,
+        "x": 3260,
+        "y": 2060,
         "wires": [
             [
                 "1abae4a5.1b726b",
@@ -2932,8 +2933,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 3230,
-        "y": 1940,
+        "x": 3510,
+        "y": 2000,
         "wires": []
     },
     {
@@ -2948,8 +2949,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 2240,
-        "y": 1620,
+        "x": 2520,
+        "y": 1680,
         "wires": [
             [
                 "766fcf49.37bc8"
@@ -2966,8 +2967,8 @@
         "chunk": false,
         "sendError": false,
         "encoding": "none",
-        "x": 2440,
-        "y": 1620,
+        "x": 2720,
+        "y": 1680,
         "wires": [
             [
                 "c791c4b0.9df1b8"
@@ -3594,8 +3595,8 @@
         "name": "",
         "scope": null,
         "uncaught": true,
-        "x": 3480,
-        "y": 160,
+        "x": 3760,
+        "y": 220,
         "wires": [
             [
                 "1ca757a6.27f6f8",
@@ -3617,8 +3618,8 @@
         "raw": false,
         "topic": "",
         "name": "",
-        "x": 3890,
-        "y": 160,
+        "x": 4170,
+        "y": 220,
         "wires": []
     },
     {
@@ -3640,8 +3641,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3660,
-        "y": 160,
+        "x": 3940,
+        "y": 220,
         "wires": [
             [
                 "23c2c997.36a156"
@@ -3657,8 +3658,8 @@
         "method": "post",
         "upload": true,
         "swaggerDoc": "",
-        "x": 1980,
-        "y": 1720,
+        "x": 2260,
+        "y": 1780,
         "wires": [
             [
                 "b85ecacf.a49298",
@@ -3673,8 +3674,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 2430,
-        "y": 1720,
+        "x": 2710,
+        "y": 1780,
         "wires": []
     },
     {
@@ -3690,8 +3691,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 1940,
-        "y": 1680,
+        "x": 2220,
+        "y": 1740,
         "wires": [
             []
         ]
@@ -3722,8 +3723,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2230,
-        "y": 1680,
+        "x": 2510,
+        "y": 1740,
         "wires": [
             [
                 "26f65fbb.a3a83"
@@ -3749,8 +3750,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2260,
-        "y": 1720,
+        "x": 2540,
+        "y": 1780,
         "wires": [
             [
                 "6c693001.8e7f7"
@@ -3777,8 +3778,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 2,
-        "x": 2410,
-        "y": 1680,
+        "x": 2690,
+        "y": 1740,
         "wires": [
             [
                 "e8abea9e.6ada28"
@@ -3796,8 +3797,8 @@
         "func": "node.error(`Error: only JSON files are allowed.`, msg)\n",
         "outputs": 0,
         "noerr": 0,
-        "x": 2630,
-        "y": 1700,
+        "x": 2910,
+        "y": 1760,
         "wires": []
     },
     {
@@ -3808,8 +3809,8 @@
         "func": "msg.payload = JSON.parse(msg.payload);\n\nif (msg.payload._type !== \"batch\") {\n    node.error(`Error: only Brewfather batch files are supported.`, msg)\n}\nelse {\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2650,
-        "y": 1660,
+        "x": 2930,
+        "y": 1720,
         "wires": [
             [
                 "ad8c0cc9.0c17c",
@@ -3828,8 +3829,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 3650,
-        "y": 200,
+        "x": 3930,
+        "y": 260,
         "wires": []
     },
     {
@@ -3851,8 +3852,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2160,
-        "y": 980,
+        "x": 2440,
+        "y": 1040,
         "wires": [
             [
                 "36967178.bc09fe",
@@ -3868,8 +3869,8 @@
         "func": "var buffer = flow.get('ble_overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\nvar didSend = false;\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nwhile(buffer.length >= 17) {\n    // Clean start of buffer for garbage in case something got lost earlier\n    while(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n       logMsg.error = true;\n       buffer = buffer.substr(1);\n    }\n\n    if(buffer.length >= 17) {\n        msg.payload = buffer.substr(0, 17);\n        const overflow = buffer.substr(17);\n        flow.set('ble_overflow', overflow);\n        buffer = overflow;\n        \n        if(overflow.length >= 17) {\n            logMsg.error = true;\n        }\n        logMsg.out = msg.payload;\n        logMsg.overflow = overflow;\n        \n        // Re-synchronize in case something goes wrong\n        const end = msg.payload.substr(-1,1);\n        if(end !== \"Z\" && end !== \",\") {\n            logMsg.error = true;\n        }\n        \n        didSend = true;\n        node.send([msg, null]);\n        if(logMsg.error) {\n            node.send([null, {'error':logMsg, 'previous':previous}]);\n            logMsg.error = false;\n        }\n    }\n    else {\n        flow.set('ble_overflow', buffer);\n        logMsg.out = null;\n    }\n}\n\nif(!didSend) {\n    flow.set('ble_overflow', buffer);\n    logMsg.out = null;\n}\n\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n",
         "outputs": 2,
         "noerr": 0,
-        "x": 980,
-        "y": 220,
+        "x": 1260,
+        "y": 280,
         "wires": [
             [
                 "cf0ea885.b26888"
@@ -3895,8 +3896,8 @@
         "label": "",
         "format": "{{msg.payload}}",
         "layout": "row-center",
-        "x": 2550,
-        "y": 1780,
+        "x": 2830,
+        "y": 1840,
         "wires": []
     },
     {
@@ -3912,8 +3913,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 2790,
-        "y": 1040,
+        "x": 3070,
+        "y": 1100,
         "wires": [
             []
         ]
@@ -3936,8 +3937,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 2080,
-        "y": 1500,
+        "x": 2360,
+        "y": 1540,
         "wires": [
             [
                 "2fb3cabe.8af616"
@@ -3980,8 +3981,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2340,
-        "y": 1480,
+        "x": 2620,
+        "y": 1520,
         "wires": [
             [
                 "3ab32ce6.cf1a74"
@@ -3994,8 +3995,8 @@
         "z": "9dea0b26.bbbe98",
         "name": "Timer or Brew Session",
         "events": "all",
-        "x": 2580,
-        "y": 1500,
+        "x": 2860,
+        "y": 1540,
         "wires": [
             []
         ]
@@ -4033,8 +4034,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2340,
-        "y": 1520,
+        "x": 2620,
+        "y": 1560,
         "wires": [
             [
                 "3ab32ce6.cf1a74"
@@ -4054,8 +4055,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 3460,
-        "y": 2000,
+        "x": 3740,
+        "y": 2060,
         "wires": [
             []
         ]
@@ -4079,8 +4080,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3220,
-        "y": 2000,
+        "x": 3500,
+        "y": 2060,
         "wires": [
             [
                 "b6bb3cce.52cbc"
@@ -4095,8 +4096,8 @@
         "func": "var boilTemp = msg.parameters[0];\n\ntemperature_unit = flow.get('temperature_unit');\nif(temperature_unit === 'F') {\n    boilTemp = (boilTemp * 9 / 5) + 32;\n}\n\nvar payload = {};\npayload.temperature_unit = temperature_unit;\npayload.boilTemp = Number(boilTemp).toFixed(1);\n\nmsg.payload = payload;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1830,
-        "y": 140,
+        "x": 2110,
+        "y": 200,
         "wires": [
             [
                 "411fe04c.d2af2"
@@ -4111,8 +4112,8 @@
         "func": "var interaction = msg.parameters[0];\nswitch(interaction) {\n    case \"C\":\n        msg.payload = \"interaction_cleared\";\n        break;\n        \n    default:\n        msg.payload = interaction;\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1480,
-        "y": 1800,
+        "x": 1760,
+        "y": 1860,
         "wires": [
             [
                 "787fce9c.18755",
@@ -4128,8 +4129,8 @@
         "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst delayedHeat = msg.payload.delayedheat || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\nvar sendPushAlert = false;\nvar pushAlertTitle = \"\";\nvar pushAlertMessage = \"\";\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n    pushAlertTitle = \"Add boil additions\";\n    pushAlertMessage = payload;\n    sendPushAlert = true;\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n        pushAlertTitle = \"Boil temperature reached\";\n        pushAlertMessage = \"Ready to start boil timer\";\n        sendPushAlert = true;\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                if(delayedHeat) {\n                    buttonTitle = \"Override Delay\";\n                }\n                else {\n                    buttonTitle = \"Start Heating\";\n                }\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                pushAlertTitle = \"Mash water ready\";\n                pushAlertMessage = \"Mash water is ready for adding grain\";\n                sendPushAlert = true;\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                pushAlertTitle = \"Mash finished\";\n                pushAlertMessage = \"Ready to start sparge\";\n                sendPushAlert = true;\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                pushAlertTitle = \"Hop stand finished\";\n                pushAlertMessage = \"The hop stand timer has elapsed.\";\n                sendPushAlert = true;\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\nmsg.pushalert = sendPushAlert;\nmsg.pushtitle = pushAlertTitle;\nmsg.pushmessage = pushAlertMessage;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2210,
-        "y": 1860,
+        "x": 2490,
+        "y": 1920,
         "wires": [
             [
                 "ffdf3fe7.d5d46",
@@ -4146,8 +4147,8 @@
         "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nmsg.payload.timertitle = brewSession.stageTitles[stageNumber];\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2460,
-        "y": 1060,
+        "x": 2740,
+        "y": 1120,
         "wires": [
             [
                 "5585b0fa.07b77"
@@ -4162,8 +4163,8 @@
         "func": "var timerTitle = \" \";\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nvar delayedHeat = flow.get(\"delayed_heat\");\n\nif(msg.payload.timeractive) {\n    timerTitle = delayedHeat ? \"Delayed heat\" : \"Timer active\";\n}\nif(msg.payload.timerpaused) {\n    timerTitle = delayedHeat ? \"Delayed heat paused\" : \"Timer paused\";\n}\nif(msg.payload.timerelapsed) {\n    timerTitle = delayedHeat ? \"Delayed heat started\" : \"Timer elapsed\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\nmsg.payload.timertitle = timerTitle;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2330,
-        "y": 760,
+        "x": 2610,
+        "y": 820,
         "wires": [
             [
                 "85deae7f.7cd6b",
@@ -4191,8 +4192,8 @@
         "payload": "alert_dismiss_code",
         "payloadType": "flow",
         "topic": "",
-        "x": 2550,
-        "y": 1820,
+        "x": 2830,
+        "y": 1880,
         "wires": [
             [
                 "27bb0cb7.24f754"
@@ -4207,8 +4208,8 @@
         "func": "const interactionMode = flow.get('interaction_mode') || false;\nconst stickyBoilAdditionAlert = flow.get('sticky_boil_addition_alert') || false;\nconst stickyTemperatureAlarm = flow.get('sticky_temperature_alarm') || false;\nconst timerElapsedAlarm = flow.get('timer_elapsed') || false;\nconst delayedHeat = flow.get('delayed_heat') || false;\n\nif(stickyBoilAdditionAlert && msg.payload == \"A\") {\n    flow.set('sticky_boil_addition_alert', false);\n    return msg;\n}\n\nif(stickyTemperatureAlarm && msg.payload == \"T\") {\n    flow.set('sticky_temperature_alarm', false);\n    return msg;\n}\n\nif(interactionMode && msg.payload === \"T\") {\n    return msg;\n}\n\nif(timerElapsedAlarm && msg.payload === \"T\") {\n    return msg;\n}\n\nif(delayedHeat && msg.payload === \"T\") {\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2740,
-        "y": 1820,
+        "x": 3020,
+        "y": 1880,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -4234,8 +4235,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1450,
-        "y": 1860,
+        "x": 1730,
+        "y": 1920,
         "wires": [
             [
                 "787fce9c.18755"
@@ -4250,8 +4251,8 @@
         "func": "if(msg.payload === \"boil_addition_alert\") {\n    flow.set('sticky_boil_addition_alert', true);\n    return msg;\n}\nif(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_boil_addition_alert', false);\n}\nelse if(flow.get('sticky_boil_addition_alert') === false) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1730,
-        "y": 1860,
+        "x": 2010,
+        "y": 1920,
         "wires": [
             [
                 "276d2c11.6ef0b4"
@@ -4269,8 +4270,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1190,
-        "y": 260,
+        "x": 1470,
+        "y": 320,
         "wires": []
     },
     {
@@ -4292,8 +4293,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1720,
-        "y": 40,
+        "x": 2000,
+        "y": 100,
         "wires": [
             [
                 "3eedaa2c.774446"
@@ -4311,8 +4312,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1890,
-        "y": 40,
+        "x": 2170,
+        "y": 100,
         "wires": []
     },
     {
@@ -4334,8 +4335,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1940,
-        "y": 620,
+        "x": 2220,
+        "y": 680,
         "wires": [
             [
                 "411c53b4.5f7cbc"
@@ -4361,8 +4362,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1490,
-        "y": 1760,
+        "x": 1770,
+        "y": 1820,
         "wires": [
             [
                 "276d2c11.6ef0b4"
@@ -4377,8 +4378,8 @@
         "func": "if(msg.payload === \"alarm\") {\n    const interactionMode = flow.get('interaction_mode');\n    const stageRamp = flow.get('stage_ramp');\n    const brewSession = flow.get('brewSession');\n    const stage = flow.get('brew_stage');\n    if(!interactionMode && stageRamp && (stage === brewSession.boilStage)) {\n        flow.set('sticky_temperature_alarm', true);\n        \n        msg.payload = \"temperature_alarm\";\n        return msg;\n    }\n}\nelse if(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_temperature_alarm', false);\n}\nelse if(flow.get('sticky_temperature_alarm') === false) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1950,
-        "y": 1860,
+        "x": 2230,
+        "y": 1920,
         "wires": [
             [
                 "d68334f5.3ad848"
@@ -4411,8 +4412,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1980,
-        "y": 1180,
+        "x": 2260,
+        "y": 1240,
         "wires": [
             [
                 "f02efb47.4ccc68"
@@ -4427,8 +4428,8 @@
         "func": "var buffer = context.get('overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"];\nif(buffer) {\n    buffer = Buffer.concat([buffer, newMsg]);\n}\nelse {\n    buffer = newMsg;\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nif(buffer.length >= 17) {\n    msg.payload = buffer.slice(0, 16).toString();\n    const overflow = buffer.slice(17);\n    context.set('overflow', overflow);\n    \n    logMsg.out = msg.payload;\n    logMsg.overflow = overflow;\n    \n    // Re-synchronize in case something goes wrong\n    const end = msg.payload.substr(16,1);\n    const start = msg.payload.substr(0,1);\n    if((\"0123456789,Z\".indexof(start) !== -1) || (end !== \"Z\" && end !== \",\") ) {\n        logMsg.error = true;\n        node.send([null, {'error':logMsg, 'previous':previous}]);\n        context.set('overflow', null);\n    }\n}\nelse {\n    msg.payload = buffer.toString();\n    logMsg.out = msg.payload;\n    context.set('overflow', null);\n}\n\n//node.send([null, {'error':logMsg, 'previous':previous}]);\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n\nnode.send([msg, null]);\n",
         "outputs": 2,
         "noerr": 0,
-        "x": 1010,
-        "y": 60,
+        "x": 1290,
+        "y": 120,
         "wires": [
             [],
             []
@@ -4450,8 +4451,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 3510,
-        "y": 480,
+        "x": 3790,
+        "y": 540,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -4467,8 +4468,8 @@
             "96d4eaea.3a2de8",
             "9e057e41.c8ba8"
         ],
-        "x": 115,
-        "y": 780,
+        "x": 395,
+        "y": 840,
         "wires": [
             [
                 "409c0204.fd2d8c"
@@ -4483,8 +4484,8 @@
         "links": [
             "74e0e099.77a4e"
         ],
-        "x": 2895,
-        "y": 700,
+        "x": 3175,
+        "y": 760,
         "wires": []
     },
     {
@@ -4495,8 +4496,8 @@
         "func": "\nconst pushEnabled = (flow.get('pushover_enabled'))||false;\nif(pushEnabled) {\n    const key = flow.get('pushover_key');\n    const token = flow.get('pushover_token');\n    if(key && token && key.length && token.length) {\n        var title;\n        msg.headers = {};\n        msg.headers['Content-type'] = 'application/json';\n        msg.url = \"https://api.pushover.net/1/messages.json\";\n        if(msg.topic && msg.topic.length) {\n            title = msg.topic;\n        }\n        else {\n            title = \"GF Connect\";\n        }\n        const payload =  {\n            \"token\": token,\n            \"user\": key,\n            \"title\": title,\n            \"message\": msg.payload };\n        msg.payload = JSON.stringify(payload);\n\n        return msg;\n    }\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 280,
-        "y": 780,
+        "x": 560,
+        "y": 840,
         "wires": [
             [
                 "8aaa732b.a7ea2"
@@ -4513,8 +4514,8 @@
         "start": "",
         "inout": "out",
         "property": "pushalert",
-        "x": 2540,
-        "y": 1860,
+        "x": 2820,
+        "y": 1920,
         "wires": [
             [
                 "b373a6f3.956418"
@@ -4529,8 +4530,8 @@
         "func": "if(msg.pushalert) {\n    msg.topic = msg.pushtitle;\n    msg.payload = msg.pushmessage;\n    \n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 2730,
-        "y": 1860,
+        "x": 3010,
+        "y": 1920,
         "wires": [
             [
                 "b46080d6.551",
@@ -4549,8 +4550,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 2950,
-        "y": 1820,
+        "x": 3230,
+        "y": 1880,
         "wires": []
     },
     {
@@ -4561,8 +4562,8 @@
         "links": [
             "74e0e099.77a4e"
         ],
-        "x": 2915,
-        "y": 1860,
+        "x": 3195,
+        "y": 1920,
         "wires": []
     },
     {
@@ -4588,8 +4589,8 @@
         "offvalueType": "bool",
         "officon": "",
         "offcolor": "",
-        "x": 430,
-        "y": 860,
+        "x": 530,
+        "y": 1140,
         "wires": [
             [
                 "e89a906.d7d817",
@@ -4612,8 +4613,8 @@
         "mode": "password",
         "delay": "0",
         "topic": "",
-        "x": 430,
-        "y": 920,
+        "x": 530,
+        "y": 1200,
         "wires": [
             [
                 "3123c1fb.59830e"
@@ -4635,8 +4636,8 @@
         "mode": "password",
         "delay": "0",
         "topic": "",
-        "x": 430,
-        "y": 980,
+        "x": 530,
+        "y": 1260,
         "wires": [
             [
                 "b45b6518.2dc8f8"
@@ -4662,8 +4663,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 200,
-        "y": 860,
+        "x": 300,
+        "y": 1140,
         "wires": [
             [
                 "706d9f4d.22536"
@@ -4689,8 +4690,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 200,
-        "y": 920,
+        "x": 300,
+        "y": 1200,
         "wires": [
             [
                 "4676395.9dac2c8"
@@ -4716,8 +4717,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 200,
-        "y": 980,
+        "x": 300,
+        "y": 1260,
         "wires": [
             [
                 "8a21da68.c2f608"
@@ -4743,8 +4744,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 680,
-        "y": 860,
+        "x": 780,
+        "y": 1140,
         "wires": [
             [
                 "e6a2e1dc.32dfa"
@@ -4770,8 +4771,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 680,
-        "y": 920,
+        "x": 780,
+        "y": 1200,
         "wires": [
             [
                 "e6a2e1dc.32dfa"
@@ -4797,8 +4798,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 680,
-        "y": 980,
+        "x": 780,
+        "y": 1260,
         "wires": [
             [
                 "e6a2e1dc.32dfa"
@@ -4813,8 +4814,8 @@
         "func": "const brewfatherEnabled = (flow.get('brewfather_enabled'))||false;\nif(brewfatherEnabled) {\n    const userID = flow.get('brewfather_user_id');\n    const apiKey = flow.get('brewfather_api_key');\n    if(userID && apiKey && userID.length && apiKey.length) {\n        authKey = Buffer.from(userID + \":\" + apiKey).toString(\"base64\");\n        const batchStatus = msg.payload.batchstatus || \"Planning\";\n        const batchLimit = msg.payload.batchlimit || 1;\n        const batchID = msg.payload.batchID;\n        const batchCmd = msg.payload.command || \"get\"; // \"Either 'set' og 'get' (default)\"\n        \n        msg.cookies = msg.payload.cookies;\n        msg.payload = {};\n        msg.headers = {};\n        msg.headers['Authorization'] = \"Basic \" + authKey;\n        msg.method = \"GET\";\n        if(batchID) {\n            msg.url = \"https://api.brewfather.app/v1/batches/\" + batchID;\n            if(batchCmd === \"set\") {\n                msg.url = msg.url + \"?status=\" + batchStatus;\n                msg.method = \"PATCH\";\n            }\n        }\n        else {\n            msg.url = \"https://api.brewfather.app/v1/batches?status=\" + batchStatus + \"&limit=\" + batchLimit;\n        }\n\n        return msg;\n    }\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1150,
-        "y": 1040,
+        "x": 1350,
+        "y": 1280,
         "wires": [
             [
                 "a7faefe.ccda81",
@@ -4835,8 +4836,8 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 630,
-        "y": 1140,
+        "x": 870,
+        "y": 1480,
         "wires": [
             [
                 "c91850e2.3deaa",
@@ -4856,8 +4857,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 930,
-        "y": 1200,
+        "x": 1090,
+        "y": 1520,
         "wires": []
     },
     {
@@ -4871,8 +4872,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1390,
-        "y": 1040,
+        "x": 1590,
+        "y": 1240,
         "wires": []
     },
     {
@@ -4888,8 +4889,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 1130,
-        "y": 1360,
+        "x": 1190,
+        "y": 1660,
         "wires": [
             []
         ]
@@ -4902,8 +4903,8 @@
         "func": "if(msg.statusCode === 200) {\n    msg.payload = \"Connected\";\n} \nelse if(msg.statusCode) {\n    msg.payload = \"Error \" + msg.statusCode + \": \" + msg.payload;\n}\nelse {\n    msg.payload = \"\";\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 870,
-        "y": 1360,
+        "x": 950,
+        "y": 1660,
         "wires": [
             [
                 "d0e026e0.86fc58"
@@ -4925,8 +4926,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 430,
-        "y": 1360,
+        "x": 450,
+        "y": 1660,
         "wires": [
             [
                 "9b1f9f36.e76f8"
@@ -4952,8 +4953,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 620,
-        "y": 1360,
+        "x": 660,
+        "y": 1660,
         "wires": [
             [
                 "53471228.8f556c"
@@ -4968,8 +4969,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 35,
-        "y": 940,
+        "x": 95,
+        "y": 1220,
         "wires": [
             [
                 "4189aa49.51f184",
@@ -5006,8 +5007,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2880,
-        "y": 1660,
+        "x": 3160,
+        "y": 1720,
         "wires": [
             [
                 "f3ea1063.7eb96",
@@ -5023,8 +5024,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 3355,
-        "y": 1700,
+        "x": 3635,
+        "y": 1760,
         "wires": [
             [
                 "9e9dc494.f7e598"
@@ -5064,8 +5065,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3500,
-        "y": 1660,
+        "x": 3780,
+        "y": 1720,
         "wires": [
             [
                 "43139386.cd6c0c"
@@ -5085,8 +5086,8 @@
         "storeOutMessages": true,
         "fwdInMessages": true,
         "templateScope": "local",
-        "x": 3730,
-        "y": 1700,
+        "x": 4010,
+        "y": 1760,
         "wires": [
             [
                 "5b7c9271.25ca2c"
@@ -5126,8 +5127,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3500,
-        "y": 1720,
+        "x": 3780,
+        "y": 1780,
         "wires": [
             [
                 "43139386.cd6c0c"
@@ -5152,8 +5153,8 @@
         "payload": "start session",
         "payloadType": "str",
         "topic": "",
-        "x": 2530,
-        "y": 2020,
+        "x": 2810,
+        "y": 2080,
         "wires": [
             [
                 "c2cf6b49.b5d4d8"
@@ -5167,7 +5168,7 @@
         "name": "",
         "label": "",
         "tooltip": "",
-        "place": "Select brewfather batch",
+        "place": "Select Brewfather batch",
         "group": "6500c5a.452263c",
         "order": 2,
         "width": 6,
@@ -5176,8 +5177,8 @@
         "options": [],
         "payload": "",
         "topic": "",
-        "x": 990,
-        "y": 1260,
+        "x": 1290,
+        "y": 1540,
         "wires": [
             [
                 "dbfbfc50.bf6c"
@@ -5202,8 +5203,8 @@
         "payload": "{}",
         "payloadType": "json",
         "topic": "",
-        "x": 400,
-        "y": 1060,
+        "x": 500,
+        "y": 1340,
         "wires": [
             [
                 "b9e599ac.bde388"
@@ -5218,8 +5219,8 @@
         "func": "var batchDropdown;\nconst cookies = msg.cookies || {};\n\nfunction getBatchInfo(value, index, array) {\n  var batch = {};\n  batch.value = value._id;\n  batch.number = value.batchNo;\n  batch.label = \"#\" + value.batchNo + \": \" + value.recipe.name + \" (\" + value.status + \")\";\n  //batch.label = value.name + \" #\" + value.batchNo + \" (\" + value.status + \")\";\n  batchDropdown[batchDropdown.length] = batch;\n}\n\nfunction sortBatch(a, b) {\n    return a.number - b.number;\n}\n\nvar dropdownList;\n\nfunction makeDropdownList(item, index, array) {\n    dropdownItem = {};\n    dropdownItem[item.label] = item.value; \n    dropdownList.push(dropdownItem);   \n}\n\nbatchDropdown = flow.get(\"batch_dropdown\") || [];\npayload = JSON.parse(msg.payload);\n\npayload.forEach(getBatchInfo);\nbatchDropdown.sort(sortBatch);\ndropdownList = [];\nbatchDropdown.forEach(makeDropdownList);\nflow.set(\"batch_dropdown\", batchDropdown);\n\nif(cookies.batchstatus === 'planning') {\n    flow.set('brewfather_pending_batch_request', false);\n}\nelse if(cookies.batchstatus === 'brewing') {\n    flow.set('brewfather_brewing_batch_request', false);\n}\n\nif(!flow.get('brewfather_pending_batch_request') && !flow.get('brewfather_brewing_batch_request')) {\n    msg = { \"options\":dropdownList };\n    node.send(msg);\n}\nmsg = {};\n\nlet selectedBatch = flow.get('selected_batch');\nif(selectedBatch) {\n    msg.payload = selectedBatch._id;\n    return msg;\n}\n\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1160,
-        "y": 1160,
+        "x": 1400,
+        "y": 1460,
         "wires": [
             [
                 "6a51924.7dbca6c",
@@ -5268,8 +5269,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 620,
-        "y": 1060,
+        "x": 720,
+        "y": 1340,
         "wires": [
             [
                 "6a51924.7dbca6c",
@@ -5286,8 +5287,8 @@
         "func": "\npayload = JSON.parse(msg.payload);\nmsg = {};\nflow.set('selected_batch', payload);\nflow.set('batch_load_method', 'api');\nmsg.payload = payload;\n\nreturn msg;\n\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 1220,
-        "y": 1120,
+        "x": 1560,
+        "y": 1400,
         "wires": [
             [
                 "49c7f927.213f08"
@@ -5321,8 +5322,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 930,
-        "y": 1140,
+        "x": 1170,
+        "y": 1440,
         "wires": [
             [
                 "58cc8c11.e1c434"
@@ -5343,8 +5344,8 @@
         "func": "var payload = {};\n\nif(msg.payload && msg.payload.length) {\n    payload.batchID = msg.payload;\n    payload.cookies = {\"request\":\"select_batch\"}\n    msg.payload = payload;\n\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 1250,
-        "y": 1260,
+        "x": 1590,
+        "y": 1540,
         "wires": [
             [
                 "e6a2e1dc.32dfa",
@@ -5367,8 +5368,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 220,
-        "y": 1060,
+        "x": 320,
+        "y": 1340,
         "wires": [
             [
                 "58cc8c11.e1c434"
@@ -5408,8 +5409,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3500,
-        "y": 1780,
+        "x": 3780,
+        "y": 1840,
         "wires": [
             [
                 "43139386.cd6c0c"
@@ -5424,8 +5425,8 @@
         "func": "if(flow.get('batch_load_method') === \"api\") {\n    var payload = {};\n    \n    payload.batchID = msg.payload._id;\n    payload.cookies = {\"request\":\"set_batch_status\"}\n    payload.command = \"set\";\n    payload.batchstatus = \"Brewing\";\n    msg.payload = payload;\n    \n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 3000,
-        "y": 2080,
+        "x": 3280,
+        "y": 2140,
         "wires": [
             [
                 "75017d5f.2d8f04",
@@ -5441,8 +5442,8 @@
         "links": [
             "a38061b1.72337"
         ],
-        "x": 3155,
-        "y": 2060,
+        "x": 3435,
+        "y": 2120,
         "wires": []
     },
     {
@@ -5453,8 +5454,8 @@
         "links": [
             "75017d5f.2d8f04"
         ],
-        "x": 955,
-        "y": 960,
+        "x": 1155,
+        "y": 1240,
         "wires": [
             [
                 "e6a2e1dc.32dfa"
@@ -5475,8 +5476,8 @@
         "reset": "",
         "bytopic": "all",
         "name": "",
-        "x": 840,
-        "y": 1060,
+        "x": 940,
+        "y": 1340,
         "wires": [
             [
                 "e6a2e1dc.32dfa"
@@ -5498,8 +5499,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1370,
-        "y": 1160,
+        "x": 1610,
+        "y": 1460,
         "wires": [
             [
                 "3a3bac0d.0c52e4"
@@ -5514,8 +5515,8 @@
         "links": [
             "49c7f927.213f08"
         ],
-        "x": 3355,
-        "y": 1640,
+        "x": 3635,
+        "y": 1700,
         "wires": [
             [
                 "f3ea1063.7eb96"
@@ -5530,8 +5531,8 @@
         "links": [
             "8edd7d50.ada8c"
         ],
-        "x": 1655,
-        "y": 1120,
+        "x": 1935,
+        "y": 1400,
         "wires": []
     },
     {
@@ -5542,8 +5543,8 @@
         "links": [
             "35ca3744.455308"
         ],
-        "x": 3355,
-        "y": 1760,
+        "x": 3635,
+        "y": 1820,
         "wires": [
             [
                 "8adfb00d.dbe53"
@@ -5558,8 +5559,8 @@
         "links": [
             "58b8beb.cf54c4"
         ],
-        "x": 1395,
-        "y": 1260,
+        "x": 1735,
+        "y": 1540,
         "wires": []
     },
     {
@@ -5581,8 +5582,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1540,
-        "y": 1160,
+        "x": 1780,
+        "y": 1460,
         "wires": [
             [
                 "49c7f927.213f08"
@@ -5608,8 +5609,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3100,
-        "y": 1740,
+        "x": 1020,
+        "y": 1580,
         "wires": [
             [
                 "6a51924.7dbca6c"
@@ -5631,8 +5632,8 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": false,
-        "x": 3230,
-        "y": 2120,
+        "x": 3510,
+        "y": 2180,
         "wires": [
             [
                 "5a06d81.1c5d028"
@@ -5658,8 +5659,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3440,
-        "y": 2120,
+        "x": 3720,
+        "y": 2180,
         "wires": [
             [
                 "be54db91.507ff8"
@@ -5674,8 +5675,8 @@
         "links": [
             "c6b58732.5d6fa8"
         ],
-        "x": 3555,
-        "y": 2120,
+        "x": 3835,
+        "y": 2180,
         "wires": []
     },
     {
@@ -5686,8 +5687,8 @@
         "links": [
             "be54db91.507ff8"
         ],
-        "x": 1135,
-        "y": 1280,
+        "x": 1475,
+        "y": 1580,
         "wires": [
             [
                 "dbfbfc50.bf6c"
@@ -5713,8 +5714,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2240,
-        "y": 80,
+        "x": 2520,
+        "y": 140,
         "wires": [
             []
         ]
@@ -5738,8 +5739,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2250,
-        "y": 40,
+        "x": 2530,
+        "y": 100,
         "wires": [
             []
         ]
@@ -5762,8 +5763,8 @@
         "min": 0,
         "max": "48",
         "step": 1,
-        "x": 2590,
-        "y": 340,
+        "x": 2870,
+        "y": 400,
         "wires": [
             [
                 "8fd350fe.14c6c"
@@ -5788,8 +5789,8 @@
         "min": 0,
         "max": "59",
         "step": 1,
-        "x": 2580,
-        "y": 400,
+        "x": 2860,
+        "y": 460,
         "wires": [
             [
                 "a22dee44.cf751"
@@ -5814,8 +5815,8 @@
         "payload": "start timer",
         "payloadType": "str",
         "topic": "",
-        "x": 2830,
-        "y": 500,
+        "x": 3110,
+        "y": 560,
         "wires": [
             [
                 "be406293.7f228"
@@ -5830,8 +5831,8 @@
         "func": "if(flow.get('connection') === \"connected\" && !flow.get('timer_active') && !flow.get('timer_paused') && !flow.get('timer_elapsed')) {\n    var minutes = flow.get('new_timer_minutes');\n    var hours = flow.get('new_timer_hours');\n    var timerVal = hours * 60 + minutes;\n    \n    if(timerVal) {\n        if(msg.payload === \"start timer\") {\n            msg.payload = \"W\" + timerVal + \",60,\";\n            return msg;\n        }\n        else if(msg.payload === \"delayed heat\") {\n            flow.set(\"delayed_heat\", true); // Prevent title showing \"timer started\" first second\n            msg.payload = \"B\" + timerVal + \",60,\";\n            return msg;\n        }\n   }\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 3040,
-        "y": 520,
+        "x": 3320,
+        "y": 580,
         "wires": [
             [
                 "bce0ab71.378748"
@@ -5857,8 +5858,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2790,
-        "y": 340,
+        "x": 3070,
+        "y": 400,
         "wires": [
             [
                 "f02efb47.4ccc68"
@@ -5884,8 +5885,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2800,
-        "y": 400,
+        "x": 3080,
+        "y": 460,
         "wires": [
             [
                 "f02efb47.4ccc68"
@@ -5900,8 +5901,8 @@
         "links": [
             "1f58d751.316199"
         ],
-        "x": 3935,
-        "y": 940,
+        "x": 4215,
+        "y": 1000,
         "wires": []
     },
     {
@@ -5912,8 +5913,8 @@
         "links": [
             "972a9ebc.ebca7"
         ],
-        "x": 2955,
-        "y": 1140,
+        "x": 3235,
+        "y": 1200,
         "wires": [
             [
                 "6cb11f95.fde87"
@@ -5939,8 +5940,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2400,
-        "y": 360,
+        "x": 2680,
+        "y": 420,
         "wires": [
             [
                 "1cbebfac.37bf8",
@@ -5956,8 +5957,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2275,
-        "y": 360,
+        "x": 2555,
+        "y": 420,
         "wires": [
             [
                 "fb404aad.c48cd8",
@@ -5983,8 +5984,8 @@
         "payload": "delayed heat",
         "payloadType": "str",
         "topic": "",
-        "x": 2820,
-        "y": 560,
+        "x": 3100,
+        "y": 620,
         "wires": [
             [
                 "be406293.7f228"
@@ -5999,8 +6000,8 @@
         "func": "var minutes = flow.get('new_timer_minutes');\nvar hours = flow.get('new_timer_hours');\nvar timerVal = hours * 60 + minutes;\nconst connected = flow.get('connection') === \"connected\";\nconst timerInactive = !flow.get('timer_active') && !flow.get('timer_paused') && !flow.get('timer_elapsed');\n\nmsg = {};\n\nif(connected && timerInactive && timerVal > 0) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#444444\";\n    msg.textcolour =\"#333333\"\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2560,
-        "y": 540,
+        "x": 2840,
+        "y": 600,
         "wires": [
             [
                 "f1e1ca3a.9bab38",
@@ -6026,8 +6027,8 @@
         "payload": "delayed session",
         "payloadType": "str",
         "topic": "",
-        "x": 2520,
-        "y": 1980,
+        "x": 2800,
+        "y": 2040,
         "wires": [
             [
                 "c2cf6b49.b5d4d8"
@@ -6052,8 +6053,8 @@
         "min": 0,
         "max": "48",
         "step": 1,
-        "x": 1630,
-        "y": 1980,
+        "x": 1910,
+        "y": 2040,
         "wires": [
             [
                 "c1317a98.2f2e68"
@@ -6078,8 +6079,8 @@
         "min": 0,
         "max": "59",
         "step": 1,
-        "x": 1640,
-        "y": 2020,
+        "x": 1920,
+        "y": 2080,
         "wires": [
             [
                 "c845f093.194a5"
@@ -6094,8 +6095,8 @@
         "func": "\nvar ui_control = {'icon':''};\nif(flow.get('brewfather_pending_batch_request') || flow.get('brewfather_brewing_batch_request')) {\n    ui_control.icon = \"fa-refresh fa-spin\";\n}\nnode.send({'ui_control':ui_control});\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 530,
-        "y": 1260,
+        "x": 570,
+        "y": 1420,
         "wires": [
             [
                 "58cc8c11.e1c434"
@@ -6110,8 +6111,8 @@
         "func": "var minutes = flow.get('delayed_session_minutes');\nvar hours = flow.get('delayed_session_hours');\nvar timerVal = hours * 60 + minutes;\nconst connected = flow.get('connection') === \"connected\";\nconst sessionActive = flow.get('brew_session_active');\n\nmsgDelayed = {};\nmsgDelayed.colour = \"#444444\";\nmsgDelayed.textcolour =\"#333333\"\nmsgStart = {};\nmsgStart.colour = \"#444444\";\nmsgStart.textcolour =\"#333333\"\n\nif(connected && !sessionActive) {\n    msgStart.colour = \"#4B7930\";\n    msgStart.textcolour = \"#FFFFFF\"\n    if(timerVal > 0) {\n        msgDelayed.colour = \"#4B7930\";\n        msgDelayed.textcolour = \"#FFFFFF\"\n    }\n}\n\nnode.send([msgDelayed, msgStart]);\n",
         "outputs": 2,
         "noerr": 0,
-        "x": 2220,
-        "y": 2000,
+        "x": 2500,
+        "y": 2060,
         "wires": [
             [
                 "144faf71.e45f11"
@@ -6140,8 +6141,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1890,
-        "y": 1980,
+        "x": 2170,
+        "y": 2040,
         "wires": [
             [
                 "e8e01e5a.df5c7"
@@ -6167,8 +6168,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1880,
-        "y": 2020,
+        "x": 2160,
+        "y": 2080,
         "wires": [
             [
                 "e8e01e5a.df5c7"
@@ -6194,8 +6195,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1460,
-        "y": 2000,
+        "x": 1740,
+        "y": 2060,
         "wires": [
             [
                 "b1ccae28.53456",
@@ -6211,8 +6212,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2375,
-        "y": 1780,
+        "x": 2655,
+        "y": 1840,
         "wires": [
             [
                 "ffdf3fe7.d5d46"
@@ -6227,8 +6228,8 @@
         "func": "var delay = 0;\nif(msg.payload === \"delayed session\") {\n    var minutes = flow.get('delayed_session_minutes');\n    var hours = flow.get('delayed_session_hours');\n    delay = hours * 60 + minutes;\n}\n\nmsg = {};\npayload = flow.get('selected_batch');\n\nmsg.delay = delay;\nmsg.payload = payload;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 2750,
-        "y": 2020,
+        "x": 3030,
+        "y": 2080,
         "wires": [
             [
                 "105c2bbe.fec7b4",
@@ -6244,8 +6245,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 2075,
-        "y": 1560,
+        "x": 2435,
+        "y": 1580,
         "wires": [
             [
                 "64ec676c.b5f938"
@@ -6260,8 +6261,8 @@
         "links": [
             "d1a86442.7b18f8"
         ],
-        "x": 1275,
-        "y": 2000,
+        "x": 1555,
+        "y": 2060,
         "wires": [
             [
                 "70ab2998.70e028"
@@ -6277,8 +6278,8 @@
             "d1a86442.7b18f8",
             "5b7c9271.25ca2c"
         ],
-        "x": 1995,
-        "y": 1940,
+        "x": 2275,
+        "y": 2000,
         "wires": [
             [
                 "e8e01e5a.df5c7"
@@ -6293,8 +6294,91 @@
         "links": [
             "4296f61b.e2b988"
         ],
-        "x": 3875,
-        "y": 1700,
+        "x": 4155,
+        "y": 1760,
         "wires": []
+    },
+    {
+        "id": "b6118699.5d7d08",
+        "type": "ui_switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "Display sparge water counter",
+        "tooltip": "",
+        "group": "d9188a2e.55c2a8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 1160,
+        "y": 440,
+        "wires": [
+            [
+                "6c18fde3.c8df14"
+            ]
+        ]
+    },
+    {
+        "id": "d95c93f4.63de3",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "display_sparge_counter",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 440,
+        "wires": [
+            [
+                "b6118699.5d7d08"
+            ]
+        ]
+    },
+    {
+        "id": "6c18fde3.c8df14",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "display_sparge_counter",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1450,
+        "y": 440,
+        "wires": [
+            []
+        ]
     }
 ]

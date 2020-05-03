@@ -428,7 +428,8 @@
                 "3b351db2.6a8832"
             ],
             [
-                "a34e3d37.c0939"
+                "a34e3d37.c0939",
+                "fb93cc0.59f3638"
             ],
             [
                 "84deb30e.2da68",
@@ -854,7 +855,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode Status (W)",
-        "func": "const heatPowerPct = Number(msg.parameters[0]);\nconst timerPaused = Boolean(msg.parameters[1] === \"1\");\nconst stepMashMode = Boolean(msg.parameters[2] === \"1\");\nconst recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nconst manualPower = Boolean(msg.parameters[4] === \"1\");\nconst spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nflow.set('timer_paused', timerPaused);\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\nmsg.payload = {\n    'heatpowerpct':heatPowerPct,\n    'timerpaused':timerPaused,\n    'stepmashmode':stepMashMode,\n    'recipeinterrupted¨':recipeInterrupted,\n    'manualpower':manualPower,\n    'spargeWaterAlert':spargeWaterAlert\n};\n\nreturn msg;",
+        "func": "const heatPowerPct = Number(msg.parameters[0]);\nconst timerPaused = Boolean(msg.parameters[1] === \"1\");\nconst stepMashMode = Boolean(msg.parameters[2] === \"1\");\nconst recipeInterrupted = Boolean(msg.parameters[3] === \"1\");\nconst manualPower = Boolean(msg.parameters[4] === \"1\");\nconst spargeWaterAlert = Boolean(msg.parameters[5] === \"1\");\n\nflow.set('timer_paused', timerPaused);\nflow.set('sparge_heat_alert', spargeWaterAlert);\n\nnode.send([{'payload':heatPowerPct}, null, null, null, null, null]);\nnode.send([null, {'payload':timerPaused}, null, null, null, null]);\nnode.send([null, null, {'payload':stepMashMode}, null, null, null]);\nnode.send([null, null, null, {'payload':recipeInterrupted}, null, null]);\nnode.send([null, null, null, null, {'payload':manualPower}, null]);\nnode.send([null, null, null, null, null, {'payload':spargeWaterAlert}]);\n\nmsg.payload = {\n    'heatpowerpct':heatPowerPct,\n    'timerpaused':timerPaused,\n    'stepmashmode':stepMashMode,\n    'recipeinterrupted¨':recipeInterrupted,\n    'manualpower':manualPower,\n    'spargeWaterAlert':spargeWaterAlert\n};\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2190,
@@ -1282,7 +1283,7 @@
         "to": "",
         "reg": false,
         "x": 1100,
-        "y": 500,
+        "y": 540,
         "wires": [
             [
                 "c9ea0ca5.44f82",
@@ -1322,7 +1323,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n    flow.set('display_sparge_counter', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n    flow.set('display_sparge_counter', false);\n    flow.set('display_sparge_heat_reminder', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 690,
@@ -1334,7 +1335,8 @@
                 "423b9d6f.4141d4",
                 "e49595ca.f39708",
                 "b610ed95.9bd7e",
-                "d95c93f4.63de3"
+                "d95c93f4.63de3",
+                "1862da4c.900f46"
             ]
         ]
     },
@@ -2054,8 +2056,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 4230,
-        "y": 940,
+        "x": 4250,
+        "y": 960,
         "wires": []
     },
     {
@@ -2265,7 +2267,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3800,
-        "y": 780,
+        "y": 760,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2285,7 +2287,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 3790,
-        "y": 820,
+        "y": 840,
         "wires": [
             [
                 "bc61b8e9.017228"
@@ -2910,7 +2912,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode batch",
-        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\nvar delayedSessionVal = msg.delay > 0 ? \"1\" : \"0\";\nvar displaySpargeCounter = flow.get('display_sparge_counter') ? \"1\" : \"0\";\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,\" + displaySpargeCounter + \",0,\" + delayedSessionVal + \",0,\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Delayed session starting in\";\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nif(msg.delay) {\n  gfRecipe[gfRecipe.length] = \"\" + msg.delay + \",60\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
+        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\nvar delayedSessionVal = msg.delay > 0 ? \"1\" : \"0\";\nvar displaySpargeCounter = flow.get('display_sparge_counter') ? \"1\" : \"0\";\nvar displaySpargeHeatReminder = flow.get('display_sparge_heat_reminder') ? \"1\" : \"0\";\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[\"\"]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,\" + displaySpargeCounter + \",\" + displaySpargeHeatReminder + \",\" + delayedSessionVal + \",0,\";\nif(msg.delay > 0) {\n    brewSession.stageTitles[0] = \"Delayed session starting in\";\n}\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nif(msg.delay) {\n  gfRecipe[gfRecipe.length] = \"\" + msg.delay + \",60\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
         "outputs": 1,
         "noerr": 0,
         "x": 3260,
@@ -4126,7 +4128,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format brew session alert",
-        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst delayedHeat = msg.payload.delayedheat || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\nvar sendPushAlert = false;\nvar pushAlertTitle = \"\";\nvar pushAlertMessage = \"\";\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n    pushAlertTitle = \"Add boil additions\";\n    pushAlertMessage = payload;\n    sendPushAlert = true;\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n        pushAlertTitle = \"Boil temperature reached\";\n        pushAlertMessage = \"Ready to start boil timer\";\n        sendPushAlert = true;\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                if(delayedHeat) {\n                    buttonTitle = \"Override Delay\";\n                }\n                else {\n                    buttonTitle = \"Start Heating\";\n                }\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                pushAlertTitle = \"Mash water ready\";\n                pushAlertMessage = \"Mash water is ready for adding grain\";\n                sendPushAlert = true;\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                pushAlertTitle = \"Mash finished\";\n                pushAlertMessage = \"Ready to start sparge\";\n                sendPushAlert = true;\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                pushAlertTitle = \"Hop stand finished\";\n                pushAlertMessage = \"The hop stand timer has elapsed.\";\n                sendPushAlert = true;\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\nmsg.pushalert = sendPushAlert;\nmsg.pushtitle = pushAlertTitle;\nmsg.pushmessage = pushAlertMessage;\n\nreturn msg;",
+        "func": "const interactionCode = msg.payload.interactioncode || 0;\nconst interactionMode = msg.payload.interactionmode || false;\nconst delayedHeat = msg.payload.delayedheat || false;\nconst boilAdditionAlert = msg.payload === \"boil_addition_alert\" || false;\nconst temperatureAlarm = msg.payload === \"temperature_alarm\" || false;\nconst spargeHeatAlert = msg.payload === \"sparge_heat_alert\" || false;\nconst brewSession = flow.get(\"brewSession\");\nconst tempUnit = flow.get(\"temperature_unit\") || \"C\";\nvar payload = \"\";\nvar dismissCode = \"T\";\nvar buttonTitle = \"\";\nconst minsLeft = flow.get('timer_left_mins');\nvar sendPushAlert = false;\nvar pushAlertTitle = \"\";\nvar pushAlertMessage = \"\";\n\nfunction boilAdditionForMin(value, index, array) {\n  return value.time === minsLeft;\n}\n\nflow.set('interaction_mode', interactionMode);\n\nif(boilAdditionAlert) {\n    var boilAddition = brewSession.boilAdditions.find(boilAdditionForMin);\n\n    if(boilAddition) {\n        payload = \"Add \" + minsLeft + \" min boil additions: \" + boilAddition.name;\n    }\n    else {\n        payload = \"Add \" + minsLeft + \" min boil additions\";\n    }\n    dismissCode = \"A\";\n    buttonTitle = \"Dismiss Alert\";\n    pushAlertTitle = \"Add boil additions\";\n    pushAlertMessage = payload;\n    sendPushAlert = true;\n}\nelse if(spargeHeatAlert) {\n    pushAlertTitle = \"Heat sparge water\";\n    pushAlertMessage = \"Start heating the sparge water\";\n    sendPushAlert = true;\n    payload = \"Heat sparge water\";\n    buttonTitle = \"Dismiss Alert\";\n    dismissCode = \"T\";\n}\nelse {\n    dismissCode = \"T\";\n    if(temperatureAlarm) {\n        buttonTitle = \"Dismiss Temperature Alarm\";\n        pushAlertTitle = \"Boil temperature reached\";\n        pushAlertMessage = \"Ready to start boil timer\";\n        sendPushAlert = true;\n    }\n    else {\n        switch(interactionCode) {\n            case \"1\":\n                if(tempUnit === \"C\") {\n                    payload = \"Add \" + brewSession.mashWaterAmount + \" L water\";\n                }\n                else {\n                    payload = \"Add \" + (brewSession.mashWaterAmount / 3.7853).toFixed(2) + \" gal water\";\n                }\n                if(delayedHeat) {\n                    buttonTitle = \"Override Delay\";\n                }\n                else {\n                    buttonTitle = \"Start Heating\";\n                }\n                break;\n            case \"2\":\n                payload = \"Add grain\";\n                buttonTitle = \"Start Mash\";\n                pushAlertTitle = \"Mash water ready\";\n                pushAlertMessage = \"Mash water is ready for adding grain\";\n                sendPushAlert = true;\n                break;\n            case \"3\":\n                payload = \"Mash finished\";\n                buttonTitle = \"Start Sparge\";\n                pushAlertTitle = \"Mash finished\";\n                pushAlertMessage = \"Ready to start sparge\";\n                sendPushAlert = true;\n                break;\n            case \"4\":\n                if(tempUnit === \"C\") {\n                    payload = \"Sparge volume \" + brewSession.spargeWaterAmount + \" L\";\n                }\n                else {\n                    payload = \"Sparge volume  \" + (brewSession.spargeWaterAmount / 3.7853).toFixed(2) + \" gal\";\n                }\n                buttonTitle = \"Skip to Boil\";\n                break;\n            case \"5\":\n                payload = \"Boil reached\";\n                buttonTitle = \"Start Boil Timer\";\n                break;\n            case \"6\":\n                if(brewSession.hopStandTime) {\n                    payload = \"Add hops\"\n                    buttonTitle = \"Start Hop Stand Timer\";\n                }\n                else {\n                    payload = \"Boil finished\";\n                    buttonTitle = \"Finish Brew Session\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                break;\n            case \"7\":\n                payload = \"Hop stand finished\";\n                buttonTitle = \"Finish Brew Session\";\n                pushAlertTitle = \"Hop stand finished\";\n                pushAlertMessage = \"The hop stand timer has elapsed.\";\n                sendPushAlert = true;\n                break;\n            default:\n                if(flow.get('timer_elapsed')) {\n                    buttonTitle = \"Boil Timer Elapsed\";\n                    pushAlertTitle = \"Boil finished\";\n                    pushAlertMessage = \"The boil timer has elapsed.\";\n                    sendPushAlert = true;\n                }\n                else {\n                    dismissCode = \"\";\n                }\n        }\n    }\n}\n\nflow.set('alert_dismiss_code', dismissCode);\n\nif(buttonTitle) {\n    msg.colour = \"#4B7930\";\n    msg.textcolour = \"#FFFFFF\"\n}\nelse {\n    msg.colour = \"#333333\";\n    msg.textcolour =\"#333333\"\n}\n\nmsg.button_title = buttonTitle;\nmsg.payload = payload;\nmsg.pushalert = sendPushAlert;\nmsg.pushtitle = pushAlertTitle;\nmsg.pushmessage = pushAlertMessage;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2490,
@@ -4205,7 +4207,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Validate dismiss",
-        "func": "const interactionMode = flow.get('interaction_mode') || false;\nconst stickyBoilAdditionAlert = flow.get('sticky_boil_addition_alert') || false;\nconst stickyTemperatureAlarm = flow.get('sticky_temperature_alarm') || false;\nconst timerElapsedAlarm = flow.get('timer_elapsed') || false;\nconst delayedHeat = flow.get('delayed_heat') || false;\n\nif(stickyBoilAdditionAlert && msg.payload == \"A\") {\n    flow.set('sticky_boil_addition_alert', false);\n    return msg;\n}\n\nif(stickyTemperatureAlarm && msg.payload == \"T\") {\n    flow.set('sticky_temperature_alarm', false);\n    return msg;\n}\n\nif(interactionMode && msg.payload === \"T\") {\n    return msg;\n}\n\nif(timerElapsedAlarm && msg.payload === \"T\") {\n    return msg;\n}\n\nif(delayedHeat && msg.payload === \"T\") {\n    return msg;\n}",
+        "func": "const interactionMode = flow.get('interaction_mode') || false;\nconst stickyBoilAdditionAlert = flow.get('sticky_boil_addition_alert') || false;\nconst stickyTemperatureAlarm = flow.get('sticky_temperature_alarm') || false;\nconst timerElapsedAlarm = flow.get('timer_elapsed') || false;\nconst delayedHeat = flow.get('delayed_heat') || false;\nconst spargeHeatAlert = flow.get('sparge_heat_alert') || false;\n\nif(stickyBoilAdditionAlert && msg.payload == \"A\") {\n    flow.set('sticky_boil_addition_alert', false);\n    return msg;\n}\n\nif(stickyTemperatureAlarm && msg.payload == \"T\") {\n    flow.set('sticky_temperature_alarm', false);\n    return msg;\n}\n\nif(interactionMode && msg.payload === \"T\") {\n    return msg;\n}\n\nif(timerElapsedAlarm && msg.payload === \"T\") {\n    return msg;\n}\n\nif(delayedHeat && msg.payload === \"T\") {\n    return msg;\n}\n\nif(spargeHeatAlert && msg.payload === \"T\") {\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 3020,
@@ -4248,7 +4250,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Sticky alert",
-        "func": "if(msg.payload === \"boil_addition_alert\") {\n    flow.set('sticky_boil_addition_alert', true);\n    return msg;\n}\nif(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_boil_addition_alert', false);\n}\nelse if(flow.get('sticky_boil_addition_alert') === false) {\n    return msg;\n}\n",
+        "func": "if(msg.payload === \"boil_addition_alert\") {\n    flow.set('sticky_boil_addition_alert', true);\n    return msg;\n}\nif(msg.payload === \"sparge_heat_alert\") {\n    flow.set('sticky_sparge_heat_alert', true);\n    return msg;\n}\nif(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_boil_addition_alert', false);\n    flow.set('sticky_sparge_heat_alert', false);\n}\nelse if(flow.get('sticky_sparge_heat_alert') === false && flow.get('sticky_sparge_heat_alert') === false) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "x": 2010,
@@ -6379,6 +6381,213 @@
         "y": 440,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "250b3798.6a8578",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "Test recipe with sparge alerts",
+        "func": "var testRecipe = [\n    \"R30,2,15,16,\", // 30 min boil, 2 mash step, 15L mash vol, 16 L sparge vol\n    \"0,1,1,0,0,\", // No water tratment alert, sparge counter, sparge alert, no delayed session, do not skip start\n    \"SPARGE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"1\", // Boil addition 1 at 1 mins remaining\n    \"25:45,\", // Mash step 1, 25°C for 45 mins\n    \"28:10,\" // Mash step 2, 28°C for 10 mins\n    ];\nmsg.payload = testRecipe;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3980,
+        "y": 1060,
+        "wires": [
+            [
+                "972a9ebc.ebca7",
+                "46b9479a.5828e8"
+            ]
+        ]
+    },
+    {
+        "id": "918313f2.94fab",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3720,
+        "y": 1060,
+        "wires": [
+            [
+                "250b3798.6a8578"
+            ]
+        ]
+    },
+    {
+        "id": "aeb0cca2.b2d23",
+        "type": "ui_switch",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "label": "Display sparge water reminder",
+        "tooltip": "",
+        "group": "d9188a2e.55c2a8",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 1170,
+        "y": 500,
+        "wires": [
+            [
+                "bf84081d.bb96b8"
+            ]
+        ]
+    },
+    {
+        "id": "1862da4c.900f46",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "display_sparge_heat_reminder",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 500,
+        "wires": [
+            [
+                "aeb0cca2.b2d23"
+            ]
+        ]
+    },
+    {
+        "id": "bf84081d.bb96b8",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "display_sparge_heat_reminder",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1470,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fb93cc0.59f3638",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Decode Sparge Alert (B)",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "sparge_heat_alert",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1710,
+        "y": 1960,
+        "wires": [
+            [
+                "787fce9c.18755"
+            ]
+        ]
+    },
+    {
+        "id": "886575fc.5050c8",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Reset sparge heat alert",
+        "topic": "",
+        "payload": "V",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3800,
+        "y": 380,
+        "wires": [
+            [
+                "bc61b8e9.017228"
+            ]
+        ]
+    },
+    {
+        "id": "6810c8e9.3541c8",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Dismiss boil alert",
+        "topic": "",
+        "payload": "A",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3760,
+        "y": 300,
+        "wires": [
+            [
+                "bc61b8e9.017228"
+            ]
+        ]
+    },
+    {
+        "id": "3e00495d.e56426",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Press Set",
+        "topic": "",
+        "payload": "T",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3760,
+        "y": 800,
+        "wires": [
+            [
+                "bc61b8e9.017228"
+            ]
         ]
     }
 ]

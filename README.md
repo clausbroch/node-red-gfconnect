@@ -31,7 +31,7 @@ In order to start a brew session you first need to establish a connection betwee
 
 Click the "Upload File" button to load the recipe into the Raspberry Pi.
 
-It is also possible to fetch the recipe diretly from Brewfather. First click the "Refresh List" button to fetch a list of batches that are ready for brewing ("Planned" or "Brewing" status). Next select the batch from the drop down list to load it into the Raspberry Pi.
+It is also possible to fetch the recipe directly from Brewfather. First click the "Refresh List" button to fetch a list of batches that are ready for brewing ("Planned" or "Brewing" status). Next select the batch from the drop down list to load it into the Raspberry Pi.
 
 **Note:** Loading recipes directly from Brewfather is currently in preliminary testing phase. In order to use this feature you need to request a User Key and API Key directly from Brewfather and entered these in the GF Connect settings. See [docs.brewfather.app/api](https://docs.brewfather.app/api) for details.
 

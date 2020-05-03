@@ -102,6 +102,7 @@
         "id": "321f8fea.8d69d",
         "type": "ui_group",
         "z": "",
+        "d": true,
         "name": "Raw Messages",
         "tab": "355d7d12.6d7412",
         "order": 4,

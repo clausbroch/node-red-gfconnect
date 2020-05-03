@@ -1324,7 +1324,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', false);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n    flow.set('display_sparge_counter', false);\n    flow.set('display_sparge_heat_reminder', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('ble_overflow', null);\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', true);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n    flow.set('display_sparge_counter', false);\n    flow.set('display_sparge_heat_reminder', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('sticky_sparge_heat_alert', false);\nflow.set('ble_overflow', \"\");\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 690,
@@ -1495,7 +1495,8 @@
         "wires": [
             [
                 "b3f2ec24.29c96",
-                "24c60883.250118"
+                "24c60883.250118",
+                "2a97b9b7.f6d6e6"
             ]
         ]
     },
@@ -1504,7 +1505,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format GF command",
-        "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str.substr(0, 19);\n}\n\nvar command = Buffer.from(pad(msg.payload)).toString('hex');\n\nvar payload = {\"0003cdd200001000800000805f9b0131\":command};\nmsg.payload = payload;\n//msg.payload = JSON.stringify(payload);\n\nreturn msg;",
+        "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str.substr(0, 19);\n}\n\nif(flow.get('connection') === \"connected\") {\n    var command = Buffer.from(pad(msg.payload)).toString('hex');\n\n    var payload = {\"0003cdd200001000800000805f9b0131\":command};\n    msg.payload = payload;\n    //msg.payload = JSON.stringify(payload);\n\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 3780,
@@ -2913,7 +2914,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Decode batch",
-        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\nvar delayedSessionVal = msg.delay > 0 ? \"1\" : \"0\";\nvar displaySpargeCounter = flow.get('display_sparge_counter') ? \"1\" : \"0\";\nvar displaySpargeHeatReminder = flow.get('display_sparge_heat_reminder') ? \"1\" : \"0\";\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[\"\"]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,\" + displaySpargeCounter + \",\" + displaySpargeHeatReminder + \",\" + delayedSessionVal + \",0,\";\nif(msg.delay > 0) {\n    brewSession.stageTitles[0] = \"Delayed session starting in\";\n}\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nif(msg.delay) {\n  gfRecipe[gfRecipe.length] = \"\" + msg.delay + \",60\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
+        "func": "var recipe = msg.payload.recipe;\nvar mash = recipe.mash;\nvar boilSteps = msg.payload.boilSteps;\nvar boilTime = recipe.boilTime;\nvar delayedSessionVal = msg.delay > 0 ? \"1\" : \"0\";\nvar displaySpargeCounter = flow.get('display_sparge_counter') ? \"1\" : \"0\";\nvar displaySpargeHeatReminder = flow.get('display_sparge_heat_reminder') ? \"1\" : \"0\";\n\nvar brewSession = {\n    'recipeName':recipe.name,\n    'batchName':msg.payload.name,\n    'batchNumber':msg.payload.batchNo,\n    'mashWaterAmount':recipe.data.mashWaterAmount.toFixed(1),\n    'spargeWaterAmount':recipe.data.spargeWaterAmount.toFixed(1),\n    'boilStage':0,\n    'boilTime':recipe.boilTime,\n    'hopStandTime':recipe.hopStandMinutes,\n    'boilAdditions':[],\n    'mashSteps':[],\n    'stageTitles':[\"\"]\n}\n\nvar gfRecipe = [];\ngfRecipe[0] = \"R\" + recipe.boilTime.toString() + \",\" + mash.steps.length.toString() + \",\" + recipe.data.mashWaterAmount.toFixed(1).toString()  + \",\" + recipe.data.spargeWaterAmount.toFixed(1).toString() + \",\";\ngfRecipe[1] = \"0,\" + displaySpargeCounter + \",\" + displaySpargeHeatReminder + \",\" + delayedSessionVal + \",0,\";\nif(msg.delay > 0) {\n    brewSession.stageTitles[0] = \"Delayed session starting in\";\n}\ngfRecipe[2] = recipe.name.toUpperCase();\ngfRecipe[3] = recipe.hopStandMinutes.toString() +\",\" + boilSteps.length.toString() + \",0,0,\";\nboilSteps.forEach(boilAdditions);\nfunction boilAdditions(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.time.toString() + \",\";\n  brewSession.boilAdditions[brewSession.boilAdditions.length] = value;\n}\nmash.steps.forEach(mashSteps);\nfunction mashSteps(value, index, array) {\n  gfRecipe[gfRecipe.length] = value.stepTemp.toString() + \":\" + value.stepTime.toString() + \",\";\n  brewSession.mashSteps[brewSession.mashSteps.length] = value;\n  brewSession.stageTitles[brewSession.stageTitles.length] = value.name || \"Mash \" + (index + 1);\n}\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Sparge\";\nbrewSession.stageTitles[brewSession.stageTitles.length] = \"Boil\";\nbrewSession.boilStage = brewSession.stageTitles.length - 1;\nif(recipe.hopStandMinutes > 0) {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \"Hop Stand\";\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Hop Stand Finished\";\n}\nelse {\n    brewSession.stageTitles[brewSession.stageTitles.length] = \" \"; //\"Boil Finished\";\n}\nif(msg.delay) {\n  gfRecipe[gfRecipe.length] = \"\" + msg.delay + \",60\";\n}\nflow.set('brewSession', brewSession);\nmsg.payload = gfRecipe;\n\nreturn msg;\n\n/* \nsimpleRecipe = [\n    \"R10,1,5,6,\", // 10 min boil, 1 mash step, 5L mash vol, 6 L sparge vol\n    \"0,0,0,0,0,\", // No water tratment alert, no sparge counter, no sparge alert, no delayed session, do not skip start\n    \"SIMPLE TEST\", // Name of recipe\n    \"0,1,0,0,\", // No hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n    \nfullRecipe = [\n    \"R10,2,5,6,\", // 10 min boil, 2 mash step, 5L mash vol, 6 L sparge vol\n    \"1,1,1,0,0,\", // Water tratment alert, Sparge counter, sparge alert, no delayed session, do not skip start\n    \"TEST WITH ALL\", // Name of recipe\n    \"5,1,0,0,\", // 5 min hop stand, 1 boil addition, no boil power mode, no strike temp mode\n    \"5\", // Boil addition 1 at 5 mins remaining\n    \"25:5,\", // Mash step 1, 25°C for 5 mins\n    \"28:5,\" // Mash step 1, 25°C for 5 mins\n    ];\n\n*/",
         "outputs": 1,
         "noerr": 0,
         "x": 3260,
@@ -2931,7 +2932,7 @@
         "type": "debug",
         "z": "9dea0b26.bbbe98",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -4147,7 +4148,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set stage title",
-        "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nmsg.payload.timertitle = brewSession.stageTitles[stageNumber];\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nreturn msg;",
+        "func": "const brewSession = flow.get(\"brewSession\");\nconst stageNumber = flow.get('brew_stage');\n\nvar displayStatic = \"inline\";\nvar displayFlashing = \"none\";\n\nif(msg.payload.timerelapsed){\n    displayStatic = \"none\";\n    displayFlashing = \"inline\";\n}\n\nmsg.payload.static = displayStatic;\nmsg.payload.flashing = displayFlashing;\n\nif(flow.get(\"brew_session_active\")) {\n    msg.payload.timertitle = brewSession.stageTitles[stageNumber];\n}\nelse {\n    msg.payload.timertitle = \"\";\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 2740,
@@ -4251,7 +4252,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Sticky alert",
-        "func": "if(msg.payload === \"boil_addition_alert\") {\n    flow.set('sticky_boil_addition_alert', true);\n    return msg;\n}\nif(msg.payload === \"sparge_heat_alert\") {\n    flow.set('sticky_sparge_heat_alert', true);\n    return msg;\n}\nif(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_boil_addition_alert', false);\n    flow.set('sticky_sparge_heat_alert', false);\n}\nelse if(flow.get('sticky_sparge_heat_alert') === false && flow.get('sticky_sparge_heat_alert') === false) {\n    return msg;\n}\n",
+        "func": "if(msg.payload === \"boil_addition_alert\") {\n    flow.set('sticky_boil_addition_alert', true);\n    return msg;\n}\nif(msg.payload === \"sparge_heat_alert\") {\n    flow.set('sticky_sparge_heat_alert', true);\n    return msg;\n}\nif(msg.payload === \"interaction_cleared\") {\n    flow.set('sticky_boil_addition_alert', false);\n    flow.set('sticky_sparge_heat_alert', false);\n}\nelse if(flow.get('sticky_boil_addition_alert') === false && flow.get('sticky_sparge_heat_alert') === false) {\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "x": 2010,
@@ -4424,25 +4425,6 @@
         ]
     },
     {
-        "id": "6ec8c28c.5490bc",
-        "type": "function",
-        "z": "9dea0b26.bbbe98",
-        "name": "Slice message stream (backup)",
-        "func": "var buffer = context.get('overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"];\nif(buffer) {\n    buffer = Buffer.concat([buffer, newMsg]);\n}\nelse {\n    buffer = newMsg;\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nif(buffer.length >= 17) {\n    msg.payload = buffer.slice(0, 16).toString();\n    const overflow = buffer.slice(17);\n    context.set('overflow', overflow);\n    \n    logMsg.out = msg.payload;\n    logMsg.overflow = overflow;\n    \n    // Re-synchronize in case something goes wrong\n    const end = msg.payload.substr(16,1);\n    const start = msg.payload.substr(0,1);\n    if((\"0123456789,Z\".indexof(start) !== -1) || (end !== \"Z\" && end !== \",\") ) {\n        logMsg.error = true;\n        node.send([null, {'error':logMsg, 'previous':previous}]);\n        context.set('overflow', null);\n    }\n}\nelse {\n    msg.payload = buffer.toString();\n    logMsg.out = msg.payload;\n    context.set('overflow', null);\n}\n\n//node.send([null, {'error':logMsg, 'previous':previous}]);\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n\nnode.send([msg, null]);\n",
-        "outputs": 2,
-        "noerr": 0,
-        "x": 1290,
-        "y": 120,
-        "wires": [
-            [],
-            []
-        ],
-        "outputLabels": [
-            "",
-            "error"
-        ]
-    },
-    {
         "id": "1ed8aea6.839e01",
         "type": "inject",
         "z": "9dea0b26.bbbe98",
@@ -4580,7 +4562,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "passthru": false,
+        "passthru": true,
         "decouple": "false",
         "topic": "",
         "style": "",
@@ -6432,7 +6414,7 @@
         "order": 4,
         "width": 0,
         "height": 0,
-        "passthru": false,
+        "passthru": true,
         "decouple": "false",
         "topic": "",
         "style": "",
@@ -6590,5 +6572,54 @@
                 "bc61b8e9.017228"
             ]
         ]
+    },
+    {
+        "id": "bbcde866.86b2b8",
+        "type": "inject",
+        "z": "9dea0b26.bbbe98",
+        "name": "Wipe flow variables",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2990,
+        "y": 100,
+        "wires": [
+            [
+                "61d5a036.43014"
+            ]
+        ]
+    },
+    {
+        "id": "61d5a036.43014",
+        "type": "function",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "func": "var keys = flow.keys();\nkeys.forEach(deleteFlowVariable);\nfunction deleteFlowVariable(key) {\n    flow.set(key, undefined);\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3170,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2a97b9b7.f6d6e6",
+        "type": "debug",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1020,
+        "y": 160,
+        "wires": []
     }
 ]

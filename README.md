@@ -25,7 +25,7 @@ The following features are currently supported:
 
 ## Installation
 
-The easiest way to install GFConnect is to copy the content of the [flow.json](flow.json) file into the workspace by selecting the menu "Import" -> "Clipboard":
+If you already have Node-RED installed you can install GFConnect by copying the content of the [flow.json](flow.json) file into the workspace by selecting the menu "Import" -> "Clipboard":
 
 <img src="pictures/InstallFlow.png"></img>
 
@@ -34,6 +34,8 @@ Paste the content of flow.json into the "Import nodes" dialog, select to import 
 <img src="pictures/ImportNewFlow.png"></img>
 
 In the workspace click the "Deploy" button to deploy the flow to the Node RED server. 
+
+If you do not have Node-RED installed, you can follow [this detailed guide](https://www.norgesvej12a.dk/husbryg/setting-up-a-new-raspberry-pi-zero-w-for-gf-connect/) for how to install the software on a new Raspberry Pi Zero W.
 
 ### Pairing with Grainfather Controller
 

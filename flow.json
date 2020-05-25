@@ -252,17 +252,6 @@
         "collapse": false
     },
     {
-        "id": "3f80edac.961f72",
-        "type": "Generic BLE",
-        "z": "",
-        "localName": "Grain",
-        "address": "bb:a0:50:0e:0a:12",
-        "uuid": "bba0500e0a12",
-        "muteNotifyEvents": false,
-        "operationTimeout": "",
-        "characteristics": []
-    },
-    {
         "id": "486b3eb4.b3723",
         "type": "ui_group",
         "z": "",
@@ -345,10 +334,10 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload.characteristics[\"0003cdd100001000800000805f9b0131\"]",
+        "complete": "payload",
         "targetType": "msg",
-        "x": 1290,
-        "y": 220,
+        "x": 1070,
+        "y": 240,
         "wires": []
     },
     {
@@ -1163,11 +1152,11 @@
         "payload": "connect",
         "payloadType": "str",
         "topic": "",
-        "x": 420,
-        "y": 220,
+        "x": 100,
+        "y": 240,
         "wires": [
             [
-                "2a13b630.b9e87a"
+                "4142331b.ce18cc"
             ]
         ]
     },
@@ -1293,38 +1282,11 @@
         ]
     },
     {
-        "id": "2a13b630.b9e87a",
-        "type": "change",
-        "z": "9dea0b26.bbbe98",
-        "name": "Subscribe",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"notify\":true,\"period\":0}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 620,
-        "y": 220,
-        "wires": [
-            [
-                "b79bbad8.1ee5f8"
-            ]
-        ]
-    },
-    {
         "id": "fbd65c91.f4f7a",
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', true);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n    flow.set('display_sparge_counter', false);\n    flow.set('display_sparge_heat_reminder', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('sticky_sparge_heat_alert', false);\nflow.set('ble_overflow', \"\");\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('auto_connect', true);\n    flow.set('temperature_unit', 'C');\n    flow.set('defaults_set', true);\n    flow.set('pushover_enabled', false);\n    flow.set('brewfather_enabled', false);\n    flow.set('display_sparge_counter', false);\n    flow.set('display_sparge_heat_reminder', false);\n}\n\nflow.set('timer_active', false);\nflow.set('timer_paused', false);\nflow.set('timer_elapsed', false);\nflow.set('timer_start_mins', 0);\nflow.set('timer_left_mins', 0);\nflow.set('timer_left_secs', 0);\nflow.set('sticky_boil_addition_alert', false);\nflow.set('sticky_temperature_alarm', false);\nflow.set('sticky_sparge_heat_alert', false);\nflow.set('ble_overflow', \"\");\nflow.set('brew_session_active', false);\nflow.set('new_timer_hours', 0);\nflow.set('new_timer_minutes', 0);\nflow.set('delayed_session_hours', 0);\nflow.set('delayed_session_minutes', 0);\n\nflow.set('peripheral', \"\");\nflow.set('connection', 'disconnected');\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 690,
@@ -1380,7 +1342,7 @@
         "crontab": "",
         "once": true,
         "onceDelay": "2",
-        "x": 420,
+        "x": 200,
         "y": 300,
         "wires": [
             [
@@ -1396,11 +1358,11 @@
         "func": "var auto_connect = flow.get('auto_connect') || false;\nvar connected = (flow.get('connection') === \"connected\") || false;\n\nif(auto_connect && !connected) {\n    msg.payload = \"auto connect\";\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "x": 640,
+        "x": 400,
         "y": 300,
         "wires": [
             [
-                "2a13b630.b9e87a"
+                "4142331b.ce18cc"
             ]
         ]
     },
@@ -1483,29 +1445,11 @@
         ]
     },
     {
-        "id": "b79bbad8.1ee5f8",
-        "type": "Generic BLE in",
-        "z": "9dea0b26.bbbe98",
-        "name": "Grainfather Read",
-        "genericBle": "3f80edac.961f72",
-        "useString": false,
-        "notification": true,
-        "x": 830,
-        "y": 220,
-        "wires": [
-            [
-                "b3f2ec24.29c96",
-                "24c60883.250118",
-                "2a97b9b7.f6d6e6"
-            ]
-        ]
-    },
-    {
         "id": "bce0ab71.378748",
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Format GF command",
-        "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str.substr(0, 19);\n}\n\nif(flow.get('connection') === \"connected\") {\n    var command = Buffer.from(pad(msg.payload)).toString('hex');\n\n    var payload = {\"0003cdd200001000800000805f9b0131\":command};\n    msg.payload = payload;\n    //msg.payload = JSON.stringify(payload);\n\n    return msg;\n}",
+        "func": "function pad(str) {\n    while(str.length < 19) {\n        str = str + \" \";\n    }\n    return str.substr(0, 19);\n}\n\nif(flow.get('connection') === \"connected\" && flow.get('peripheral')) {\n    msg.payload = pad(msg.payload);\n    msg.peripheral = flow.get('peripheral');\n\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 3780,
@@ -1516,16 +1460,6 @@
                 "4af1ed2.902d914"
             ]
         ]
-    },
-    {
-        "id": "28188956.6c5066",
-        "type": "Generic BLE out",
-        "z": "9dea0b26.bbbe98",
-        "name": "",
-        "genericBle": "3f80edac.961f72",
-        "x": 4150,
-        "y": 1260,
-        "wires": []
     },
     {
         "id": "fa3b9cc2.52978",
@@ -1691,7 +1625,7 @@
         "y": 1260,
         "wires": [
             [
-                "28188956.6c5066"
+                "5619d537.00612c"
             ]
         ]
     },
@@ -3870,7 +3804,7 @@
         "type": "function",
         "z": "9dea0b26.bbbe98",
         "name": "Slice message stream",
-        "func": "var buffer = flow.get('ble_overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.characteristics[\"0003cdd100001000800000805f9b0131\"].toString();\nvar didSend = false;\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nwhile(buffer.length >= 17) {\n    // Clean start of buffer for garbage in case something got lost earlier\n    while(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n       logMsg.error = true;\n       buffer = buffer.substr(1);\n    }\n\n    if(buffer.length >= 17) {\n        msg.payload = buffer.substr(0, 17);\n        const overflow = buffer.substr(17);\n        flow.set('ble_overflow', overflow);\n        buffer = overflow;\n        \n        if(overflow.length >= 17) {\n            logMsg.error = true;\n        }\n        logMsg.out = msg.payload;\n        logMsg.overflow = overflow;\n        \n        // Re-synchronize in case something goes wrong\n        const end = msg.payload.substr(-1,1);\n        if(end !== \"Z\" && end !== \",\") {\n            logMsg.error = true;\n        }\n        \n        didSend = true;\n        node.send([msg, null]);\n        if(logMsg.error) {\n            node.send([null, {'error':logMsg, 'previous':previous}]);\n            logMsg.error = false;\n        }\n    }\n    else {\n        flow.set('ble_overflow', buffer);\n        logMsg.out = null;\n    }\n}\n\nif(!didSend) {\n    flow.set('ble_overflow', buffer);\n    logMsg.out = null;\n}\n\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n",
+        "func": "var buffer = flow.get('ble_overflow');\nconst template = {\"timestamp\":0, \"in\":\"\", \"out\":\"\", \"overflow\":\"\"};\nvar previous = flow.get('ble_messages') || [template, template, template, template, template];\nvar logMsg = template;\nconst newMsg = msg.payload.toString();\nvar didSend = false;\nif(buffer) {\n    buffer = buffer + newMsg;\n}\nelse {\n    buffer = newMsg;\n}\n\nlogMsg.timestamp = msg.timestamp;\nlogMsg.in = newMsg;\n\nwhile(buffer.length >= 17) {\n    // Clean start of buffer for garbage in case something got lost earlier\n    while(\"0123456789,Z\".indexOf(buffer.substr(0,1)) !== -1) {\n       logMsg.error = true;\n       buffer = buffer.substr(1);\n    }\n\n    if(buffer.length >= 17) {\n        msg.payload = buffer.substr(0, 17);\n        const overflow = buffer.substr(17);\n        flow.set('ble_overflow', overflow);\n        buffer = overflow;\n        \n        if(overflow.length >= 17) {\n            logMsg.error = true;\n        }\n        logMsg.out = msg.payload;\n        logMsg.overflow = overflow;\n        \n        // Re-synchronize in case something goes wrong\n        const end = msg.payload.substr(-1,1);\n        if(end !== \"Z\" && end !== \",\") {\n            logMsg.error = true;\n        }\n        \n        didSend = true;\n        node.send([msg, null]);\n        if(logMsg.error) {\n            node.send([null, {'error':logMsg, 'previous':previous}]);\n            logMsg.error = false;\n        }\n    }\n    else {\n        flow.set('ble_overflow', buffer);\n        logMsg.out = null;\n    }\n}\n\nif(!didSend) {\n    flow.set('ble_overflow', buffer);\n    logMsg.out = null;\n}\n\nprevious[previous.length] = logMsg;\nprevious.shift();\nflow.set('ble_messages',previous);\n",
         "outputs": 2,
         "noerr": 0,
         "x": 1260,
@@ -6608,18 +6542,136 @@
         ]
     },
     {
-        "id": "2a97b9b7.f6d6e6",
-        "type": "debug",
+        "id": "7d584ed9.43cb4",
+        "type": "BLE scanner",
+        "z": "9dea0b26.bbbe98",
+        "name": "Scan for GF",
+        "services": "0000cdd000001000800000805f9b34fb",
+        "servicesType": "str",
+        "continuous": false,
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "998a4543.16a9a8"
+            ]
+        ]
+    },
+    {
+        "id": "4142331b.ce18cc",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "Scan",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "start",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "7d584ed9.43cb4"
+            ]
+        ]
+    },
+    {
+        "id": "998a4543.16a9a8",
+        "type": "BLE device",
+        "z": "9dea0b26.bbbe98",
+        "name": "GF device",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "4ec9c90e.fba0c8",
+                "ac7d3b18.8b2c98"
+            ]
+        ]
+    },
+    {
+        "id": "9459839b.498ff",
+        "type": "BLE in",
+        "z": "9dea0b26.bbbe98",
+        "topic": "subscribe",
+        "characteristic": "0003cdd100001000800000805f9b0131",
+        "name": "",
+        "x": 870,
+        "y": 280,
+        "wires": [
+            [
+                "24c60883.250118",
+                "b3f2ec24.29c96"
+            ]
+        ]
+    },
+    {
+        "id": "4ec9c90e.fba0c8",
+        "type": "switch",
         "z": "9dea0b26.bbbe98",
         "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 1020,
-        "y": 160,
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "connected",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 280,
+        "wires": [
+            [
+                "9459839b.498ff"
+            ]
+        ]
+    },
+    {
+        "id": "ac7d3b18.8b2c98",
+        "type": "change",
+        "z": "9dea0b26.bbbe98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "peripheral",
+                "pt": "flow",
+                "to": "peripheral",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5619d537.00612c",
+        "type": "BLE out",
+        "z": "9dea0b26.bbbe98",
+        "characteristic": "0003cdd200001000800000805f9b0131",
+        "name": "",
+        "x": 4180,
+        "y": 1260,
         "wires": []
     }
 ]

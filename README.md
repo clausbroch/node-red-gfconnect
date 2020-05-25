@@ -20,7 +20,7 @@ The following features are currently supported:
 ## Dependencies
 * node-red-dashboard
 * node-red-contrib-ui-level
-* node-red-contrib-generic-ble
+* node-red-contrib-noble-bluetooth
 * node-red-node-rbe
 
 ## Installation

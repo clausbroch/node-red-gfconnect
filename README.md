@@ -25,7 +25,7 @@ The following features are currently supported:
 
 ## Installation
 
-The easiest way to install GFConnect is to copy the content of the [flow.json](flow.json) file into the workspace by selecting the menu "Import" -> "Clipboard":
+If you already have Node-RED installed you can install GFConnect by copying the content of the [flow.json](flow.json) file into the workspace by selecting the menu "Import" -> "Clipboard":
 
 <img src="pictures/InstallFlow.png"></img>
 
@@ -34,6 +34,8 @@ Paste the content of flow.json into the "Import nodes" dialog, select to import 
 <img src="pictures/ImportNewFlow.png"></img>
 
 In the workspace click the "Deploy" button to deploy the flow to the Node RED server. 
+
+If you do not have Node-RED installed, you can follow [this detailed guide](https://www.norgesvej12a.dk/husbryg/setting-up-a-new-raspberry-pi-zero-w-for-gf-connect/) for how to install the software on a new Raspberry Pi Zero W.
 
 The GFConnect dashboard can now be accessed from http://pi:1880/ui/ where *pi* is either the hostname or the ip address of your Raspberry Pi.
 
@@ -47,7 +49,7 @@ Click the "Upload File" button to load the recipe into the Raspberry Pi.
 
 It is also possible to fetch the recipe directly from Brewfather. First click the "Refresh List" button to fetch a list of batches that are ready for brewing ("Planned" or "Brewing" status). Next select the batch from the drop down list to load it into the Raspberry Pi.
 
-**Note:** Loading recipes directly from Brewfather is currently in preliminary testing phase. In order to use this feature you need to request a User Key and API Key directly from Brewfather and entered these in the GF Connect settings. See [docs.brewfather.app/api](https://docs.brewfather.app/api) for details.
+In order to use the direct Brewfather integration feature you need to generate your API/User Key directly from the [Brewfather settings page](https://web.brewfather.app/tabs/settings) and enter these in the GF Connect settings. Make sure you generate the key to allow both read and write access to the Batch feature.
 
 Once the recipe is loaded, you can start the brew session by clicking "Start Session". Alternatively you can delay the session start by setting the number of hours and minutes and clicking the "Start Delayed Session". The recipe will now be sent to the Grainfather controller and you can start brewing:
 

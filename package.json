@@ -3,10 +3,10 @@
     "description": "A Node-RED Project for controlling the Grainfather Connect G30 brewing system",
     "version": "0.9.1",
     "dependencies": {
-        "node-red-contrib-generic-ble": "3.1.0",
         "node-red-dashboard": "2.19.4",
         "node-red-contrib-ui-level": "0.1.27",
-        "node-red-node-rbe": "0.2.8"
+        "node-red-node-rbe": "0.2.8",
+        "node-red-contrib-noble-bluetooth": "0.9.1"
     },
     "node-red": {
         "settings": {

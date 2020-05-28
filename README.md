@@ -20,7 +20,7 @@ The following features are currently supported:
 ## Dependencies
 * node-red-dashboard
 * node-red-contrib-ui-level
-* node-red-contrib-generic-ble
+* node-red-contrib-noble-bluetooth
 * node-red-node-rbe
 
 ## Installation
@@ -36,30 +36,6 @@ Paste the content of flow.json into the "Import nodes" dialog, select to import 
 In the workspace click the "Deploy" button to deploy the flow to the Node RED server. 
 
 If you do not have Node-RED installed, you can follow [this detailed guide](https://www.norgesvej12a.dk/husbryg/setting-up-a-new-raspberry-pi-zero-w-for-gf-connect/) for how to install the software on a new Raspberry Pi Zero W.
-
-### Pairing with Grainfather Controller
-
-The first time you run the GFConnect flow it will need to be paired with the Grainfather controller. Navigate to the top left corner of the editor and locate the blue "Grainfather Read" node.
-
-<img src="pictures/GrainfatherReadNodeDisconnected.png"></img>
-
-If there is a red indicator and the text "disconnected" or similar below it, then you need to pair with the controller. First make sure the Grainfather controller is turned on and no other devices are connected to it. Double-click the blue "Grainfather Read" node to open the node editor and click on the pencil icon:
-
-<img src="pictures/GrainfatherEditBLEConfiguration.png"></img>
-
-In the next window, enable the option to "Select from scan result":
-
-<img src="pictures/GrainfatherEditBLESelectFromScan.png"></img>
-
-All the discoverable Bluetooth nodes will now appear in the "Scan Result" popup. It may take a few seconds to fully populate the list and get the device names. If the Grainfather controller is found, there will now be an entry named "Grain" in the list. Otherwise, click the Cancel button and retry the scan process above.
-
-Once the entry named "Grain" is found, select the entry and click on the "Update" button and next the "Done" button. 
-
-<img src="pictures/GrainfatherEditBLESelectGrain.png"></img>
-
-Finally, click on the "Deploy" button in the editor to deploy the new confiuration to the server. Within a couple of seconds you should now have a successful connection to the Grainfather, indicated by green under the node:
-
-<img src="pictures/GrainfatherReadNodeConnected.png"></img>
 
 The GFConnect dashboard can now be accessed from http://pi:1880/ui/ where *pi* is either the hostname or the ip address of your Raspberry Pi.
 

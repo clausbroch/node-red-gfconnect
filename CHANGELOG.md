@@ -1,11 +1,9 @@
 # Revision History
 
-* latest
+* v0.9.2
   - Updated to new bluetooth library that supports automatic pairing with the Grainfather controller (#4)
-  - ~~Updated README with description of installation and pairing process (#2)~~
   - Updated README with description of how to get a Brewfather API key
-- Updated README with reference to detailed installation guide
-  
+  - Updated README with reference to detailed installation guide
 * v0.9.1
   - Fixed issue that didn't connect properly to Grainfather controller on a clean install (#1)
   - Fixed issue that displayed "TypeError: Cannot read property 'stageTitles' of undefined" messages (#1)

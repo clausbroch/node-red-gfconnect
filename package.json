@@ -1,7 +1,7 @@
 {
     "name": "node-red-gfconnect",
     "description": "A Node-RED Project for controlling the Grainfather Connect G30 brewing system",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "dependencies": {
         "node-red-dashboard": "2.19.4",
         "node-red-contrib-ui-level": "0.1.27",
